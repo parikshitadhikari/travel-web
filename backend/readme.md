@@ -111,7 +111,9 @@ Handles user posts and provides recommendations.
       "description":"Description",
       "label": ["label1", "label2"],
       "img": Image File,
+      "username": "Username of poster",
       
+
     }
     ```
 

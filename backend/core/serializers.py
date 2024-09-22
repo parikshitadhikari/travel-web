@@ -114,14 +114,14 @@ class PostSerializer(serializers.ModelSerializer):
         # Extract the nested data for instructor feedback
         print(validated_data)
         labels = validated_data.pop('label', None)
-        user_data = validated_data.pop('base_user', None)
+        # user_data = validated_data.pop('base_user', None)
         # # Create the student instance
         
-        user_key=User(username = user_data['username'],password=user_data['password'])
-        user_key.save()
+        # user_key=User(username = user_data['username'],password=user_data['password'])
+        # user_key.save()
         
         # validated_data.push('base_user',user)
-        post = Post.objects.create(base_user=user_key,**validated_data)
+        post = Post.objects.create(**validated_data)
         
         if labels is not None:
             for label in labels:

@@ -204,12 +204,12 @@ class PostViewSet(viewsets.ModelViewSet):
         labels = data['label']
         # print(interests)
         # post_serializer.
-        base_user={
-            'username': data['username'],
-            'password':data['password'],
-            'email':data['email']
-        }
-        data['base_user']=base_user
+        # base_user={
+        #     'username': data['username'],
+        #     'password':data['password'],
+        #     'email':data['email']
+        # }
+        data['base_user']=User.objects.get(username = data['username']).pk
         data['label']=[]
         for label in labels:
             # print(interest)
