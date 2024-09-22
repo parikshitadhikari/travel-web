@@ -30,7 +30,7 @@ const Testimonial = () => {
         "Wow! They are the best in the business. I love the way they go about their job, sheer professionalism at its best!",
       personImage:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPVFwiCwqjKjyL7tVfEMrswvIV_NgKDbRCdw&usqp=CAU",
-      personName: "Susheel Thapa",
+      personName: "Sudeep Subedi",
       personPosition: "Content Creator",
     },
   ];
