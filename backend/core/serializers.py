@@ -118,7 +118,11 @@ class EventSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     label = LabelSerializer(many=True, required=False)
-    user = UserSerializer(read_only= True)
+    user = serializers.SerializerMethodField()
+    def get_user(self,obj):
+        base_user= self.instance.base_user
+        serializer = UserSerializer(instance=base_user)
+        return serializer.data;
     def create(self, validated_data):
         # Extract the nested data for instructor feedback
         print(validated_data)
