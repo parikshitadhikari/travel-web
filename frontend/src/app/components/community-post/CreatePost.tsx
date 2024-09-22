@@ -26,19 +26,21 @@ const CreatePost = ({ onPostSubmit }: Props) => {
    */
   const handleSubmit = async () => {
     const formData = new FormData();
-    formData.append("content", postContent);
+    formData.append("description", postContent);
+    formData.append("username", "ujjwal");
+    formData.append("label", JSON.stringify(["Music", "Moosic"]));
     if (image) {
-      formData.append("image", image);
+      formData.append("img", image);
     }
 
     try {
       await axios.post(
-        "http://127.0.0.1:8000/auth/posts/create_post",
+        "http://127.0.0.1:8000/auth/posts/create_post/",
         formData,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token retrieval logic
+            // Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token retrieval logic
           },
         }
       );
