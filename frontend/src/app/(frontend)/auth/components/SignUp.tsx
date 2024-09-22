@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 
 const SignUp = () => {
@@ -11,7 +11,7 @@ const SignUp = () => {
   };
   return (
     <div className="flex justify-center items-center ">
-      <div className="bg-white  w-[40rem] border-4 rounded-xl shadow-2xl p-8">
+      <div className="bg-white  w-[30rem] border-4 rounded-xl shadow-2xl p-8">
         <form className=" mx-auto space-y-6" onSubmit={handleFormSubmit}>
           <div className="mb-6">
             <label
@@ -21,6 +21,7 @@ const SignUp = () => {
               Username
             </label>
             <input
+              placeholder="Enter your username"
               type="text"
               id="username"
               className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
@@ -58,6 +59,7 @@ const SignUp = () => {
             <input
               type="password"
               id="password"
+              placeholder="Enter your password"
               className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -75,6 +77,7 @@ const SignUp = () => {
             <input
               type="password"
               id="confirmPassword"
+              placeholder="Confirm Password"
               className="mt-1 p-3 w-full text-lg border rounded-md focus:ring-blue-500 focus:border-blue-500"
               onChange={(e) => {
                 setconfirmPassword(e.target.value);

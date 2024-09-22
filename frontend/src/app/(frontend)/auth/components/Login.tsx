@@ -8,7 +8,7 @@ const Login = () => {
     console.log("hi");
   };
   return (
-    <div className="flex justify-center items-center z-10 relative min-h-screen">
+    <div className="flex justify-center items-center z-10 relative min-h-[30vh]">
       <div className="bg-white w-[30rem] border-4 rounded-xl shadow-2xl p-8 py-12">
         <form className="mx-auto space-y-6" onSubmit={handleFormSubmit}>
           <div className="mb-6">
