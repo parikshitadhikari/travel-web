@@ -11,6 +11,7 @@ const NavBar = () => {
           href="/hi"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
+          <Image src={"/logo.png"} alt="logo here" width={250} height={250} />
           <Image src="/../../assets/favicon.png" alt="logo here" width="16" height = "16" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             TravelWeb
