@@ -12,7 +12,7 @@ class User(AbstractUser):
 class Post(models.Model):
     description = models.TextField()
     created_at = models.DateTimeField(auto_now=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    base_user = models.ForeignKey(User, on_delete=models.CASCADE)
     img = models.ImageField(upload_to='core/post/images', null=True, blank=True)
 
     def __str__(self):
@@ -34,21 +34,22 @@ class PostLike(models.Model):
     liked_by = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class Label(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=255)
     
 
 class Travellers(models.Model):
-    user = models.ForeignKey(User)
+    base_user = models.ForeignKey(User,on_delete=models.CASCADE)
     interests = models.ManyToManyField(Label)
 
 class Package(models.Model):
-    name = models.CharField()
+    name = models.CharField(max_length=255)
     label = models.ManyToManyField(Label)
     
 class Business(User):
-    user = models.ForeignKey(User)
+    base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Business")
     packages = models.ManyToManyField(Package)
     
 class Guide(User):
-    user = models.ForeignKey(User)
+    base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Guide")
     label = models.ManyToManyField(Label)
+
