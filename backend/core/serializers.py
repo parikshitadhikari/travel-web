@@ -1,7 +1,6 @@
 
-from importlib.resources import Package
 from rest_framework import serializers
-from .models import Business, User,Travellers,Label,AbstractUser
+from .models import Business, User,Travellers,Label,Package
 
 class UserSerializer(serializers.ModelSerializer):
 

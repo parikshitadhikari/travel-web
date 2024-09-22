@@ -3,7 +3,7 @@ from rest_framework import viewsets,permissions,authentication,status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from core.models import Business, User,Travellers
-from core.serializers import TravellersSerializer, UserSerializer,LabelSerializer
+from core.serializers import BusinessSerializer, TravellersSerializer, UserSerializer,LabelSerializer
 from rest_framework.decorators import action
 # Create your views here.
 # class UserRegistrationView(APIView):
