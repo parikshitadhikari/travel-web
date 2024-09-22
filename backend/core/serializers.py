@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from .models import Business, User,Travellers,Label,Package
+from .models import Business, User,Travellers,Label,Package,Event
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -80,8 +80,31 @@ class PackageSerializer(serializers.ModelSerializer):
 
 class BusinessSerializer(serializers.ModelSerializer):
     # packages = PackageSerializer(many=True, read_only=True)  # Include related packages
-    packages = serializers.SerializerMethodField()
+    # packages = serializers.SerializerMethodField()
     
     class Meta:
         model = Business
         fields = ['id', 'username', 'email', 'packages']  
+        
+class EventSerializer(serializers.ModelSerializer):
+    label = LabelSerializer(many=True,required= False)
+    
+    def create(self, validated_data):
+        # Extract the nested data for instructor feedback
+        print(validated_data)
+        labels = validated_data.pop('label', None)
+      
+        # validated_data.push('base_user',user)
+        event = Event.objects.create(**validated_data)
+        
+        if labels is not None:
+            for label in labels:
+                label_instance,created = Label.objects.get_or_create( **label)
+                event.label.add(label_instance.pk)
+        event.save()
+        return event
+
+    class Meta:
+        model = Event
+        fields= "__all__"
+        
