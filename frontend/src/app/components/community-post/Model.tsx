@@ -1,30 +1,44 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 
-/**
- * Props for the Modal component.
- * @typedef {Object} Props
- * @property {ReactNode} children - The content to be displayed inside the modal.
- * @property {boolean} isOpen - Boolean indicating whether the modal is open or not.
- * @property {() => void} onClose - Function to be called to close the modal.
- */
 interface Props {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
 }
 
-/**
- * Modal component which is a reusable UI element for displaying content in a modal dialog.
- *
- * @param {Props} props - The props for the Modal component.
- * @returns {JSX.Element|null} The Modal component if `isOpen` is true; otherwise null.
- */
 const Modal = ({ children, isOpen, onClose }: Props) => {
   if (!isOpen) return null;
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Escape") {
+      onClose();
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleOutsideClick = (event: React.MouseEvent) => {
+    const target = event.target as HTMLElement;
+    if (target.closest(".modal-content") === null) {
+      onClose();
+    }
+  };
+
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center">
-      <div className="bg-white p-5 rounded-lg shadow-lg">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-80 z-50 flex justify-center items-center"
+      onClick={handleOutsideClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+      aria-describedby="modal-description"
+    >
+      <div className="modal-content bg-white p-5 rounded-lg shadow-lg">
         {children}
         <button
           onClick={onClose}

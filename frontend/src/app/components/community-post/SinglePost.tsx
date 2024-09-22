@@ -3,33 +3,15 @@ import { IoMdSend } from "react-icons/io";
 import Comment from "./Comment";
 import { generateRandomNumber } from "../../services/generateRandomNumber";
 
-/**
- * Represents a post.
- * @typedef {Object} Post
- * @property {number} id - The ID of the post.
- * @property {{ username: string }} user - The user who created the post.
- * @property {string} description - The description of the post.
- * @property {string} created_at - The creation date of the post.
- * @property {string} img - The image URL of the post.
- * @property {Comment[]} postcomment_set - The set of comments on the post.
- */
 export interface Post {
   id: number;
   user: { username: string };
   description: string;
   created_at: string;
-  img: string;
+  img: string; // Assuming this is the image path or URL
   postcomment_set: Comment[];
 }
 
-/**
- * Represents a comment.
- * @typedef {Object} Comment
- * @property {number} id - The ID of the comment.
- * @property {number} post - The ID of the post the comment is associated with.
- * @property {string} comment - The text of the comment.
- * @property {number} commented_by - The ID of the user who commented.
- */
 export interface Comment {
   id: number;
   post: number;
@@ -37,23 +19,11 @@ export interface Comment {
   commented_by: number;
 }
 
-/**
- * Props for the Post component.
- * @typedef {Object} Props
- * @property {Post} post - The post data.
- * @property {boolean} [inModal=false] - Flag to indicate if the post is displayed in a modal.
- */
 interface Props {
   post: Post;
   inModal?: boolean;
 }
 
-/**
- * A component that displays an individual post with its details, comments, and interaction buttons.
- *
- * @param {Props} props - Props for the component.
- * @returns {JSX.Element} The `Post` component.
- */
 const Post = ({ post, inModal = false }: Props) => {
   const profileImage =
     "https://media.istockphoto.com/id/1495088043/vector/user-profile-icon-avatar-or-person-icon-profile-picture-portrait-symbol-default-portrait.jpg?s=612x612&w=0&k=20&c=dhV2p1JwmloBTOaGAtaA3AW1KSnjsdMt7-U_3EZElZ0=";
@@ -85,17 +55,19 @@ const Post = ({ post, inModal = false }: Props) => {
 
         <img
           className={`mt-3 w-full rounded-lg ${imageClassName}`}
-          src={`http://localhost:8000/${post.img}/`}
+          src={post.img} // Adjust this if needed
           alt="Post"
         />
 
         <div className="flex justify-between items-center mt-3 mx-4 text-gray-500">
           <button className="flex items-center space-x-1 hover:text-blue-600">
             <FaThumbsUp />
-            <span>{generateRandomNumber()}</span>
+            <span>{generateRandomNumber()}</span>{" "}
+            {/* Replace with actual like count if available */}
           </button>
           <button className="flex items-center space-x-1 hover:text-blue-600">
-            <span>{generateRandomNumber()}</span>
+            <span>{generateRandomNumber()}</span>{" "}
+            {/* Replace with actual comment count if available */}
             <FaRegCommentAlt />
           </button>
         </div>
@@ -111,21 +83,17 @@ const Post = ({ post, inModal = false }: Props) => {
           </div>
         </div>
       </div>
-      {inModal && (
+      {inModal && post.postcomment_set.length > 0 && (
         <div>
-          {post.postcomment_set && (
-            <div className="mt-4">
-              <h3 className="text-md font-semibold mb-2 ml-6">Comments</h3>
-              {post.postcomment_set.map(({ comment, commented_by }, index) => (
-                <Comment
-                  username={`${commented_by}`}
-                  comment={comment}
-                  date={`${new Date().getFullYear()}`}
-                  key={index}
-                />
-              ))}
-            </div>
-          )}
+          <h3 className="text-md font-semibold mb-2 ml-6">Comments</h3>
+          {post.postcomment_set.map(({ id, comment, commented_by }) => (
+            <Comment
+              key={id} // Use the comment ID as the key for better performance
+              username={`${commented_by}`} // Adjust this if you need the actual username
+              comment={comment}
+              date={`${new Date().getFullYear()}`} // Adjust the date display if necessary
+            />
+          ))}
         </div>
       )}
     </div>

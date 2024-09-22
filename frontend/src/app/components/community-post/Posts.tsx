@@ -3,56 +3,39 @@ import { useEffect, useState } from "react";
 import Modal from "./Model";
 import CreatePost from "./CreatePost";
 import SinglePost, { Post } from "./SinglePost";
-// import apiClient from "../../services/apiClient";
-// import { getToken } from "../../services/token";
-import { FaSeedling } from "react-icons/fa";
 import axios from "axios";
+import { FaSeedling } from "react-icons/fa";
 
-/**
- * Props for Posts component.
- * @typedef {Object} Props
- * @property {string} className - Additional CSS class for styling.
- */
 interface Props {
   className: string;
 }
 
-/**
- * A component that displays a list of posts and handles the creation of new posts.
- *
- * @param {Props} props - Props for the component.
- * @returns {JSX.Element} The `Posts` component.
- */
 const Posts = ({ className }: Props) => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
-  // Fetches posts on component mount
+  // Function to fetch posts
+  const fetchPosts = async () => {
+    try {
+      const response = await axios.get("http://127.0.0.1:8000/posts/");
+      console.log("Fetched posts:", response.data); 
+      setPosts(response.data);
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+
+  // Fetch posts on component mount
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get("http://127.0.0.1:8000/posts/");
-        console.log("Fetched posts:", response.data);
-        setPosts(response.data);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-    fetchPosts();
+    fetchPosts(); // Call the fetchPosts function
   }, []);
 
-  /**
-   * Handles the click event on a post, setting the selected post and opening the modal.
-   *
-   * @param {Post} post - The post object that was clicked.
-   */
   const handlePostClick = (post: Post) => {
     setSelectedPost(post);
     setIsModalOpen(true);
   };
 
-  // Closes the modal and resets the selected post
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedPost(null);
@@ -62,8 +45,7 @@ const Posts = ({ className }: Props) => {
     <div className={`${className} bg-green-50`}>
       <CreatePost
         onPostSubmit={async () => {
-          // Function logic for creating a post (optional)
-          // Consider fetching posts again after a new post is added
+          await fetchPosts(); // Refresh posts after creating a new post
         }}
       />
       <div
