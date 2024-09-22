@@ -2,8 +2,8 @@ from django.shortcuts import render
 from rest_framework import viewsets,permissions,authentication,status
 from rest_framework.request import Request
 from rest_framework.response import Response
-from core.models import Business, Event, Label, Package, User,Travellers,PackageLike
-from core.serializers import BusinessSerializer, EventSerializer, PackageSerializer, TravellersSerializer, UserSerializer,LabelSerializer
+from core.models import Business, Event, Label, Package, User,Travellers,PackageLike,Post,PostComment,PostLike
+from core.serializers import BusinessSerializer, EventSerializer, PackageSerializer, TravellersSerializer, UserSerializer,LabelSerializer,PostSerializer
 from rest_framework.decorators import action
 from django.db.models import Count
 from .authentication import CustomAuthentication
@@ -171,3 +171,49 @@ class EventViewSet(viewsets.ModelViewSet):
         
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+    def get_traveller(username):
+        user = User.objects.get(username=username)
+        traveller =Travellers.objects.get(base_user =user.pk )
+        return traveller
+    @action(methods=["GET"],detail=False)
+    def recommendations(self,request):
+        traveller = self.get_traveller(request.data['username'])
+        matching_users = Post.objects.filter(label__name__in=traveller.interests) \
+                .annotate(matched_labels=Count('label')) \
+                .order_by('-matched_labels')
+    # @action(methods=["GET"],detail=False)
+    # def trending(self,request):
+    #     traveller =self.get_traveller(request.data['username'])
+    @action(methods=['POST'],permission_classes=[],authentication_classes=[],detail=False)
+    def create_post(self, request, *args, **kwargs):
+        
+        data = request.data
+        labels = data['label']
+        # print(interests)
+        # post_serializer.
+        
+        data['label']=[]
+        for label in labels:
+            # print(interest)
+            data['label'].append({'name':label})
+        
+        # data['interests']=None
+        # print(data)
+        # print(data['interests'])
+        post_serializer =  self.serializer_class(data=data)
+        post_serializer.is_valid()
+        post = post_serializer.save()
+        print(post)
+        
+        return Response(status=status.HTTP_200_OK)
+        # return super().create(request, *args, **kwargs
+
+

@@ -1,6 +1,6 @@
 
 from rest_framework import serializers
-from .models import Business, User,Travellers,Label,Package,Event
+from .models import Business, Post, User,Travellers,Label,Package,Event
 
 class UserSerializer(serializers.ModelSerializer):
 
@@ -107,4 +107,24 @@ class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
         fields= "__all__"
+class PostSerializer(serializers.ModelSerializer):
+    label = LabelSerializer(many=True,required= False)
+    
+    def create(self, validated_data):
+        # Extract the nested data for instructor feedback
+        print(validated_data)
+        labels = validated_data.pop('label', None)
+      
+        # validated_data.push('base_user',user)
+        post = Post.objects.create(**validated_data)
         
+        if labels is not None:
+            for label in labels:
+                label_instance,created = Label.objects.get_or_create( **label)
+                post.label.add(label_instance.pk)
+        post.save()
+        return post
+
+    class Meta:
+        model = Post
+        fields= "__all__"
