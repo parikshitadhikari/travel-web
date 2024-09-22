@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 // import { Link } from "react-router-dom";
@@ -10,7 +11,7 @@ const NavBar = () => {
           href="/hi"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img alt="logo here" className="w-16 h-16" />
+          <Image src="/../../assets/favicon.png" alt="logo here" width="16" height = "16" />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             TravelWeb
           </span>
