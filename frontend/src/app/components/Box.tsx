@@ -8,7 +8,7 @@ import { GrAnalytics } from "react-icons/gr";
 
 /**
  * @function Box
- * @description A component displaying a grid of boxes, each with an icon and information related to different services like community, market analytics, AI, etc.
+ * @description A component displaying a grid of boxes, each with an icon and information related to different tourism services like community, analytics, etc.
  * @returns {JSX.Element} - A series of styled boxes with icons and text.
  */
 const Box = () => {
@@ -17,12 +17,11 @@ const Box = () => {
       <div className="grid grid-cols-4 gap-4">
         {/* Large descriptive box */}
         <div className="p-8 m-8 shadow-lg rounded-md col-span-2 bg-gray-50">
-          <h4 className="text-green-700 text-3xl">Groups for everything</h4>
+          <h4 className="text-green-700 text-3xl">Explore Together</h4>
           <div className="text-zinc-400 mt-1">
-            <div>GrowMore Groups: Unite. Share. Thrive. Join a community!</div>
+            <div>Join travel communities: Share experiences and tips.</div>
             <div className="mt-1">
-              Connect with like-minded individuals, fostering growth in a
-              vibrant, supportive ecosystem.
+              Connect with fellow travelers to enrich your journeys!
             </div>
           </div>
         </div>
@@ -30,52 +29,52 @@ const Box = () => {
         {/* Community box */}
         <div className="p-8 m-8 shadow-lg rounded-md bg-gray-50">
           <RiCommunityLine className="text-5xl" />
-          <h6 className="text-2xl">Community</h6>
+          <h6 className="text-2xl">Travel Community</h6>
           <div className="text-zinc-400">
-            <div>For the community By the community.</div>
-            <div>Join please, okay.</div>
+            <div>For travelers, by travelers.</div>
+            <div>Join us to discover new adventures!</div>
           </div>
         </div>
 
         {/* Market Analytics box */}
         <div className="p-8 m-8 shadow-lg rounded-md bg-gray-50">
           <GrAnalytics className="text-5xl" />
-          <h6 className="text-2xl">Market Analytics</h6>
+          <h6 className="text-2xl">Travel Insights</h6>
           <div className="text-zinc-400">
-            <div>We analyze the market for you</div>
-            <div>Start Analyzing today!</div>
+            <div>We analyze travel trends for you</div>
+            <div>Start planning smarter today!</div>
           </div>
         </div>
       </div>
 
-      {/* growAI box */}
+      {/* Travel Planning box */}
       <div className="grid grid-cols-4 gap-4">
         <div className="p-8 m-8 shadow-lg rounded-md bg-gray-50">
           <GiTreeGrowth className="text-5xl" />
-          <h6 className="text-2xl">growAI</h6>
+          <h6 className="text-2xl">Personalized Trips</h6>
           <div className="text-zinc-400">
-            <div>Enabling you by personalization</div>
-            <div>Start growing with us now.</div>
+            <div>Tailored travel experiences just for you</div>
+            <div>Start planning your dream trip now.</div>
           </div>
         </div>
 
-        {/* Crop Monitoring box */}
+        {/* Destination Monitoring box */}
         <div className="p-8 m-8 shadow-lg rounded-md bg-gray-50">
           <PiMonitorDuotone className="text-5xl" />
-          <h6 className="text-2xl">Crop Monitoring</h6>
+          <h6 className="text-2xl">Destination Insights</h6>
           <div className="text-zinc-400">
-            <div>Here, we monitor the crops and provide you analysis</div>
-            <div></div>
+            <div>Monitor travel destinations for the best experiences</div>
+            <div>Stay informed with real-time updates!</div>
           </div>
         </div>
 
-        {/* Farmerce box */}
+        {/* Travel Marketplace box */}
         <div className="p-8 m-8 shadow-lg rounded-md bg-gray-50">
           <SiCoinmarketcap className="text-5xl" />
-          <h6 className="text-2xl">Farmerce</h6>
+          <h6 className="text-2xl">Travel Marketplace</h6>
           <div className="text-zinc-400">
-            <div>Sell and Buy products here!</div>
-            <div>Farming Ecommerce</div>
+            <div>Buy and book your travel essentials here!</div>
+            <div>Explore exclusive offers and deals.</div>
           </div>
         </div>
 
@@ -84,8 +83,8 @@ const Box = () => {
           <LiaConnectdevelop className="text-5xl" />
           <h6 className="text-2xl">Connect!</h6>
           <div className="text-zinc-400">
-            <div>Connect with fellow peers.</div>
-            <div>Start learning and sharing today</div>
+            <div>Network with fellow travelers.</div>
+            <div>Share tips and learn from each other!</div>
           </div>
         </div>
       </div>
