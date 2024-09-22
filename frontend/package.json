@@ -11,6 +11,8 @@
   "dependencies": {
     "@mantine/core": "^7.12.2",
     "@mantine/hooks": "^7.12.2",
+    "axi": "^1.0.0",
+    "axios": "^1.7.7",
     "@tabler/icons-react": "^3.17.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
