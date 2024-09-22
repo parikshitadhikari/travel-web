@@ -22,16 +22,16 @@ const Auth = () => {
         <button
           onClick={() => setFormType("login")}
           className={`px-6 py-3 font-medium text-lg ${
-            formType === "login" ? "bg-blue-600 text-white" : "bg-gray-200"
-          } hover:bg-blue-700 rounded-md`}
+            formType === "login" ? "bg-green-600 text-white" : "bg-gray-200"
+          } hover:bg-green-700 rounded-md`}
         >
           Login
         </button>
         <button
           onClick={() => setFormType("signup")}
           className={`px-6 py-3 font-medium text-lg ${
-            formType === "signup" ? "bg-blue-600 text-white" : "bg-gray-200"
-          } hover:bg-blue-700 rounded-md`}
+            formType === "signup" ? "bg-green-600 text-white" : "bg-gray-200"
+          } hover:bg-green-700 rounded-md`}
         >
           Sign Up
         </button>
