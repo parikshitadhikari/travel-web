@@ -214,7 +214,7 @@ class EventViewSet(viewsets.ModelViewSet):
 class PostViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = []
-    queryset = Post.objects.all()
+    queryset = Post.objects.all().order_by("-created_at")
     serializer_class = PostSerializer
 
     def get_traveller(username):
