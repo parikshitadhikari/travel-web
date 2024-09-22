@@ -1,7 +1,6 @@
-import { BackgroundBeams } from "@/components/ui/background-beams";
-import { TypewriterEffect } from "@/components/ui/typewriter-effect";
-
-export default function Home() {
+"use client";
+import { TypewriterEffectSmooth } from "../ui/typewriter-effect";
+export default function TypewriterEffectSmoothDemo() {
   const words = [
     {
       text: "Build",
@@ -21,16 +20,12 @@ export default function Home() {
     },
   ];
   return (
-    <div>
-      <div className="">
-        <BackgroundBeams />
-      </div>
-      <div className="flex flex-col items-center justify-center h-[40rem] ">
-      <p className="text-neutral-600 dark:text-neutral-200 text-base  mb-10">
+    <div className="flex flex-col items-center justify-center h-[40rem]  ">
+      <p className="text-neutral-600 dark:text-neutral-200 text-xs sm:text-base  ">
         The road to freedom starts from here
       </p>
-      <TypewriterEffect words={words} />
-      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4 mt-10">
+      <TypewriterEffectSmooth words={words} />
+      <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
         <button className="w-40 h-10 rounded-xl bg-black border dark:border-white border-transparent text-white text-sm">
           Join now
         </button>
@@ -39,9 +34,5 @@ export default function Home() {
         </button>
       </div>
     </div>
-    </div>
   );
 }
-
-
-

@@ -1,7 +1,7 @@
-import { BackgroundBeams } from "@/components/ui/background-beams";
-import { TypewriterEffect } from "@/components/ui/typewriter-effect";
+"use client";
+import { TypewriterEffect } from "../ui/typewriter-effect";
 
-export default function Home() {
+export default function TypewriterEffectDemo() {
   const words = [
     {
       text: "Build",
@@ -21,11 +21,7 @@ export default function Home() {
     },
   ];
   return (
-    <div>
-      <div className="">
-        <BackgroundBeams />
-      </div>
-      <div className="flex flex-col items-center justify-center h-[40rem] ">
+    <div className="flex flex-col items-center justify-center h-[40rem] ">
       <p className="text-neutral-600 dark:text-neutral-200 text-base  mb-10">
         The road to freedom starts from here
       </p>
@@ -39,9 +35,5 @@ export default function Home() {
         </button>
       </div>
     </div>
-    </div>
   );
 }
-
-
-
