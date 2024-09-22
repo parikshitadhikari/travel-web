@@ -20,8 +20,8 @@ from .authentication import CustomAuthentication
 
 
 class TravellersViewSet(viewsets.ModelViewSet):
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = []
+    permission_classes = []
     queryset = Travellers.objects.all()
     serializer_class = TravellersSerializer
     
