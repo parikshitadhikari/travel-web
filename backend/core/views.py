@@ -257,6 +257,7 @@ class PostViewSet(viewsets.ModelViewSet):
         # data['interests']=None
         # print(data)
         # print(data['interests'])
+        
         post_serializer = self.serializer_class(data=data)
         post_serializer.is_valid(raise_exception=True)
         post = post_serializer.save()
