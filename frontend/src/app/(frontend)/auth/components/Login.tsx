@@ -1,12 +1,24 @@
 "use client";
 import React, { useState } from "react";
+import mockUsers from "../data/mockUsers";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  const handleFormSubmit = () => {
-    console.log("hi");
+  const handleFormSubmit = (e: any) => {
+    e.preventDefault();
+    const user = mockUsers.find(
+      (user) => user.email === email && user.password === password
+    );
+    if (user) {
+      localStorage.setItem("userInfo", JSON.stringify(user));
+      toast.success("User successfully logged in.");
+    } else {
+      toast.error("Invalid credentials.");
+    }
   };
+
   return (
     <div className="flex justify-center items-center z-10 relative min-h-[30vh]">
       <div className="bg-white w-[30rem] border-4 rounded-xl shadow-2xl p-8 py-12">

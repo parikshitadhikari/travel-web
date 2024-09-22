@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import "@mantine/core/styles.css";
 import { Modal, MantineProvider, Checkbox } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import mockUsers from "../data/mockUsers";
+import { toast } from "react-toastify";
 
 const interests = [
   "Adventure Seeker",
@@ -25,9 +27,28 @@ const SignUp: React.FC = () => {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Username:", username);
-    console.log("Email:", email);
-    console.log("Selected Interests:", selectedInterests);
+
+    const existingUser = mockUsers.find((user) => user.email === email);
+    if (existingUser) {
+      toast.error("User already exists");
+      return;
+    }
+    if (password !== confirmPassword) {
+      toast.error("Passwords donot match");
+      return;
+    }
+    const newUser = {
+      username,
+      email,
+      password,
+      interests: selectedInterests,
+    };
+
+    mockUsers.push(newUser);
+
+    localStorage.setItem("userInfo", JSON.stringify(newUser));
+    console.log(mockUsers);
+    toast.success("User successfully signed up.");
   };
 
   const handleInterestChange = (interest: string) => {
@@ -56,13 +77,16 @@ const SignUp: React.FC = () => {
             />
           ))}
         </div>
-        <button className="p-2 font-bold bg-green-600 text-xs mt-4 text-white text-center w-full rounded-sm">
+        <button
+          className="p-2 font-bold bg-green-600 text-xs mt-4 text-white text-center w-full rounded-sm"
+          onClick={handleFormSubmit}
+        >
           Complete SignUp
         </button>
       </Modal>
       <div className="flex justify-center items-center ">
         <div className="bg-white  w-[30rem] border-4 rounded-xl shadow-2xl p-8">
-          <form className=" mx-auto space-y-6" onSubmit={handleFormSubmit}>
+          <div className=" mx-auto space-y-6">
             <div className="mb-6">
               <label
                 htmlFor="username"
@@ -136,15 +160,13 @@ const SignUp: React.FC = () => {
               />
             </div>
 
-            <div className=""></div>
             <button
-              type="submit"
               className="w-full text-2xl bg-green-600 hover:bg-green-700 text-white font-medium rounded-md py-3"
               onClick={open}
             >
               Submit
             </button>
-          </form>
+          </div>
         </div>
       </div>
     </MantineProvider>

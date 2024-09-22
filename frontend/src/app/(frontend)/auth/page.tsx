@@ -4,6 +4,8 @@ import { BackgroundBeams } from "@/components/ui/background-beams";
 import React, { useState } from "react";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Auth = () => {
   const [formType, setFormType] = useState("login");
@@ -38,6 +40,7 @@ const Auth = () => {
       <div className="flex justify-center items-center mt-10 z-10 relative">
         {formType === "login" ? <Login /> : <SignUp />}
       </div>
+      <ToastContainer />
     </div>
   );
 };
