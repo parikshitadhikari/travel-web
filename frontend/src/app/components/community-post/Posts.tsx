@@ -6,6 +6,7 @@ import SinglePost, { Post } from "./SinglePost";
 // import apiClient from "../../services/apiClient";
 // import { getToken } from "../../services/token";
 import { FaSeedling } from "react-icons/fa";
+import axios from "axios";
 
 /**
  * Props for Posts component.
@@ -28,19 +29,18 @@ const Posts = ({ className }: Props) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   // Fetches posts on component mount
-//   useEffect(() => {
-//     const fetchPosts = async () => {
-//       try {
-//         const response = await apiClient.get("/api/post", {
-//           headers: { Authorization: `Bearer ${getToken()}` },
-//         });
-//         setPosts(response.data);
-//       } catch (error) {
-//         console.error("Error fetching posts:", error);
-//       }
-//     };
-//     fetchPosts();
-//   }, []);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://127.0.0.1:8000/auth/posts/");
+        console.log(response.data);
+        setPosts(response.data);
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   /**
    * Handles the click event on a post, setting the selected post and opening the modal.
