@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Business, Post, User, Travellers, Label, Package, Event
+from .models import Business, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -115,11 +115,32 @@ class EventSerializer(serializers.ModelSerializer):
         model = Event
         fields = "__all__"
 
+class PostCommentSerializer(serializers.ModelSerializer):
+    commented_by = serializers.CharField(source='commented_by.username')
+
+    class Meta:
+        model = PostComment
+        fields = ['id', 'comment', 'commented_by']
+
+# Serializer for PostLike
+class PostLikeSerializer(serializers.ModelSerializer):
+    liked_by = serializers.CharField(source='liked_by.username')
+
+    class Meta:
+        model = PostLike
+        fields = ['id', 'liked_by']
 
 class PostSerializer(serializers.ModelSerializer):
     label = LabelSerializer(many=True, required=False)
-    base_user = UserSerializer(read_only=True)
-
+    postcomment_set = PostCommentSerializer(source='comments', many=True, read_only=True)
+    postlike_set = PostLikeSerializer(source='likes', many=True, read_only=True)
+    # base_user = UserSerializer(read_only=True)
+    user = serializers.JSONField(source='base_user', read_only=True)
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        # Rename 'base_user' to 'user' in the serialized output
+        representation['user'] = representation.pop('base_user', None)
+        return representation
     def create(self, validated_data):
         # Extract the nested data for instructor feedback
         print(validated_data)

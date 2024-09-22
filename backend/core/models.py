@@ -22,7 +22,7 @@ class Post(models.Model):
 
 # Model for handling Post comments.
 class PostComment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name="comments")
     comment = models.CharField(max_length=255)
     commented_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
@@ -31,7 +31,7 @@ class PostComment(models.Model):
 
 # Model for handling Post likes.
 class PostLike(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE,related_name="likes")
     liked_by = models.OneToOneField(User, on_delete=models.CASCADE)
 
 
