@@ -13,7 +13,7 @@ export default function Home() {
       <div className="">
         <BackgroundBeams />
       </div>
-      <div className="z-50">
+      <div className="z-10">
         <div>
           <NavBar />
           <Hero />
