@@ -1,11 +1,12 @@
-import React from 'react'
+import Posts from "@/app/components/community-post/Posts";
+import React from "react";
 
 const CommunityPost = () => {
   return (
-    <div>
-      This is community post
+    <div className="bg-green-50 h-screen pt-20">
+      <Posts className="w-full" />
     </div>
-  )
-}
+  );
+};
 
-export default CommunityPost
+export default CommunityPost;
