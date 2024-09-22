@@ -260,9 +260,9 @@ class PostViewSet(viewsets.ModelViewSet):
         post_serializer = self.serializer_class(data=data)
         post_serializer.is_valid(raise_exception=True)
         post = post_serializer.save()
-        print(post)
-        list = self.queryset
-        data = PostSerializer(list, many=True).data
-        print(data)
-        return Response(status=status.HTTP_200_OK, data=data)
+        # print(post)
+        # list = self.queryset
+        # data = PostSerializer(list, many=True).data
+        # print(data)
+        return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs
