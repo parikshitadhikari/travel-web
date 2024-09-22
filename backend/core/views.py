@@ -238,7 +238,7 @@ class PostViewSet(viewsets.ModelViewSet):
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )
     def create_post(self, request, *args, **kwargs):
-
+        # request = request.copy()
         data = request.data
         labels = data["label"]
         # print(interests)
