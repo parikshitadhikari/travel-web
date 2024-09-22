@@ -17,7 +17,6 @@ class Post(models.Model):
 
     def __str__(self):
         return self.description
-    
 
 # Model for handling Post comments.
 class PostComment(models.Model):
@@ -44,12 +43,18 @@ class Travellers(models.Model):
 class Business(User):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Business")
     
-class Package(models.Model):
-    name = models.CharField(max_length=255)
-    label = models.ManyToManyField(Label)
-    business = models.ForeignKey(Business,related_name="packages",on_delete=models.CASCADE)
-    
 class Guide(User):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Guide")
     label = models.ManyToManyField(Label)
 
+
+class Package(models.Model):
+    name = models.CharField(max_length=255)
+    label = models.ManyToManyField(Label)
+    business = models.ForeignKey(Business,related_name="packages",on_delete=models.CASCADE)
+    img = models.ImageField(upload_to='core/post/images', null=True, blank=True)
+    price = models.FloatField(default=0.0)
+    description= models.TextField(blank=True, default="")
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, null=True, default=None)
+    
+    
