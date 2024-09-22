@@ -9,14 +9,12 @@ const Auth = () => {
   const [formType, setFormType] = useState("login");
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen bg-white">
       <div className="absolute inset-0 z-0">
         <BackgroundBeams />
       </div>
 
-      <div>
-        <NavBar />
-      </div>
+      <NavBar />
 
       <div className="flex justify-center mt-10 space-x-4 z-10 relative">
         <button
@@ -31,13 +29,12 @@ const Auth = () => {
           onClick={() => setFormType("signup")}
           className={`px-6 py-3 font-medium text-lg ${
             formType === "signup" ? "bg-green-600 text-white" : "bg-gray-200"
-          } hover:bg-green-700 rounded-md`}
+          } hover:bg-green-700 rounded-md text-black`}
         >
           Sign Up
         </button>
       </div>
 
-      {/* Conditionally render the form based on state */}
       <div className="flex justify-center items-center mt-10 z-10 relative">
         {formType === "login" ? <Login /> : <SignUp />}
       </div>
