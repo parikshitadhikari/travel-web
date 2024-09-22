@@ -36,7 +36,11 @@ const Hero = () => {
 
       {/* Image section */}
       <div>
-        <img className="object-cover h-96" alt="image description" />
+        <img
+          src={"/images/ujj.jpg"}
+          className="object-cover h-96"
+          alt="image description"
+        />
       </div>
     </div>
   );

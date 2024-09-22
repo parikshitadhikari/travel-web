@@ -10,7 +10,11 @@ const NavBar = () => {
           href="/hi"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
-          <img alt="logo here" className="w-16 h-16" />
+          <img
+            src={"/images/ujj.jpg"}
+            alt="logo here"
+            className="w-16 h-16"
+          />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             TravelWeb
           </span>
