@@ -19,6 +19,10 @@ from .authentication import CustomAuthentication
 #         return Response({'token':token, 'info':user_info.data}, status=status.HTTP_201_CREATED)
 
 
+#Json Fields
+#username
+#password
+#interests
 class TravellersViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = []
@@ -30,7 +34,8 @@ class TravellersViewSet(viewsets.ModelViewSet):
         data = request.data;
         base_user={
             'username': data['username'],
-            'password':data['password']
+            'password':data['password'],
+            'email':data['email']
         }
         data['base_user']=base_user
         interests = data['interests']
@@ -199,7 +204,12 @@ class PostViewSet(viewsets.ModelViewSet):
         labels = data['label']
         # print(interests)
         # post_serializer.
-        
+        base_user={
+            'username': data['username'],
+            'password':data['password'],
+            'email':data['email']
+        }
+        data['base_user']=base_user
         data['label']=[]
         for label in labels:
             # print(interest)
