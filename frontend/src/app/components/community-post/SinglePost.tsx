@@ -5,7 +5,7 @@ import { generateRandomNumber } from "../../services/generateRandomNumber";
 
 export interface Post {
   id: number;
-  user: { username: string };
+  base_user: { username: string };
   description: string;
   created_at: string;
   img: string; // Assuming this is the image path or URL
@@ -43,7 +43,7 @@ const Post = ({ post, inModal = false }: Props) => {
           />
           <div>
             <p className="text-sm font-medium text-gray-800">
-              {post.user.username}
+              {post.base_user.username}
             </p>
             <p className="text-xs text-gray-500">
               {post.created_at.slice(0, 10)}

@@ -18,7 +18,7 @@ const Posts = ({ className }: Props) => {
   // Function to fetch posts
   const fetchPosts = async () => {
     try {
-      const response = await axios.get("http://127.0.0.1:8000/posts/");
+      const response = await axios.get("http://127.0.0.1:8000/auth/posts/");
       console.log("Fetched posts:", response.data); 
       setPosts(response.data);
     } catch (error) {
