@@ -32,8 +32,8 @@ const Posts = ({ className }: Props) => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://127.0.0.1:8000/auth/posts/");
-        console.log(response.data);
+        const response = await axios.get("http://127.0.0.1:8000/posts/");
+        console.log("Fetched posts:", response.data);
         setPosts(response.data);
       } catch (error) {
         console.error("Error fetching posts:", error);
