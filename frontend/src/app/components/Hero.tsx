@@ -3,7 +3,7 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <div className="m-4 mx-80 flex justify-between items-center">
+    <div className="m-4 mx-60 flex justify-between items-center">
       {/* Text section with headings and description */}
       <div className="m-10 space-y-10 flex flex-col justify-evenly w-3/5">
         {/* Heading */}

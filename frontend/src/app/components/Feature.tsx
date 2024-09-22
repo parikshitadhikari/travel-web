@@ -53,7 +53,7 @@ const Feature = () => {
           with like-minded travelers through our innovative platform.
         </p>
       </div>
-      <div className="m-3 mx-96 p-3 flex justify-around space-x-24">
+      <div className="m-3 mx-50 p-3 flex justify-around space-x-24">
         {features.map(({ id, icon, title, description }) => (
           <div
             className="flex justify-center items-center flex-col space-y-3"

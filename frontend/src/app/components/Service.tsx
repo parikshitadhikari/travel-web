@@ -45,7 +45,7 @@ const Service = () => {
 
   // JSX structure for the component
   return (
-    <div className="flex mx-80 space-x-16">
+    <div className="flex mx-40 space-x-16">
       <div className="left flex justify-center items-center ">
         <img src={"/images/ujj.jpg"} alt="Tourists exploring a city" />
       </div>
