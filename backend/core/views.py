@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from rest_framework import viewsets,permissions,authentication
-from core.models import User
-from core.serializers import UserSerializer
+from rest_framework import viewsets,permissions,authentication,status
+from rest_framework.request import Request
+from rest_framework.response import Response
+from core.models import Business, User,Travellers
+from core.serializers import TravellersSerializer, UserSerializer,LabelSerializer
+from rest_framework.decorators import action
 # Create your views here.
 # class UserRegistrationView(APIView):
 #     renderer_classes = [UserRenderer]
@@ -14,14 +17,46 @@ from core.serializers import UserSerializer
 #         return Response({'token':token, 'info':user_info.data}, status=status.HTTP_201_CREATED)
 
 
-class UserRegistrationViewSet(viewsets.ModelViewSet):
-    authentication_classes = []
+class TravellersViewSet(viewsets.ModelViewSet):
+    authentication_classes = [authentication.BasicAuthentication]
     permission_classes = [permissions.IsAuthenticated]
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    queryset = Travellers.objects.all()
+    serializer_class = TravellersSerializer
+    
+    @action(methods=['POST'],permission_classes=[],authentication_classes=[],detail=False)
+    def create_user(self, request, *args, **kwargs):
+        data = request.data;
+        base_user={
+            'username': data['username'],
+            'password':data['password']
+        }
+        data['base_user']=base_user
+        interests = data['interests']
+        # print(interests)
+        # traveller_serializer.
+        
+        data['interests']=[]
+        for interest in interests:
+            # print(interest)
+            data['interests'].append({'name':interest})
+        
+        # data['interests']=None
+        # print(data)
+        # print(data['interests'])
+        traveller_serializer =  self.serializer_class(data=data)
+        traveller_serializer.is_valid(raise_exception=True)
+        traveller = traveller_serializer.save()
+        print(traveller)
+        
+        return Response(status=status.HTTP_200_OK)
+        # return super().create(request, *args, **kwargs)
+  
+    # def destroy(self, request, *args, **kwargs):
+    #     return super().destroy(request, *args, **kwargs)
+    # @action(methods=['GET'],permission_classes=[permissions.IsAdminUser],authentication=[authentication.BasicAuthentication],detail=False)
+    # def list(self, request, *args, **kwargs):
+    #     return super().list(request, *args, **kwargs)
 
-    def create(self,request):
-        pass
 
 # # View for user login
 # class UserLoginView(APIView):
@@ -38,3 +73,36 @@ class UserRegistrationViewSet(viewsets.ModelViewSet):
 #         return Response({'token':token, 'info':user_info.data}, status=status.HTTP_200_OK)
 #     else:
 #         Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
+class BusinessViewSet(viewsets.ModelViewSet):
+    authentication_classes = [authentication.BasicAuthentication]
+    permission_classes = [permissions.IsAuthenticated]
+    queryset = Business.objects.all()
+    serializer_class = BusinessSerializer
+    
+    @action(methods=['POST'],permission_classes=[],authentication_classes=[],detail=False)
+    def create_user(self, request, *args, **kwargs):
+        data = request.data;
+        base_user={
+            'username': data['username'],
+            'password':data['password']
+        }
+        data['base_user']=base_user
+        interests = data['interests']
+        # print(interests)
+        # traveller_serializer.
+        
+        data['interests']=[]
+        for interest in interests:
+            # print(interest)
+            data['interests'].append({'name':interest})
+        
+        # data['interests']=None
+        # print(data)
+        # print(data['interests'])
+        traveller_serializer =  self.serializer_class(data=data)
+        traveller_serializer.is_valid(raise_exception=True)
+        traveller = traveller_serializer.save()
+        print(traveller)
+        
+        return Response(status=status.HTTP_200_OK)
+        # return super().create(request, *args, **kwargs)

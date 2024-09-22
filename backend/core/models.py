@@ -39,15 +39,15 @@ class Label(models.Model):
 
 class Travellers(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE)
-    interests = models.ManyToManyField(Label)
+    interests = models.ManyToManyField(Label,blank=True)
 
+class Business(User):
+    base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Business")
+    
 class Package(models.Model):
     name = models.CharField(max_length=255)
     label = models.ManyToManyField(Label)
-    
-class Business(User):
-    base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Business")
-    packages = models.ManyToManyField(Package)
+    business = models.ForeignKey(Business,related_name="packages",on_delete=models.CASCADE)
     
 class Guide(User):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Guide")
