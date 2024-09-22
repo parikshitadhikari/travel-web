@@ -1,101 +1,153 @@
 "use client";
 import React, { useState } from "react";
+import "@mantine/core/styles.css";
+import { Modal, MantineProvider, Checkbox } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
 
-const SignUp = () => {
+const interests = [
+  "Adventure Seeker",
+  "Cultural Enthusiast",
+  "Food Explorer",
+  "Nature Lover",
+  "Relaxation and Wellness",
+  "History Buffs",
+  "Thrill Seeker",
+];
+
+const SignUp: React.FC = () => {
+  const [opened, { open, close }] = useDisclosure(false);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
-  const handleFormSubmit = () => {
-    console.log("hi");
-  };
-  return (
-    <div className="flex justify-center items-center ">
-      <div className="bg-white  w-[30rem] border-4 rounded-xl shadow-2xl p-8">
-        <form className=" mx-auto space-y-6" onSubmit={handleFormSubmit}>
-          <div className="mb-6">
-            <label
-              htmlFor="username"
-              className="block text-2xl font-medium text-gray-600 mb-3"
-            >
-              Username
-            </label>
-            <input
-              placeholder="Enter your username"
-              type="text"
-              id="username"
-              className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => {
-                setUsername(e.target.value);
-              }}
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="email"
-              className="block text-2xl font-medium text-gray-600 mb-3"
-            >
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
-              placeholder="email@gmail.com"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="password"
-              className="block text-2xl font-medium text-gray-600 mb-3"
-            >
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              placeholder="Enter your password"
-              className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              required
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              htmlFor="confirmPassword"
-              className="block text-2xl font-medium text-gray-600 mb-3"
-            >
-              Confirm password
-            </label>
-            <input
-              type="password"
-              id="confirmPassword"
-              placeholder="Confirm Password"
-              className="mt-1 p-3 w-full text-lg border rounded-md focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => {
-                setconfirmPassword(e.target.value);
-              }}
-              required
-            />
-          </div>
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
 
-          <div className=""></div>
-          <button
-            type="submit"
-            className="w-full text-2xl bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md py-3"
-          >
-            Submit
-          </button>
-        </form>
+  const handleFormSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Username:", username);
+    console.log("Email:", email);
+    console.log("Selected Interests:", selectedInterests);
+  };
+
+  const handleInterestChange = (interest: string) => {
+    setSelectedInterests((prev) =>
+      prev.includes(interest)
+        ? prev.filter((i) => i !== interest)
+        : [...prev, interest]
+    );
+  };
+
+  return (
+    <MantineProvider>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Select Your Interests"
+        centered
+      >
+        <div className="space-y-2">
+          {interests.map((interest) => (
+            <Checkbox
+              key={interest}
+              label={interest}
+              checked={selectedInterests.includes(interest)}
+              onChange={() => handleInterestChange(interest)}
+            />
+          ))}
+        </div>
+        <button className="p-2 font-bold bg-green-600 text-xs mt-4 text-white text-center w-full rounded-sm">
+          Complete SignUp
+        </button>
+      </Modal>
+      <div className="flex justify-center items-center ">
+        <div className="bg-white  w-[30rem] border-4 rounded-xl shadow-2xl p-8">
+          <form className=" mx-auto space-y-6" onSubmit={handleFormSubmit}>
+            <div className="mb-6">
+              <label
+                htmlFor="username"
+                className="block text-2xl font-medium text-gray-600 mb-3"
+              >
+                Username
+              </label>
+              <input
+                placeholder="Enter your username"
+                type="text"
+                id="username"
+                className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                onChange={(e) => {
+                  setUsername(e.target.value);
+                }}
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="email"
+                className="block text-2xl font-medium text-gray-600 mb-3"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                placeholder="email@gmail.com"
+                onChange={(e) => {
+                  setEmail(e.target.value);
+                }}
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="password"
+                className="block text-2xl font-medium text-gray-600 mb-3"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                placeholder="Enter your password"
+                className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+                required
+              />
+            </div>
+            <div className="mb-6">
+              <label
+                htmlFor="confirmPassword"
+                className="block text-2xl font-medium text-gray-600 mb-3"
+              >
+                Confirm password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Confirm Password"
+                className="mt-1 p-3 w-full text-lg border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                onChange={(e) => {
+                  setconfirmPassword(e.target.value);
+                }}
+                required
+              />
+            </div>
+
+            <div className=""></div>
+            <button
+              type="submit"
+              className="w-full text-2xl bg-green-600 hover:bg-green-700 text-white font-medium rounded-md py-3"
+              onClick={open}
+            >
+              Submit
+            </button>
+          </form>
+        </div>
       </div>
-    </div>
+    </MantineProvider>
   );
 };
 
