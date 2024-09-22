@@ -37,7 +37,7 @@ const Hero = () => {
       {/* Image section */}
       <div>
         <img
-          src={"/images/ujj.jpg"}
+          src={"/images/logo-travel-web.png"}
           className="object-cover h-96"
           alt="image description"
         />
