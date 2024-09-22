@@ -9,7 +9,7 @@ export interface Post {
   description: string;
   created_at: string;
   img: string; // Assuming this is the image path or URL
-  // postcomment_set: Comment[];
+  postcomment_set: Comment[];
 }
 
 export interface Comment {
