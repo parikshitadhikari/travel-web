@@ -395,7 +395,7 @@ class TraverseViewSet(viewsets.ModelViewSet):
 #   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
 #   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
         model = genai.GenerativeModel("gemini-1.5-flash")
-        prompt = f"I am going on the package(travel): {package.name}. It's description is {package.description}. Give me the required preparation, useful tips for the package as well as required equipment and costs "
+        prompt = f"I am going on the package(travel): {package.name}. It's description is {package.description}. Give required equipments and its price for this trip."
         response = model.generate_content(prompt)
         # print(response.text)
 
