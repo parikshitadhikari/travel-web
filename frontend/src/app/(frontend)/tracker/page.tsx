@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import SidebarDemo from "@/app/components/Sidebar";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 // Define types for expenses and chart data
@@ -14,8 +15,8 @@ const FinanceTracker: React.FC = () => {
   // State to store income and expenses
   const [income, setIncome] = useState<number>(0);
   const [expenses, setExpenses] = useState<Expense[]>([
-    { name: "Rent", amount: 0 },
-    { name: "Groceries", amount: 0 },
+    { name: "Accomodation", amount: 0 },
+    { name: "Dining", amount: 0 },
     { name: "Transportation", amount: 0 },
     { name: "Entertainment", amount: 0 },
     { name: "Miscellaneous", amount: 0 },
@@ -74,9 +75,9 @@ const FinanceTracker: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-r from-purple-600 to-blue-500 p-8 text-white">
+    <div className="min-h-screen flex flex-col items-center bg-gradient-to-r from-blue-600 to-blue-300 p-8 text-white">
+      <SidebarDemo/>
       <h1 className="text-4xl font-bold mb-6">Finance Tracker</h1>
-
       <div className="w-full max-w-4xl bg-white p-8 rounded-2xl shadow-lg text-gray-800">
         {/* Income Input */}
         <div className="mb-8">
