@@ -9,6 +9,8 @@ class User(AbstractUser):
         return self.username
 class Label(models.Model):
     name = models.CharField(max_length=255)
+    def __str__(self):
+        return self.name
 
 # Post model for handling User posts.
 class Post(models.Model):
