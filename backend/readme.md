@@ -212,7 +212,7 @@ Chat with chatbot
 
 ## Destination 
 Create destination or get a list of destination
-- **POST**  `/auth/destination/create_destination`
+- **POST**  `/auth/destination/create_destination/`
 - Data Format:
 - {
   "name": "Package Name",
@@ -225,4 +225,6 @@ Create destination or get a list of destination
   "username": "rohan",
   
 }
+- **GET** `/auth/destination`
+- Get list of destination
 ---
