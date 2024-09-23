@@ -120,3 +120,16 @@ Handles user posts and provides recommendations.
 -Creates a comment on a post.
 
 ---
+## ChatViewSet (chat)
+Chat with chatbot
+
+### ENDPOINTS
+- **POST** `/auth/post`
+  -  prompt chatbot
+   - **Request Body:**
+    ```json
+    {
+
+      "prompt" :"Your Prompt"
+    }
+    ```
