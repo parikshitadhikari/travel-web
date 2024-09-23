@@ -227,4 +227,17 @@ Create destination or get a list of destination
 }
 - **GET** `/auth/destination`
 - Get list of destination
+
+
+- **POST** `auth/destination/subscribe/`
+-Creates a interest on a event.
+  - **Request Body:**
+    ```json
+    {
+      "id": id of the destination in number,
+      "username":"Username of the interested user"
+    }
+    ```
+- **GET** `auth/destination/subscribe/`
+- -Returns a list of interested users
 ---

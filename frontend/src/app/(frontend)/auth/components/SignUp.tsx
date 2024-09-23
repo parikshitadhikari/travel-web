@@ -28,7 +28,9 @@ const SignUp: React.FC = () => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const existingUser = mockUsers.find((user) => user.email === email);
+    const existingUser = mockUsers.find(
+      (user) => user.email === email && user.email !== "rohan@gmail.com"
+    );
     if (existingUser) {
       toast.error("User already exists");
       return;

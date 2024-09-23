@@ -164,16 +164,16 @@ class PackageViewSet(viewsets.ModelViewSet):
         traveller = self.get_traveller(request.data["username"])
 
     @action(methods=["POST","GET"], permission_classes=[], authentication_classes=[], detail=False)
-    def interested(self, request, *args, **kwargs):
+    def subscribe(self, request, *args, **kwargs):
         if(request.method=="POST"):
             data =request.data
             user = User.objects.get(username=data['username'])
             # comment = data['comment']
-            event = Package.objects.get(id= data['id'])
+            package = Package.objects.get(id= data['id'])
             package_subsctipton_data={
                 
             }
-            package_subsctipton_data['event']= event.pk
+            package_subsctipton_data['package']= package.pk
             package_subsctipton_data['subscribed_by']= user.pk
             package_subscription_serializer = PackageSubscriptionSerializer(data= package_subsctipton_data)
             package_subscription_serializer.is_valid(raise_exception=True)
@@ -182,9 +182,11 @@ class PackageViewSet(viewsets.ModelViewSet):
         else:
             data = request.data
             event_id = data['id']
-            event = Event.objects.get(id= event_id)
+            package = Package.objects.get(id= event_id)
             # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
-            interested_users = User.objects.filter(eventinterested__event=event)
+            interested_users = User.objects.filter(packagesubscription__package=package)
+            return Response(status=status.HTTP_200_OK, data=UserSerializer(interested_users, many=True).data)
+            
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )
