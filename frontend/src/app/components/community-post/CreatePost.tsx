@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaImage } from "react-icons/fa";
 import axios from "axios";
-
+const staticUser = "Rohan";
 /**
  * Props for CreatePost component.
  * @typedef {Object} Props
@@ -27,7 +27,7 @@ const CreatePost = ({ onPostSubmit }: Props) => {
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("description", postContent);
-    formData.append("username", "ujjwal");
+    formData.append("username",staticUser );
     formData.append("label", JSON.stringify(["Music", "Moosic"]));
     if (image) {
       formData.append("img", image);
