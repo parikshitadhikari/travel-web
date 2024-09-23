@@ -116,5 +116,7 @@ Handles user posts and provides recommendations.
 
     }
     ```
+- **POST** `/posts/:id/comment/`
+-Creates a comment on a post.
 
 ---
