@@ -46,6 +46,7 @@ class Business(models.Model):
 class Guide(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Guide")
     label = models.ManyToManyField(Label)
+    image = models.ImageField(upload_to='core/giude/profile',null=True,blank=True)
 
 
 class Package(models.Model):

@@ -243,9 +243,12 @@ Create destination or get a list of destination
 
 - **POST** `auth/traverse/`
 - Ask for preparation and equipments
-- ```json
+ ```json
   {
     "id": id of the package,
   }
 ```
+## Guide
+- **GET** `auth/guide/`
+- Returns list of guides
 ---

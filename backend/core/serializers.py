@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Business,  EventInterested, PackageSubscription, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
+from .models import Business,  EventInterested, Guide, PackageSubscription, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -228,3 +228,31 @@ class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = "__all__"
+class GuideSerializer(serializers.ModelSerializer):
+    label = LabelSerializer(many=True,read_only=True,required=False)
+    # interests = serializers.StringRelatedField()
+    base_user = UserSerializer()
+
+    def create(self, validated_data):
+        # Extract the nested data for instructor feedback
+        print(validated_data)
+        interests = validated_data.pop("interests", None)
+        user_data = validated_data.pop("base_user", None)
+        # # Create the student instance
+
+        user_key = User(username=user_data["username"], password=user_data["password"])
+        user_key.save()
+
+        # validated_data.push('base_user',user)
+        guide = Guide.objects.create(base_user=user_key, **validated_data)
+
+        if interests is not None:
+
+            for interest in interests:
+                label, created = Label.objects.get_or_create(**interest)
+                guide.interests.add(label.pk)
+        guide.save()
+        return guide
+    class Meta:
+        model = Guide
+        fields ="__all__"

@@ -6,6 +6,7 @@ from core.models import (
     Business,
     Event,
     EventInterested,
+    Guide,
     Label,
     Package,
     User,
@@ -19,6 +20,7 @@ from core.serializers import (
     BusinessSerializer,
     EventInterestedSerializer,
     EventSerializer,
+    GuideSerializer,
     PackageSerializer,
     TravellersSerializer,
     UserSerializer,
@@ -401,3 +403,36 @@ class TraverseViewSet(viewsets.ModelViewSet):
 
         return Response(data=response.text,status=status.HTTP_200_OK)
         # return super().list(request, *args, **kwargs)
+
+class GuideViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
+    queryset=Guide.objects.all()
+    serializer_class = GuideSerializer
+    def create(self, request, *args, **kwargs):
+        data = request.data
+        base_user = {
+            "username": data["username"],
+            "password": data["password"],
+            "email": data["email"],
+        }
+        data["base_user"] = base_user
+        interests = data["interests"]
+        # print(interests)
+        # traveller_serializer.
+
+        data["interests"] = []
+        for interest in interests:
+            # print(interest)
+            data["interests"].append({"name": interest})
+
+        # data['interests']=None
+        # print(data)
+        # print(data['interests'])
+        guide_serializer = self.serializer_class(data=data)
+        guide_serializer.is_valid(raise_exception=True)
+        guide = guide_serializer.save()
+        print(guide)
+
+        return Response(status=status.HTTP_200_OK)
+        # return super().create(request, *args, **kwargs)
