@@ -67,7 +67,7 @@ class Event(models.Model):
     label = models.ManyToManyField(Label)
     img = models.ImageField(upload_to='core/events/images', null=True, blank=True)
     created_at = models.DateTimeField(auto_now=True)
-    
+    created_by = models.ForeignKey(User,on_delete=models.CASCADE)
     # price = models.FloatField(default=0.0)
     description= models.TextField(blank=True, default="")
     # guide = models.ForeignKey(Guide, on_delete=models.CASCADE, null=True, default=None)

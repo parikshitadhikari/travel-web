@@ -95,6 +95,7 @@ class BusinessSerializer(serializers.ModelSerializer):
 
 class EventSerializer(serializers.ModelSerializer):
     label = LabelSerializer(many=True, required=False)
+    user = serializers.JSONField(source='created_by', read_only=True)
 
     def create(self, validated_data):
         # Extract the nested data for instructor feedback

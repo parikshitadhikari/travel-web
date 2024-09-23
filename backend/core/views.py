@@ -193,6 +193,7 @@ class EventViewSet(viewsets.ModelViewSet):
         labels = data["label"]
         # print(interests)
         # event_serializer.
+        data["created_by"] = User.objects.get(username=data["username"]).pk
 
         data["label"] = []
         for label in labels:
@@ -205,7 +206,7 @@ class EventViewSet(viewsets.ModelViewSet):
         event_serializer = self.serializer_class(data=data)
         event_serializer.is_valid()
         event = event_serializer.save()
-        print(event)
+        # print(event)
 
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs

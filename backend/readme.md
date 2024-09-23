@@ -81,7 +81,8 @@ Handles event-related operations.
     ```json
     {
       "name": "Event Name",
-      "label": ["label1", "label2"]
+      "label": ["label1", "label2"],
+      "username":"Username of creator"
     }
     ```
 
