@@ -61,6 +61,10 @@ class PackageLike(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE)
     liked_by = models.OneToOneField(User, on_delete=models.CASCADE)
 
+class PackageComment(models.Model):
+    package = models.ForeignKey(Package, on_delete=models.CASCADE)
+    commented_by = models.OneToOneField(User, on_delete=models.CASCADE)
+    comment = models.TextField()
 
 class Event(models.Model):
     name = models.CharField(max_length=255)
@@ -75,3 +79,8 @@ class Event(models.Model):
 class EventLike(models.Model):
     event = models.ForeignKey(Event,on_delete=models.CASCADE)
     liked_by = models.OneToOneField(User,on_delete=models.CASCADE)
+
+class EventComment(models.Model):
+    event = models.ForeignKey(Event,on_delete=models.CASCADE)
+    commented_by = models.OneToOneField(User,on_delete=models.CASCADE)
+    comment = models.TextField()

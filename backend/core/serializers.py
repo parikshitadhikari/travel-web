@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Business, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
+from .models import Business, EventComment, EventLike, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -92,11 +92,26 @@ class BusinessSerializer(serializers.ModelSerializer):
         model = Business
         fields = ["id", "username", "email", "packages"]
 
+class EventCommentSerializer(serializers.ModelSerializer):
+    commented_by = serializers.CharField(source='commented_by.username')
+
+    class Meta:
+        model = EventComment
+        fields = ['id', 'comment', 'commented_by']
+
+# Serializer for EventLike
+class EventLikeSerializer(serializers.ModelSerializer):
+    liked_by = serializers.CharField(source='liked_by.username')
+
+    class Meta:
+        model = EventLike
+        fields = ['id', 'liked_by']
 
 class EventSerializer(serializers.ModelSerializer):
     label = LabelSerializer(many=True, required=False)
     user = serializers.JSONField(source='created_by', read_only=True)
-
+    postcomment_set = EventCommentSerializer(source='comments', many=True, read_only=True)
+    postlike_set = EventLikeSerializer(source='likes', many=True, read_only=True)
     def create(self, validated_data):
         # Extract the nested data for instructor feedback
         print(validated_data)

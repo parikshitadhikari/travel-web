@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from core.models import (
     Business,
     Event,
+    EventComment,
     Label,
     Package,
     User,
@@ -180,7 +181,16 @@ class EventViewSet(viewsets.ModelViewSet):
             .annotate(matched_labels=Count("label"))
             .order_by("-matched_labels")
         )
-
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def comment(self, request, *args, **kwargs):
+        data =request.data
+        user = User.objects.get(username=data['username'])
+        comment = data['comment']
+        event = Event.objects.get(id= data['id'])
+        event_comment = EventComment.objects.create(event = event.pk,comment= comment,commented_by=user.pk)
+        return Response(status=status.HTTP_200_OK)
     # @action(methods=["GET"],detail=False)
     # def trending(self,request):
     #     traveller =self.get_traveller(request.data['username'])
@@ -231,7 +241,16 @@ class PostViewSet(viewsets.ModelViewSet):
             .annotate(matched_labels=Count("label"))
             .order_by("-matched_labels")
         )
-
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def comment(self, request, *args, **kwargs):
+        data =request.data
+        user = User.objects.get(username=data['username'])
+        comment = data['comment']
+        post = Post.objects.get(id= data['id'])
+        post_comment = PostComment.objects.create(post = post.pk,comment= comment,commented_by=user.pk)
+        return Response(status=status.HTTP_200_OK)
     # @action(methods=["GET"],detail=False)
     # def trending(self,request):
     #     traveller =self.get_traveller(request.data['username'])
