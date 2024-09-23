@@ -12,7 +12,7 @@ type Card = {
   image: string;
   ctaLink: string;
   ctaText: string;
-  content: () => JSX.Element | string;
+  content: string | JSX.Element; // Allow content to be string or JSX
 };
 
 export default function ExpandableCardDemo() {
@@ -34,7 +34,10 @@ export default function ExpandableCardDemo() {
           image: item.img, // Map 'img' to 'image'
           ctaLink: `https://example.com/event/${item.created_by}`, // Example link
           ctaText: "Learn More", // Hardcoded CTA text
-          content: () => item.description, // Map 'description' for the content
+          content:
+            typeof item.description === "object" // Handle object descriptions
+              ? JSON.stringify(item.description)
+              : item.description || "No description available", // Fallback if description is empty or object
         }));
 
         setCards(transformedCards); // Set the transformed cards
@@ -142,7 +145,9 @@ export default function ExpandableCardDemo() {
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400"
                   >
-                    {active.content()}
+                    {typeof active.content === "string"
+                      ? active.content
+                      : JSON.stringify(active.content)}
                   </motion.div>
                 </div>
               </div>
@@ -217,5 +222,5 @@ export const CloseIcon = () => (
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M18 6l-12 12" />
     <path d="M6 6l12 12" />
-  </motion.svg>
+  </motion.svg>   
 );
