@@ -78,10 +78,19 @@ Handles event-related operations.
   ```json
   {
     "name":
-    "label":
+    "label": [{
+      "name":"label1"
+    },
+    {
+      "name":"label2"
+    }
+    ]
     "img":
     "created_at":
-    "user":
+    "user":{
+      "username":username of user
+      "id":userid
+    }
     "description":
   }
   ```
