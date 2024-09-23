@@ -221,9 +221,8 @@ Create destination or get a list of destination
     "label2"
   ],
   "price": 100,
-  "description": "flasjdfdlas;jflsadjflasdfjl;sdfjsdl;fjsld;fjsld;fj",
+  "description": "Package Description",
   "username": "rohan",
-  
 }
 - **GET** `/auth/destination`
 - Get list of destination

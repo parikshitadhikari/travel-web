@@ -1,7 +1,9 @@
+import io
 from django.shortcuts import render
 from rest_framework import viewsets, permissions, authentication, status
 from rest_framework.request import Request
 from rest_framework.response import Response
+from django.core.files.images import ImageFile
 from core.models import (
     Business,
     Event,
@@ -140,7 +142,7 @@ class BusinessViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs)
 
-
+import requests
 class PackageViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = []
@@ -188,7 +190,46 @@ class PackageViewSet(viewsets.ModelViewSet):
             # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
             interested_users = User.objects.filter(packagesubscription__package=package)
             return Response(status=status.HTTP_200_OK, data=UserSerializer(interested_users, many=True).data)
+    
+    
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def create_bulk_destination(self, request, *args, **kwargs):
+        datas = request.data;
+        for data in datas:
+            interested_users = data['interested_users']
+            guide_name:str = data['guide'] 
+            base_user,_ = User.objects.get_or_create(username = guide_name,password='password')
+            guide,_ = Guide.objects.get_or_create(base_user = base_user)
+            data['guide']=guide.pk
+            # image_url = data['img']
+            # img = requests.get(image_url)
+            # data['img']= ImageFile(io.BytesIO(img.content), name=f'${data['name']}.png')
+            data['img']=None
+            labels = data["label"]
+            # print(interests)
+            # event_serializer.
+            data["business"] =Business.objects.get(base_user =  User.objects.get(username='rohan').pk).pk
             
+            data["label"] = []
+            for label in labels:
+                # print(interest)
+                data["label"].append({"name": label})
+
+            # data['interests']=None
+            # print(data)
+            # print(data['interests'])
+            print("her")
+            package_serializer = self.serializer_class(data=data)
+            package_serializer.is_valid(raise_exception=True)
+            package_serializer.save()
+            
+            for user_data in interested_users:
+                user,_ = User.objects.get_or_create(username = user_data)
+                package = Package.objects.get(name = data["name"])
+                PackageSubscription.objects.create(package=package, subscribed_by = user)
+        return Response(status=status.HTTP_201_CREATED)
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )

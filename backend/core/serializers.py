@@ -153,13 +153,17 @@ class PackageSerializer(serializers.ModelSerializer):
     # user = serializers.JSONField(source='created_by', read_only=True)
     # postcomment_set = PackageCommentSerializer(source='comments', many=True, read_only=True)
     # subscribedby_set = PackageSubscriptionSerializer(source='subscription', many=True, read_only=True)
-    business_data = BusinessSerializer(source="business",read_only=True)
-    def to_representation(self, instance):
-        representation = super().to_representation(instance)
-        # Rename 'base_user' to 'user' in the serialized output
-        business_data= representation.pop('business_data', None)
-        representation['business'] =business_data
-        return representation
+    # business_data = BusinessSerializer(source="business",read_only=True)
+    interested_users = serializers.SerializerMethodField()
+    def get_interested_users(self, obj):
+        interested_users = PackageSubscription.objects.filter(package=obj).values_list('subscribed_by__username', flat=True)
+        return list(interested_users)
+    # def to_representation(self, instance):
+    #     representation = super().to_representation(instance)
+    #     # Rename 'base_user' to 'user' in the serialized output
+    #     business_data= representation.pop('business_data', None)
+    #     representation['business'] =business_data
+    #     return representation
     def create(self, validated_data):
         # Extract the nested data for instructor feedback
         print(validated_data)

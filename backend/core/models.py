@@ -41,15 +41,19 @@ class PostLike(models.Model):
 class Travellers(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE)
     interests = models.ManyToManyField(Label,blank=True)
+    def __str__(self):
+        return self.base_user.username
 
 class Business(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Business")
-
+    def __str__(self):
+        return self.base_user.username
 class Guide(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Guide")
     label = models.ManyToManyField(Label)
     image = models.ImageField(upload_to='core/giude/profile',null=True,blank=True)
-
+    def __str__(self):
+        return self.base_user.username
 
 class Package(models.Model):
     name = models.CharField(max_length=255)
@@ -59,10 +63,13 @@ class Package(models.Model):
     price = models.FloatField(default=0.0)
     description= models.TextField(blank=True, default="")
     guide = models.ForeignKey(Guide, on_delete=models.CASCADE, null=True)
+    def __str__(self):
+        return self.name
+
     
 class PackageSubscription(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE)
-    subscribed_by = models.OneToOneField(User, on_delete=models.CASCADE)
+    subscribed_by = models.ForeignKey(User, on_delete=models.CASCADE)
 
 class PackageComment(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE)

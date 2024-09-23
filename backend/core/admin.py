@@ -58,7 +58,9 @@ class PackageAdmin(admin.ModelAdmin):
     search_fields = ("name", )
     filter_horizontal = ("label",)
 
-
+@admin.register(PackageSubscription)
+class PackageSubscriptionAdmin(admin.ModelAdmin):
+    list_display=("package","subscribed_by")
 # # Register PackageLike
 # @admin.register(PackageSubscription)
 # class PackageLikeAdmin(admin.ModelAdmin):
