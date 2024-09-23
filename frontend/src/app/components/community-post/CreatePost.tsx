@@ -63,7 +63,7 @@ const CreatePost = ({ onPostSubmit }: Props) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImage(e.target.files[0]);
-    }
+    } 
   };
 
   return (
