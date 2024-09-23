@@ -68,7 +68,7 @@ const GrowAI = () => {
   };
 
   return (
-    <div className="flex flex-col justify-end w-full bg-gray-200 shadow-md">
+    <div className="flex flex-col justify-end w-full h-screen bg-gray-200 shadow-md">
       <Chat messages={messages} />
       <SendMessage
         handleSendMessage={handleSendMessage}
