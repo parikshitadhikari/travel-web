@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Sidebar,
   SidebarBody,
@@ -22,6 +22,19 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 export default function SidebarDemo() {
+  const [userData, setUserData] = useState<any>({
+    username: "",
+    email: "",
+    password: "",
+    interests: [],
+    mood: "",
+  });
+  useEffect(() => {
+    const storedData = localStorage.getItem("userData");
+    if (storedData) {
+      setUserData(JSON.parse(storedData));
+    }
+  }, []);
   const links = [
     {
       label: "Community",
@@ -96,8 +109,8 @@ export default function SidebarDemo() {
             <div>
               <SidebarLink
                 link={{
-                  label: "Rohan Acharya",
-                  href: "#", // Updated with a route
+                  label: userData?.username || "Traveler",
+                  href: "#", 
                   icon: (
                     <Image
                       src="https://assets.aceternity.com/manu.png"
