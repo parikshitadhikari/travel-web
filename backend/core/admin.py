@@ -10,6 +10,7 @@ from .models import (
     Event,
     EventInterested,
     Post,
+    PostComment
 )
 
 
@@ -85,3 +86,7 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ("id", "description")
     search_fields = ("description",)
     filter_horizontal = ("label",)
+
+@admin.register(PostComment)
+class PostCommentAdmin(admin.ModelAdmin):
+    list_display=("id","comment","commented_by__username")

@@ -10,8 +10,12 @@ export interface Post {
   created_at: string;
   img: string; // Assuming this is the image path or URL
   postcomment_set: Comment[];
+  postlike_set: Like[];
 }
-
+export interface Like{
+  id: number;
+  
+}
 export interface Comment {
   id: number;
   post: number;
@@ -66,7 +70,7 @@ const Post = ({ post, inModal = false }: Props) => {
             {/* Replace with actual like count if available */}
           </button>
           <button className="flex items-center space-x-1 hover:text-blue-600">
-            <span>{generateRandomNumber()}</span>{" "}
+            <span>{post.postcomment_set.length}</span>{" "}
             {/* Replace with actual comment count if available */}
             <FaRegCommentAlt />
           </button>
@@ -78,6 +82,7 @@ const Post = ({ post, inModal = false }: Props) => {
               className="bg-transparent flex-grow text-sm outline-none"
               type="text"
               placeholder="Write a comment..."
+
             />
             <IoMdSend className="text-gray-500 text-2xl ml-2 hover:text-blue-600" />
           </div>
