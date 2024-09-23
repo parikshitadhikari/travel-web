@@ -5,7 +5,7 @@ This documentation outlines the views and their endpoints available in the appli
 ## Running
 - Navigate to backend folder
 - Create venv: ``` python -m venv env ```
-- Activate venv: Linux: source env/bin/activate Windows:``` ./nev/bin/Scripts/Activate.ps1```
+- Activate venv: Linux: ```source env/bin/activate``` Windows:``` ./env/Scripts/Activate.ps1```
 - Install packages: ```pip install -r requirements.txt```
 - Perform migrations: ```python manage.py makemigrations```
 - Apply migrations: ```python manage.py migrate```
