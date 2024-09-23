@@ -82,7 +82,14 @@ const mockPlaces = [
       "Rara Lake, the largest lake in Nepal, is located in the remote far-western region of the country. This pristine lake is set amidst the Rara National Park, surrounded by forests of pine, spruce, and juniper. The lake offers stunning views of the surrounding mountains and is a perfect destination for those looking for solitude and untouched natural beauty. It requires a few days of trekking to reach, making it a more adventurous destination.",
     budget: "$100–200/day",
     guide_name: "Dorje Lama",
-    people_liking_this_place: ["Sabin", "Manju", "Tara"],
+    people_liking_this_place: [
+      "Sabin",
+      "Manju",
+      "Tara",
+      "Ujjwal",
+      "Rohan",
+      "Sudeep",
+    ],
     image_of_the_place:
       "https://upload.wikimedia.org/wikipedia/commons/1/1a/Rara_Lake.jpg",
     tag: ["Nature Lover", "Adventure Seeker"],
@@ -93,7 +100,7 @@ const mockPlaces = [
       "The Annapurna Circuit is one of the most famous trekking routes in the world, known for its diversity in landscape and culture. The trek takes you through subtropical forests, alpine meadows, and arid desert-like terrain, offering stunning views of the Annapurna and Dhaulagiri mountain ranges. The trek also passes through traditional villages inhabited by Gurung, Thakali, and Manangi people, providing an immersive cultural experience.",
     budget: "$800–1200",
     guide_name: "Dawa Tamang",
-    people_liking_this_place: ["Shyam", "Rina", "Sunil"],
+    people_liking_this_place: ["Shyam", "Rina", "Sunil", "Rohan", "Sudeep"],
     image_of_the_place:
       "https://upload.wikimedia.org/wikipedia/commons/2/2f/Annapurna_circuit_thorung_la.jpg",
     tag: ["Adventure Seeker", "Nature Lover", "Cultural Enthusiast"],
@@ -104,7 +111,7 @@ const mockPlaces = [
       "Nagarkot is a popular hill station located just 32 km from Kathmandu. It is known for offering panoramic views of the Himalayan range, including Mount Everest on clear days. Nagarkot is especially famous for its sunrise and sunset views. The village is surrounded by lush forests and is a peaceful retreat from the hustle and bustle of the city.",
     budget: "$50–80/day",
     guide_name: "Milan Gurung",
-    people_liking_this_place: ["Pratik", "Jyoti", "Rashmi"],
+    people_liking_this_place: ["Pratik", "Jyoti", "Rashmi", "Karan"],
     image_of_the_place:
       "https://upload.wikimedia.org/wikipedia/commons/d/da/Nagarkot_hills%2C_Nepal.JPG",
     tag: ["Nature Lover", "Relaxation and Wellness"],
