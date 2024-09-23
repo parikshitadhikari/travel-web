@@ -93,7 +93,8 @@ Handles event-related operations.
     }
     "description":
   }
-  ```
+  ```  
+
 - **GET** `auth/events/recommendations/`
   - Returns event recommendations for the authenticated traveller.
   - **Request Body:**
