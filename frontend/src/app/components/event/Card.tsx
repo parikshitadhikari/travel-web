@@ -24,6 +24,8 @@ export default function ExpandableCardDemo() {
   const id = useId();
   const truncate = (input: string) =>
     input?.length > 10 ? `${input.substring(0, 10)}` : input;
+  const truncate = (input: string) =>
+    input?.length > 10 ? `${input.substring(0, 10)}` : input;
 
   // Fetch data from API and transform it to match the Card structure
   useEffect(() => {
