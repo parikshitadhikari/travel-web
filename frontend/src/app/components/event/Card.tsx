@@ -22,7 +22,7 @@ export default function ExpandableCardDemo() {
   const ref = useRef<HTMLDivElement>(null);
   const id = useId();
 
-  const staticUsername = "Rohan"; // Static username for the API request
+  const staticUsername = "Rohan";
 
   // Fetch data from API and transform it to match the Card structure
   useEffect(() => {
