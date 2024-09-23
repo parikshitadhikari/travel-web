@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import ItenariesCard from "./ItenariesCard";
 import "@mantine/core/styles.css";
+import { Carousel } from "@mantine/carousel";
 
 import mockPlaces from "../data/mockPlaces";
 interface Place {
@@ -45,15 +46,25 @@ const Recommended = () => {
   return (
     <div className="px-20">
       <h1 className="font-bold text-xl mb-3">RECOMMENDED FOR YOU</h1>
-      <div className="grid grid-cols-3 gap-x-16">
+      <Carousel
+        withIndicators
+        slideSize="33.333333%"
+        slideGap="md"
+        loop
+        align="start"
+        slidesToScroll={3}
+        style={{ width: "100%" }}
+      >
         {filteredPlaces.length > 0 ? (
           filteredPlaces.map((place) => (
-            <ItenariesCard key={place.name} place={place} />
+            <Carousel.Slide>
+              <ItenariesCard key={place.name} place={place} />
+            </Carousel.Slide>
           ))
         ) : (
           <p>No places match your interests.</p>
         )}
-      </div>
+      </Carousel>
     </div>
   );
 };

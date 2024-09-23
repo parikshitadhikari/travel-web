@@ -2,6 +2,7 @@
 import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
+import "@mantine/carousel/styles.css";
 interface Place {
   name: string;
   description: string;
@@ -20,7 +21,7 @@ function ItenariesCard({ place }: ItenariesCardProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
-        <Image src={place.image_of_the_place} height={160} alt={place.name} />
+        <img src={place.image_of_the_place} className="h-64 w-full" alt={place.name} />
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">

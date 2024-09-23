@@ -18,7 +18,7 @@ const mockPlaces = [
     guide_name: "Sita Khadka",
     people_liking_this_place: ["Anil", "Roshni", "Suman"],
     image_of_the_place:
-      "https://upload.wikimedia.org/wikipedia/commons/2/2a/Phewa_Lake%2C_Pokhara%2C_Nepal.jpg",
+      "https://xcmag.com/wp-content/uploads/2014/02/pokhara-602-402.gif",
     tag: ["Adventure Seeker", "Nature Lover", "Relaxation and Wellness"],
   },
   {
@@ -29,7 +29,7 @@ const mockPlaces = [
     guide_name: "Bishnu Thapa",
     people_liking_this_place: ["Arun", "Maya", "Deepak"],
     image_of_the_place:
-      "https://upload.wikimedia.org/wikipedia/commons/c/c7/Rhinoceros_in_Chitwan_National_Park.jpg",
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRAkBDnxxMQVZ5-vetFbga6dCZwojEubQFvzA&s",
     tag: ["Adventure Seeker", "Nature Lover", "Thrill Seeker"],
   },
   {
