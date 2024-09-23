@@ -27,9 +27,9 @@ const SendMessage: React.FC<Props> = ({
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         placeholder="Type your message..."
-        className="flex-grow p-2 border"
+        className="flex-grow ml-20 mb-5 p-2 border rounded-lg"
       />
-      <button type="submit" className="p-2">
+      <button type="submit" className="p-2 mb-5">
         <IoSend />
       </button>
     </form>
