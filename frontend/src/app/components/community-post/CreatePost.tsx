@@ -104,7 +104,7 @@ const CreatePost = ({ onPostSubmit }: Props) => {
           )}
         </div>
         <button
-          className={`bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 ${
+          className={`bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 ${
             !postContent ? "opacity-50 cursor-not-allowed" : ""
           }`}
           onClick={handleSubmit}
