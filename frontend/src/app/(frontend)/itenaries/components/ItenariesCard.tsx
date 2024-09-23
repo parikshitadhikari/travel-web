@@ -1,7 +1,7 @@
 "use client";
 import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
 import "@mantine/core/styles.css";
-
+import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 interface Place {
   name: string;
   description: string;
@@ -24,17 +24,45 @@ function ItenariesCard({ place }: ItenariesCardProps) {
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
-        <Text fw={500}>{place.name}</Text>
-        <Badge color="pink">{place.budget}</Badge>
+        <Text
+          fw={500}
+          style={{
+            maxWidth: "60%",
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+          }}
+        >
+          {place.name}
+        </Text>
+        <div className="max-w-[40%] flex justify-center items-center gap-x-4">
+          <IconHeart
+            className="max-w-[50%] border-2 p-0.5 rounded-full"
+            size={30}
+          />
+          <Badge color="pink" className="max-w-[50%]">
+            {place.budget}
+          </Badge>
+        </div>
       </Group>
 
-      <Text size="sm" c="dimmed">
+      <Text
+        size="sm"
+        c="dimmed"
+        style={{
+          display: "-webkit-box",
+          WebkitLineClamp: 3,
+          WebkitBoxOrient: "vertical",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+        }}
+      >
         {place.description}
       </Text>
 
-      <Button color="blue" fullWidth mt="md" radius="md">
+      <button className="bg-green-600 hover:bg-green-700 rounded-sm w-full text-center mt-6 py-1 font-bold text-white">
         View Details
-      </Button>
+      </button>
     </Card>
   );
 }
