@@ -1,6 +1,10 @@
 import NavBar from "@/app/components/NavBar";
 import { BackgroundBeams } from "@/components/ui/background-beams";
 import React from "react";
+import ItenariesCard from "./components/ItenariesCard";
+import Recommended from "./components/Recommended";
+import Trending from "./components/Trending";
+import LowBudget from "./components/LowBudget";
 
 const Itenaries = () => {
   return (
@@ -11,8 +15,10 @@ const Itenaries = () => {
 
       <NavBar />
 
-      <div className="flex justify-center mt-10 space-x-4 z-10 relative">
-        Itenaries
+      <div className="flex flex-col items-center justify-center mt-10 space-y-4 z-10 relative">
+        <Recommended />
+        <Trending />
+        <LowBudget />
       </div>
     </div>
   );
