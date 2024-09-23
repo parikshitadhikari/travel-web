@@ -4,12 +4,12 @@ This documentation outlines the views and their endpoints available in the appli
 
 ## Running
 - Navigate to backend folder
-- create venv: python -m venv env
-- activate venv: Linux: source env/bin/activate Winsows: ./nev/bin/Scripts/Activate.ps1
-- install packages: pip install -r requirements.txt
-- perform migrations: python manage.py makemigrations
-- apply migrations: python manage.py migrate
-- run the server: python manage.py runserver
+- Create venv: ``` python -m venv env ```
+- Activate venv: Linux: source env/bin/activate Windows:``` ./nev/bin/Scripts/Activate.ps1```
+- Install packages: ```pip install -r requirements.txt```
+- Perform migrations: ```python manage.py makemigrations```
+- Apply migrations: ```python manage.py migrate```
+- Run the server: ```python manage.py runserver```
 
 ## TravellersViewSet
 Manages the creation and listing of travellers.
