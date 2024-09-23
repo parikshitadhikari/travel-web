@@ -8,7 +8,7 @@ router.register(r'events',EventViewSet)
 router.register(r'posts',PostViewSet)
 router.register(r'chat',ChatbotViewSet,basename="chat")
 router.register(r'destination',PackageViewSet)
-router.register(r'traverse', TraverseViewSet)
+router.register(r'traverse', TraverseViewSet,basename="traverse")
 urlpatterns = [
     path('', include(router.urls)),
 ]
