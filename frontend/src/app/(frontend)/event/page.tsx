@@ -1,9 +1,10 @@
-import ExpandableCardDemo from '@/components/blocks/expandable-card-demo-grid'
+import ExpandableCardDemo from '@/app/components/event/Card'
 import React from 'react'
 
 const Event = () => {
   return (
     <div>
+      <SidebarDemo/>
       <ExpandableCardDemo/>
     </div>
   )
