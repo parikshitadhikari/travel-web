@@ -25,28 +25,28 @@ export default function SidebarDemo() {
   const links = [
     {
       label: "Community",
-      href: "#",
+      href: "/community", // Updated with a route
       icon: (
         <IconBrandTabler className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Destination",
-      href: "#",
+      href: "/destination", // Updated with a route
       icon: (
         <IconMountain className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Events",
-      href: "#",
+      href: "/events", // Updated with a route
       icon: (
         <IconCalendarEvent className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Travel AI",
-      href: "#",
+      href: "/travel-ai", // Updated with a route
       icon: (
         <IconAi className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -54,27 +54,29 @@ export default function SidebarDemo() {
 
     {
       label: "Financial Tracker",
-      href: "#",
+      href: "/financial-tracker", // Updated with a route
       icon: (
         <IconChartArcs className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Profile",
-      href: "#",
+      href: "/profile", // Updated with a route
       icon: (
         <IconUserBolt className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Logout",
-      href: "#",
+      href: "/logout", // Updated with a route
       icon: (
         <IconArrowLeft className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
   ];
+
   const [open, setOpen] = useState(false);
+
   return (
     <>
       <div
@@ -94,8 +96,8 @@ export default function SidebarDemo() {
             <div>
               <SidebarLink
                 link={{
-                  label: "Manu Arora",
-                  href: "#",
+                  label: "Rohan Acharya",
+                  href: "#", // Updated with a route
                   icon: (
                     <Image
                       src="https://assets.aceternity.com/manu.png"

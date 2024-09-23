@@ -3,7 +3,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
+import {
+  HoveredLink,
+  Menu,
+  MenuItem,
+  ProductItem,
+} from "@/components/ui/navbar-menu";
 
 const NavBar = () => {
   return (
@@ -66,16 +71,14 @@ const NavBar = () => {
           </ul> */}
         </div>
         <div className="md:order-2">
-          <Link href="/auth">
-            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
-              <button className="w-40 h-10 rounded-xl bg-blue-500 border dark:border-white border-transparent text-white text-sm">
-                Login
-              </button>
-              {/* <button className="w-40 h-10 rounded-xl bg-white text-black border border-black  text-sm">
-                Signup
-              </button> */}
-            </div>
-          </Link>
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
+            <Link
+              href="/auth"
+              className="w-40 h-10 flex items-center justify-center rounded-xl bg-blue-500 border dark:border-white border-transparent text-white text-sm z-[9999]"
+            >
+              Login
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
@@ -83,9 +86,6 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
-
 
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
@@ -107,4 +107,3 @@ function Navbar({ className }: { className?: string }) {
     </div>
   );
 }
-
