@@ -57,8 +57,8 @@ const Recommended = () => {
       >
         {filteredPlaces.length > 0 ? (
           filteredPlaces.map((place) => (
-            <Carousel.Slide>
-              <ItenariesCard key={place.name} place={place} />
+            <Carousel.Slide key={place.name}>
+              <ItenariesCard place={place} />
             </Carousel.Slide>
           ))
         ) : (

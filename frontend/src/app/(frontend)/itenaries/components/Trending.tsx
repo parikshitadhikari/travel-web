@@ -39,7 +39,7 @@ const Trending = () => {
 
   return (
     <div className="px-20">
-      <h1 className="font-bold text-xl mb-3 mt-10">TRENDING PLACES</h1>
+      <h1 className="font-bold text-xl mb-3 mt-10">TOP 3 TRENDING PLACES</h1>
       <Carousel
         withIndicators
         slideSize="33.333333%"
