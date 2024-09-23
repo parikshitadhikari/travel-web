@@ -54,7 +54,7 @@ const Post = ({ post, inModal = false }: Props) => {
         <p className="mt-3 text-gray-800">{post.description}</p>
 
         <img
-          className={`mt-3 w-full rounded-lg ${imageClassName}`}
+          className={`mt-3 w-80 rounded-lg ${imageClassName}`}
           src={post.img} // Adjust this if needed
           alt="Post"
         />
