@@ -8,7 +8,7 @@ from .models import (
     Package,
     PackageLike,
     Event,
-    EventLike,
+    EventInterested,
     Post,
 )
 
@@ -74,10 +74,10 @@ class EventAdmin(admin.ModelAdmin):
 
 
 # Register EventLike
-@admin.register(EventLike)
+@admin.register(EventInterested)
 class EventLikeAdmin(admin.ModelAdmin):
-    list_display = ("id", "event", "liked_by")
-    search_fields = ("event__name", "liked_by__username")
+    list_display = ("id", "event", "interested_user")
+    search_fields = ("event__name", "interested_user__username")
 
 
 @admin.register(Post)
