@@ -120,10 +120,12 @@ Handles event-related operations.
     ```json
     {
       "id": id of the event in number,
-      "usernmae":"Username of the interested user"
+      "username":"Username of the interested user"
     }
     ```
-- **POST** `auth/events/like/`
+- **GET** `auth/events/interested/`
+- -Returns a list of interested users
+<!-- - **POST** `auth/events/like/`
 -Creates a like on a event.
   - **Request Body:**
     ```json
@@ -135,7 +137,7 @@ Handles event-related operations.
       
 
     }
-    ```
+    ``` -->
 ## PostViewSet
 Handles user posts and provides recommendations.
 
@@ -207,4 +209,20 @@ Chat with chatbot
       "prompt" :"Your Prompt"
     }
     ```
+
+## Destination 
+Create destination or get a list of destination
+- **POST**  `/auth/destination/create_destination`
+- Data Format:
+- {
+  "name": "Package Name",
+  "label": [
+    "label1",
+    "label2"
+  ],
+  "price": 100,
+  "description": "flasjdfdlas;jflsadjflasdfjl;sdfjsdl;fjsld;fjsld;fj",
+  "username": "rohan",
+  
+}
 ---

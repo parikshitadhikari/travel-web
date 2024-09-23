@@ -40,10 +40,10 @@ class Travellers(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE)
     interests = models.ManyToManyField(Label,blank=True)
 
-class Business(User):
+class Business(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Business")
-    
-class Guide(User):
+
+class Guide(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Guide")
     label = models.ManyToManyField(Label)
 
@@ -55,11 +55,11 @@ class Package(models.Model):
     img = models.ImageField(upload_to='core/post/images', null=True, blank=True)
     price = models.FloatField(default=0.0)
     description= models.TextField(blank=True, default="")
-    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, null=True, default=None)
+    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, null=True)
     
-class PackageLike(models.Model):
+class PackageSubscription(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE)
-    liked_by = models.OneToOneField(User, on_delete=models.CASCADE)
+    subscribed_by = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class PackageComment(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE)

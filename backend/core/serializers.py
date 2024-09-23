@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Business,  EventInterested, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
+from .models import Business,  EventInterested, PackageSubscription, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -87,10 +87,10 @@ class PackageSerializer(serializers.ModelSerializer):
 class BusinessSerializer(serializers.ModelSerializer):
     # packages = PackageSerializer(many=True, read_only=True)  # Include related packages
     # packages = serializers.SerializerMethodField()
-
+    base_user_data = UserSerializer(read_only=True,source= "base_user")
     class Meta:
         model = Business
-        fields = ["id", "username", "email", "packages"]
+        fields = "__all__"
 
 # class EventCommentSerializer(serializers.ModelSerializer):
 #     commented_by = serializers.CharField(source='commented_by.username')
@@ -136,6 +136,43 @@ class EventSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Event
+        fields = "__all__"
+class PackageSubscriptionSerializer(serializers.ModelSerializer):
+    subscription_users = UserSerializer(source='subscription_user',read_only=True)
+
+    class Meta:
+        model = PackageSubscription
+        fields = '__all__'
+
+class PackageSerializer(serializers.ModelSerializer):
+    label = LabelSerializer(many=True, required=False)
+    # user = serializers.JSONField(source='created_by', read_only=True)
+    # postcomment_set = PackageCommentSerializer(source='comments', many=True, read_only=True)
+    # subscribedby_set = PackageSubscriptionSerializer(source='subscription', many=True, read_only=True)
+    business_data = BusinessSerializer(source="business",read_only=True)
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        # Rename 'base_user' to 'user' in the serialized output
+        business_data= representation.pop('business_data', None)
+        representation['business'] =business_data
+        return representation
+    def create(self, validated_data):
+        # Extract the nested data for instructor feedback
+        print(validated_data)
+        labels = validated_data.pop("label", None)
+
+        # validated_data.push('base_user',user)
+        package = Package.objects.create(**validated_data)
+
+        if labels is not None:
+            for label in labels:
+                label_instance, created = Label.objects.get_or_create(**label)
+                package.label.add(label_instance.pk)
+        package.save()
+        return package
+
+    class Meta:
+        model = Package
         fields = "__all__"
 
 class PostCommentSerializer(serializers.ModelSerializer):

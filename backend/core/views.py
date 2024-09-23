@@ -10,7 +10,7 @@ from core.models import (
     Package,
     User,
     Travellers,
-    PackageLike,
+    PackageSubscription,
     Post,
     PostComment,
     PostLike,
@@ -24,6 +24,7 @@ from core.serializers import (
     UserSerializer,
     LabelSerializer,
     PostSerializer,
+    PackageSubscriptionSerializer
 )
 from rest_framework.decorators import action
 from django.db.models import Count
@@ -139,8 +140,8 @@ class BusinessViewSet(viewsets.ModelViewSet):
 
 
 class PackageViewSet(viewsets.ModelViewSet):
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = []
+    permission_classes = []
     queryset = Package.objects.all()
     serializer_class = PackageSerializer
 
@@ -161,6 +162,56 @@ class PackageViewSet(viewsets.ModelViewSet):
     @action(methods=["GET"], detail=False)
     def trending(self, request):
         traveller = self.get_traveller(request.data["username"])
+
+    @action(methods=["POST","GET"], permission_classes=[], authentication_classes=[], detail=False)
+    def interested(self, request, *args, **kwargs):
+        if(request.method=="POST"):
+            data =request.data
+            user = User.objects.get(username=data['username'])
+            # comment = data['comment']
+            event = Package.objects.get(id= data['id'])
+            package_subsctipton_data={
+                
+            }
+            package_subsctipton_data['event']= event.pk
+            package_subsctipton_data['subscribed_by']= user.pk
+            package_subscription_serializer = PackageSubscriptionSerializer(data= package_subsctipton_data)
+            package_subscription_serializer.is_valid(raise_exception=True)
+            package_subscription_serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            data = request.data
+            event_id = data['id']
+            event = Event.objects.get(id= event_id)
+            # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
+            interested_users = User.objects.filter(eventinterested__event=event)
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def create_destination(self, request, *args, **kwargs):
+
+        data = request.data
+        labels = data["label"]
+        # print(interests)
+        # event_serializer.
+        data["business"] =Business.objects.get(base_user =  User.objects.get(username=data["username"]).pk).pk
+        
+        data["label"] = []
+        for label in labels:
+            # print(interest)
+            data["label"].append({"name": label})
+
+        # data['interests']=None
+        # print(data)
+        # print(data['interests'])
+        package_serializer = self.serializer_class(data=data)
+        package_serializer.is_valid(raise_exception=True)
+        event = package_serializer.save()
+        # print(event)
+
+        return Response(status=status.HTTP_200_OK)
+        # return super().create(request, *args, **kwargs
+
 
 
 class EventViewSet(viewsets.ModelViewSet):
@@ -207,7 +258,6 @@ class EventViewSet(viewsets.ModelViewSet):
             event = Event.objects.get(id= event_id)
             # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
             interested_users = User.objects.filter(eventinterested__event=event)
-
 # Serialize the user data
             return Response(status=status.HTTP_200_OK, data=UserSerializer(interested_users, many=True).data)
             # return Response(status=status.HTTP_200_OK,data=UserSerializer(interested_users,many=True).data)
