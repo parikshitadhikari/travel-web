@@ -4,11 +4,9 @@ import React from "react";
 
 const CommunityPost = () => {
   return (
-    <div className="bg-green-50 h-screen">
-      <div className="float-left">
-        <SidebarDemo />
-      </div>
-      <div className="pt-12">
+    <div className="bg-blue-200 h-screen">
+      <SidebarDemo />
+      <div className="bg-blue-200 pt-12">
         <Posts className="w-full" />
       </div>
     </div>
