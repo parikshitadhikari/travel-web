@@ -34,7 +34,7 @@ export default function ExpandableCardDemo() {
           title: item.name,
           description: item.description,
           image: item.img,
-          isFavorite: false, // Initially, all events are not favorited
+          isFavorite: item.interested_users.includes(staticUsername), // Initially, all events are not favorited
           content: () => item.description,
         }));
         setCards(transformedCards);

@@ -24,6 +24,6 @@ dist-ssr
 *.sw?
 backend/readme.html
 backend/mydatabase
-
+backend/static
 backend/mydatabase.sqlite
 *.sqlite
