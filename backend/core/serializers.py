@@ -100,18 +100,18 @@ class BusinessSerializer(serializers.ModelSerializer):
 #         fields = ['id', 'comment', 'commented_by']
 
 # Serializer for EventLike
-class EventLikeSerializer(serializers.ModelSerializer):
-    interested_users = serializers.CharField(source='liked_by.username')
+class EventInterestedSerializer(serializers.ModelSerializer):
+    interested_users = UserSerializer(source='interested_user',read_only=True)
 
     class Meta:
         model = EventInterested
-        fields = ['id', 'liked_by']
+        fields = '__all__'
 
 class EventSerializer(serializers.ModelSerializer):
     label = LabelSerializer(many=True, required=False)
     # user = serializers.JSONField(source='created_by', read_only=True)
     # postcomment_set = EventCommentSerializer(source='comments', many=True, read_only=True)
-    eventlike_set = EventLikeSerializer(source='likes', many=True, read_only=True)
+    eventlike_set = EventInterestedSerializer(source='likes', many=True, read_only=True)
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         # Rename 'base_user' to 'user' in the serialized output

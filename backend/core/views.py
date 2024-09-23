@@ -17,6 +17,7 @@ from core.models import (
 )
 from core.serializers import (
     BusinessSerializer,
+    EventInterestedSerializer,
     EventSerializer,
     PackageSerializer,
     TravellersSerializer,
@@ -182,15 +183,34 @@ class EventViewSet(viewsets.ModelViewSet):
             .order_by("-matched_labels")
         )
     @action(
-        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+        methods=["POST","GET"], permission_classes=[], authentication_classes=[], detail=False
     )
     def interested(self, request, *args, **kwargs):
-        data =request.data
-        user = User.objects.get(username=data['username'])
-        # comment = data['comment']
-        event = Event.objects.get(id= data['id'])
-        event_comment = EventInterested.objects.create(event = event.pk,interested_user=user.pk)
-        return Response(status=status.HTTP_200_OK)
+        if(request.method=="POST"):
+            
+            data =request.data
+            user = User.objects.get(username=data['username'])
+            # comment = data['comment']
+            event = Event.objects.get(id= data['id'])
+            event_interested_data={
+                
+            }
+            event_interested_data['event']= event.pk
+            event_interested_data['interested_user']= user.pk
+            event_interested_seralizer = EventInterestedSerializer(data= event_interested_data)
+            event_interested_seralizer.is_valid(raise_exception=True)
+            event_interested_seralizer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            data = request.data
+            event_id = data['id']
+            event = Event.objects.get(id= event_id)
+            # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
+            interested_users = User.objects.filter(eventinterested__event=event)
+
+# Serialize the user data
+            return Response(status=status.HTTP_200_OK, data=UserSerializer(interested_users, many=True).data)
+            # return Response(status=status.HTTP_200_OK,data=UserSerializer(interested_users,many=True).data)
     # @action(methods=["GET"],detail=False)
     # def trending(self,request):
     #     traveller =self.get_traveller(request.data['username'])
