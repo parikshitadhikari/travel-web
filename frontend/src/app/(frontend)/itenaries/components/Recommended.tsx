@@ -47,7 +47,7 @@ const Recommended = () => {
     <div className="px-20">
       <h1 className="font-bold text-xl mb-3">RECOMMENDED FOR YOU</h1>
       <Carousel
-        withIndicators
+        // withIndicators
         slideSize="33.333333%"
         slideGap="md"
         loop

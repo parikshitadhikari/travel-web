@@ -37,9 +37,9 @@ const LowBudget = () => {
 
   return (
     <div className="px-20">
-      <h1 className="font-bold text-xl mb-3 mt-10">TOP 5 LOW BUDGET PLACES</h1>
+      <h1 className="font-bold text-xl mb-3 mt-20">TOP 5 LOW BUDGET PLACES</h1>
       <Carousel
-        withIndicators
+        // withIndicators
         slideSize="33.333333%"
         slideGap="md"
         loop
