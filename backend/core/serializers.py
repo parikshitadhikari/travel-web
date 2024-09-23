@@ -101,7 +101,7 @@ class BusinessSerializer(serializers.ModelSerializer):
 
 # Serializer for EventLike
 class EventInterestedSerializer(serializers.ModelSerializer):
-    interested_user = UserSerializer(source='interested_user',read_only=True)
+    interested_user = UserSerializer(read_only=True)
 
     class Meta:
         model = EventInterested
