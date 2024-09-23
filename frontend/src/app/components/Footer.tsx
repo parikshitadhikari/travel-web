@@ -45,9 +45,9 @@ const Footer = () => {
               />
             </div>
             {/* Submit button */}
-            <Button className="w-40 bg-green-600 text-white rounded-lg text-lg px-4 py-2 hover:bg-green-700">
+            <button className="w-40 h-10 rounded-xl bg-blue-500 text-slate-200 border border-black  text-sm">
               Send Message
-            </Button>
+            </button>
           </div>
         </div>
 

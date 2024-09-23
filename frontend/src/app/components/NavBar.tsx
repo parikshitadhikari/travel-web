@@ -67,10 +67,13 @@ const NavBar = () => {
         </div>
         <div className="md:order-2">
           <Link href="/auth">
-            <div className=" flex md:order-3 ">
-              <button className="w-40 z-50 bg-green-600 text-white hover:bg-green-900 rounded-lg text-lg px-2 py-2 text-center">
+            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
+              <button className="w-40 h-10 rounded-xl bg-blue-500 border dark:border-white border-transparent text-white text-sm">
                 Login
               </button>
+              {/* <button className="w-40 h-10 rounded-xl bg-white text-black border border-black  text-sm">
+                Signup
+              </button> */}
             </div>
           </Link>
         </div>
