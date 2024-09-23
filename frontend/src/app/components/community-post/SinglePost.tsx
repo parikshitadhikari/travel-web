@@ -30,7 +30,7 @@ const Post = ({ post, inModal = false }: Props) => {
 
   const imageClassName = inModal
     ? "mt-3 w-auto max-h-60 rounded-lg"
-    : "max-h-80 w-auto mx-auto";
+    : "max-h-80 w-80 mx-auto";
 
   return (
     <div className="mx-32 my-1 bg-white rounded-3xl border border-gray-300 shadow-lg hover:shadow-xl transition duration-300 overflow-hidden">
@@ -54,7 +54,7 @@ const Post = ({ post, inModal = false }: Props) => {
         <p className="mt-3 text-gray-800">{post.description}</p>
 
         <img
-          className={`mt-3 w-full rounded-lg ${imageClassName}`}
+          className={`mt-3 w-80 rounded-lg ${imageClassName}`}
           src={post.img} // Adjust this if needed
           alt="Post"
         />

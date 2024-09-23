@@ -329,7 +329,7 @@ class PostViewSet(viewsets.ModelViewSet):
     )
     def create_post(self, request, *args, **kwargs):
         # request = request.copy()
-        data = request.data
+        data = request.data.copy()
         labels = data["label"]
         # print(interests)
         # post_serializer.
