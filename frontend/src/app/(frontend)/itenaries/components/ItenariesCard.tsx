@@ -4,6 +4,7 @@ import "@mantine/core/styles.css";
 import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import "@mantine/carousel/styles.css";
 import { useRouter } from "next/navigation";
+import "@mantine/core/styles.css";
 
 interface Place {
   id: Number;
