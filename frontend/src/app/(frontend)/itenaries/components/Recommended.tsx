@@ -6,6 +6,7 @@ import { Carousel } from "@mantine/carousel";
 
 import mockPlaces from "../data/mockPlaces";
 interface Place {
+  id: Number;
   name: string;
   description: string;
   budget: string;

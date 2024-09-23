@@ -3,7 +3,10 @@ import { Card, Image, Text, Badge, Button, Group } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { IconHeart, IconHeartFilled } from "@tabler/icons-react";
 import "@mantine/carousel/styles.css";
+import { useRouter } from "next/navigation";
+
 interface Place {
+  id: Number;
   name: string;
   description: string;
   budget: string;
@@ -18,10 +21,19 @@ interface ItenariesCardProps {
 }
 
 function ItenariesCard({ place }: ItenariesCardProps) {
+  const router = useRouter();
+  const handleViewDetails = () => {
+    router.push(`/itenaries/${place.id}`);
+  };
+
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
-        <img src={place.image_of_the_place} className="h-64 w-full" alt={place.name} />
+        <img
+          src={place.image_of_the_place}
+          className="h-64 w-full"
+          alt={place.name}
+        />
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
@@ -61,7 +73,10 @@ function ItenariesCard({ place }: ItenariesCardProps) {
         {place.description}
       </Text>
 
-      <button className="bg-green-600 hover:bg-green-700 rounded-sm w-full text-center mt-6 py-1 font-bold text-white">
+      <button
+        onClick={handleViewDetails}
+        className="bg-green-600 hover:bg-green-700 rounded-sm w-full text-center mt-6 py-1 font-bold text-white"
+      >
         View Details
       </button>
     </Card>

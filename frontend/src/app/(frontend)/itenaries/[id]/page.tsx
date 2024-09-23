@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
 import mockPlaces from "../data/mockPlaces";
 
 interface Place {
@@ -15,8 +15,7 @@ interface Place {
 }
 
 const PlaceDetails = () => {
-  const router = useRouter();
-  const { id } = router.query;
+  const { id } = useParams(); 
   const [place, setPlace] = useState<Place | undefined>(undefined);
 
   useEffect(() => {
