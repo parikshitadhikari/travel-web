@@ -28,7 +28,7 @@ function ItenariesCard({ place }: ItenariesCardProps) {
         <Text
           fw={500}
           style={{
-            maxWidth: "60%",
+            maxWidth: "50%",
             whiteSpace: "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -36,12 +36,12 @@ function ItenariesCard({ place }: ItenariesCardProps) {
         >
           {place.name}
         </Text>
-        <div className="max-w-[40%] flex justify-center items-center gap-x-4">
+        <div className="max-w-[50%] flex justify-center items-center gap-x-4">
           <IconHeart
-            className="max-w-[50%] border-2 p-0.5 rounded-full"
+            className="max-w-[40%] border-2 p-0.5 rounded-full"
             size={30}
           />
-          <Badge color="pink" className="max-w-[50%]">
+          <Badge color="pink" className="max-w-[100%]">
             {place.budget}
           </Badge>
         </div>
