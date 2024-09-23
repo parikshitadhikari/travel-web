@@ -3,50 +3,67 @@ import Image from "next/image";
 import React, { useEffect, useId, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useOutsideClick } from "@/app/hooks/use-outside-click";
-import axios from "axios"; // Import axios for data fetching
+import axios from "axios";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai"; // Icons for favorite
 
 // Define the type structure for a card
 type Card = {
+  id: number; // Add 'id' for API calls
   title: string;
   description: string;
   image: string;
-  ctaLink: string;
-  ctaText: string;
-  content: string | JSX.Element; // Allow content to be string or JSX
+  isFavorite: boolean;
+  content: () => JSX.Element | string;
 };
 
 export default function ExpandableCardDemo() {
-  const [cards, setCards] = useState<Card[]>([]); // Cards state from API
-  const [active, setActive] = useState<Card | null>(null); // Active card state
+  const [cards, setCards] = useState<Card[]>([]);
+  const [active, setActive] = useState<Card | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const id = useId();
+
+  const staticUsername = "Rohan"; // Static username for the API request
 
   // Fetch data from API and transform it to match the Card structure
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get("http://127.0.0.1:8000/auth/events/");
-
-        // Transform backend data to match Card structure
         const transformedCards = response.data.map((item: any) => ({
-          title: item.name, // Map 'name' to 'title'
-          description: item.label, // Map 'label' to 'description'
-          image: item.img, // Map 'img' to 'image'
-          ctaLink: `https://example.com/event/${item.created_by}`, // Example link
-          ctaText: "Learn More", // Hardcoded CTA text
-          content:
-            typeof item.description === "object" // Handle object descriptions
-              ? JSON.stringify(item.description)
-              : item.description || "No description available", // Fallback if description is empty or object
+          id: item.id, // Get event ID for the API
+          title: item.name,
+          description: item.description,
+          image: item.img,
+          isFavorite: false, // Initially, all events are not favorited
+          content: () => item.description,
         }));
-
-        setCards(transformedCards); // Set the transformed cards
+        setCards(transformedCards);
       } catch (error) {
         console.error("Error fetching events data:", error);
       }
     };
     fetchData();
   }, []);
+
+  // Handle API call to toggle favorite status
+  const toggleFavorite = async (card: Card) => {
+    try {
+      // Toggle favorite state before API call for immediate UI feedback
+      setCards((prevCards) =>
+        prevCards.map((c) =>
+          c.id === card.id ? { ...c, isFavorite: !c.isFavorite } : c
+        )
+      );
+
+      // Send data to API (event ID and username)
+      await axios.post("http://127.0.0.1:8000/auth/events/interested/", {
+        id: card.id,
+        username: staticUsername,
+      });
+    } catch (error) {
+      console.error("Error toggling favorite status:", error);
+    }
+  };
 
   // Handle closing the expanded card with ESC key
   useEffect(() => {
@@ -64,7 +81,6 @@ export default function ExpandableCardDemo() {
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [active]);
 
-  // Close the active card when clicking outside
   useOutsideClick(ref, () => setActive(null));
 
   return (
@@ -127,14 +143,18 @@ export default function ExpandableCardDemo() {
                     </motion.p>
                   </div>
 
-                  <motion.a
-                    layoutId={`button-${active.title}-${id}`}
-                    href={active.ctaLink}
-                    target="_blank"
-                    className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
+                  {/* Favorite Heart Button */}
+                  <motion.button
+                    layoutId={`favorite-${active.title}-${id}`}
+                    onClick={() => toggleFavorite(active)}
+                    className="text-red-500 hover:scale-110 transition-all"
                   >
-                    {active.ctaText}
-                  </motion.a>
+                    {active.isFavorite ? (
+                      <AiFillHeart className="h-6 w-6 text-red-500" />
+                    ) : (
+                      <AiOutlineHeart className="h-6 w-6" />
+                    )}
+                  </motion.button>
                 </div>
 
                 <div className="pt-4 relative px-4">
@@ -145,9 +165,7 @@ export default function ExpandableCardDemo() {
                     exit={{ opacity: 0 }}
                     className="text-neutral-600 text-xs md:text-sm lg:text-base h-40 md:h-fit pb-10 flex flex-col items-start gap-4 overflow-auto dark:text-neutral-400"
                   >
-                    {typeof active.content === "string"
-                      ? active.content
-                      : JSON.stringify(active.content)}
+                    {active.content()}
                   </motion.div>
                 </div>
               </div>
@@ -189,11 +207,21 @@ export default function ExpandableCardDemo() {
                 </motion.p>
               </div>
             </div>
+
+            {/* Favorite Heart Icon */}
             <motion.button
-              layoutId={`button-${card.title}-${id}`}
-              className="px-4 py-2 text-sm rounded-full font-bold bg-gray-100 hover:bg-green-500 hover:text-white text-black mt-4 md:mt-0"
+              layoutId={`favorite-${card.title}-${id}`}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent opening the card when clicking the heart
+                toggleFavorite(card);
+              }}
+              className="text-red-500 hover:scale-110 transition-all mt-4 md:mt-0"
             >
-              {card.ctaText}
+              {card.isFavorite ? (
+                <AiFillHeart className="h-6 w-6 text-red-500" />
+              ) : (
+                <AiOutlineHeart className="h-6 w-6" />
+              )}
             </motion.button>
           </motion.div>
         ))}
@@ -222,5 +250,5 @@ export const CloseIcon = () => (
     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
     <path d="M18 6l-12 12" />
     <path d="M6 6l12 12" />
-  </motion.svg>   
+  </motion.svg>
 );
