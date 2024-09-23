@@ -76,11 +76,11 @@ class Event(models.Model):
     description= models.TextField(blank=True, default="")
     # guide = models.ForeignKey(Guide, on_delete=models.CASCADE, null=True, default=None)
     
-class EventLike(models.Model):
+class EventInterested(models.Model):
     event = models.ForeignKey(Event,on_delete=models.CASCADE)
-    liked_by = models.OneToOneField(User,on_delete=models.CASCADE)
+    interested_user = models.OneToOneField(User,on_delete=models.CASCADE)
 
-class EventComment(models.Model):
-    event = models.ForeignKey(Event,on_delete=models.CASCADE)
-    commented_by = models.OneToOneField(User,on_delete=models.CASCADE)
-    comment = models.TextField()
+# class EventComment(models.Model):
+#     event = models.ForeignKey(Event,on_delete=models.CASCADE)
+#     commented_by = models.OneToOneField(User,on_delete=models.CASCADE)
+#     comment = models.TextField()

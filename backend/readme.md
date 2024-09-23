@@ -74,7 +74,17 @@ Handles event-related operations.
 
 - **GET** `auth/events/`
   - Returns a list of all events.
-
+  Event:
+  ```json
+  {
+    "name":
+    "label":
+    "img":
+    "created_at":
+    "user":
+    "description":
+  }
+  ```
 - **GET** `auth/events/recommendations/`
   - Returns event recommendations for the authenticated traveller.
   - **Request Body:**
@@ -94,17 +104,13 @@ Handles event-related operations.
       "username":"Username of creator"
     }
     ```
-- **POST** `auth/events/comment/`
--Creates a comment on a event.
+- **POST** `auth/events/interested/`
+-Creates a interest on a event.
   - **Request Body:**
     ```json
     {
-
       "id": id of the event in number,
-      "comment" :"Comment on the event",
-      "usernmae":"Username of the commenter"
-      
-
+      "usernmae":"Username of the interested user"
     }
     ```
 - **POST** `auth/events/like/`

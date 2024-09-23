@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from core.models import (
     Business,
     Event,
-    EventComment,
+    EventInterested,
     Label,
     Package,
     User,
@@ -184,12 +184,12 @@ class EventViewSet(viewsets.ModelViewSet):
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )
-    def comment(self, request, *args, **kwargs):
+    def interested(self, request, *args, **kwargs):
         data =request.data
         user = User.objects.get(username=data['username'])
-        comment = data['comment']
+        # comment = data['comment']
         event = Event.objects.get(id= data['id'])
-        event_comment = EventComment.objects.create(event = event.pk,comment= comment,commented_by=user.pk)
+        event_comment = EventInterested.objects.create(event = event.pk,interested_user=user.pk)
         return Response(status=status.HTTP_200_OK)
     # @action(methods=["GET"],detail=False)
     # def trending(self,request):
