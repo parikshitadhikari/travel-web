@@ -10,6 +10,7 @@ import { useState } from "react";
 import Chat from "../../components/travelAI/Chat";
 import SendMessage from "../../components/travelAI/SendMessage"; // Correct import for SendMessage
 import { askGrowAI } from "../../services/askGrowAI";
+import SidebarDemo from "@/app/components/Sidebar";
 
 /**
  * @interface Message
@@ -68,7 +69,8 @@ const GrowAI = () => {
   };
 
   return (
-    <div className="flex flex-col justify-end w-full h-screen bg-gray-200 shadow-md">
+    <div className="flex flex-col justify-end w-full h-screen bg-blue-200 shadow-md">
+      <SidebarDemo/>
       <Chat messages={messages} />
       <SendMessage
         handleSendMessage={handleSendMessage}
