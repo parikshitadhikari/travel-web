@@ -1,4 +1,6 @@
 "use client";
+import ProfilePageComponent from "@/app/components/profile/Profile";
+import SidebarDemo from "@/app/components/Sidebar";
 import React, { useEffect, useState } from "react";
 
 const ProfilePage = () => {
@@ -22,8 +24,10 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-200 to-indigo-400 p-10">
-      {/* Travel Quote */}
+    <div className="min-h-screen bg-gradient-to-br from-blue-200 to-blue-400 p-10">
+      <SidebarDemo/>
+      <ProfilePageComponent/>
+      {/* Travel Quote
       <div className="flex justify-center items-center mb-12">
         <blockquote className="text-4xl italic font-bold text-white text-center max-w-3xl opacity-0 animate-fadeIn">
           "Traveling – it leaves you speechless, then turns you into a
@@ -31,9 +35,9 @@ const ProfilePage = () => {
         </blockquote>
       </div>
 
-      {/* Profile and Mood Sections */}
+      Profile and Mood Sections
       <div className="flex flex-col lg:flex-row justify-around items-start space-y-10 lg:space-y-0 lg:space-x-10">
-        {/* Profile Card */}
+        Profile Card 
         <div className="bg-white shadow-lg rounded-lg p-8 w-full lg:w-1/3 transform hover:scale-105 transition-transform duration-500 ease-in-out">
           <div className="flex flex-col items-center">
             <img
@@ -94,9 +98,9 @@ const ProfilePage = () => {
           </div>
         </div>
 
-        {/* Interests and About Me Sections */}
+        Interests and About Me Sections
         <div className="bg-white shadow-lg rounded-lg p-8 w-full lg:w-2/3 space-y-10">
-          {/* Interested Places */}
+          Interested Places
           <div className="animate-slideInRight">
             <h3 className="text-2xl font-bold text-indigo-500">
               Places I'm Interested In
@@ -116,7 +120,7 @@ const ProfilePage = () => {
             </ul>
           </div>
 
-          {/* About Me Section */}
+          About Me Section
           <div className="animate-slideInLeft">
             <h3 className="text-2xl font-bold text-indigo-500">About Me</h3>
             <p className="text-lg text-gray-600 mt-4">
@@ -128,7 +132,7 @@ const ProfilePage = () => {
             </p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
