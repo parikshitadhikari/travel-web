@@ -240,4 +240,12 @@ Create destination or get a list of destination
     ```
 - **GET** `auth/destination/subscribe/`
 - -Returns a list of interested users
+
+- **POST** `auth/traverse/`
+- Ask for preparation and equipments
+- ```json
+  {
+    "id": id of the package,
+  }
+```
 ---

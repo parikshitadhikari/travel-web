@@ -381,3 +381,23 @@ class ChatbotViewSet(viewsets.ModelViewSet):
 
         return Response(data=response.text,status=status.HTTP_200_OK)
         # return super().list(request, *args, **kwargs)
+
+class TraverseViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
+    queryset=None
+    def create(self, request, *args, **kwargs):
+        # prompt = request.data['prompt']
+        package_id = request.data['id']
+        package =Package.objects.get(id=package_id)
+#         curl \
+#   -H 'Content-Type: application/json' \
+#   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
+#   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        prompt = f"I am going on the package(travel): {package.name}. It's description is {package.description}. Give me the required preparation, useful tips for the package as well as required equipment and costs "
+        response = model.generate_content(prompt)
+        # print(response.text)
+
+        return Response(data=response.text,status=status.HTTP_200_OK)
+        # return super().list(request, *args, **kwargs)
