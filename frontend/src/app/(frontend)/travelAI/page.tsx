@@ -7,9 +7,10 @@
 
 "use client"; // Next.js client component directive
 import { useState } from "react";
-import Chat from "../../components/travelAI/Chat"; 
-import SendMessage from "../../components/travelAI/Chat"; 
-import { askGrowAI } from "../../services/askGrowAI"; 
+import Chat from "../../components/travelAI/Chat";
+import SendMessage from "../../components/travelAI/SendMessage"; // Correct import for SendMessage
+import { askGrowAI } from "../../services/askGrowAI";
+
 /**
  * @interface Message
  * @description Represents a chat message with a username and content.
@@ -34,10 +35,10 @@ const GrowAI = () => {
    * @function handleSendMessage
    * @description Handles sending a user message to the chatbot and updating the chat accordingly.
    */
-  const handleSendMessage = async () => {
+  const handleSendMessage = async (msg: string) => {
     const userMessage = {
       username: "User",
-      message: message,
+      message: msg,
     };
 
     const loadingMessage = {
@@ -54,7 +55,7 @@ const GrowAI = () => {
     ]);
 
     // Fetch the AI's response
-    const aiMessage = await askGrowAI(message);
+    const aiMessage = await askGrowAI(msg);
     const growAIMessage = { username: "GrowAI", message: aiMessage };
 
     // Update the last loading message with the AI's response

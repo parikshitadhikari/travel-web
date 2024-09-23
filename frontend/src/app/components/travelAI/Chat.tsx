@@ -2,7 +2,7 @@
 
 import { FiUser } from "react-icons/fi";
 import { FaRobot } from "react-icons/fa";
-import { Message } from "@/app/growai/page"; // Adjusted path for Next.js structure
+import { Message } from "../../(frontend)/travelAI/page"; 
 
 interface Props {
   messages: Message[];
