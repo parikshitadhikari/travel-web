@@ -14,6 +14,10 @@ const Event = () => {
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+
 
   )
 }
