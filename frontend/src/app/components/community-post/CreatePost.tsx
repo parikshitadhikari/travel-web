@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { FaImage } from "react-icons/fa";
 import axios from "axios";
-
+const staticUser = "Rohan";
 /**
  * Props for CreatePost component.
  * @typedef {Object} Props
@@ -27,7 +27,7 @@ const CreatePost = ({ onPostSubmit }: Props) => {
   const handleSubmit = async () => {
     const formData = new FormData();
     formData.append("description", postContent);
-    formData.append("username", "ujjwal");
+    formData.append("username",staticUser );
     formData.append("label", JSON.stringify(["Music", "Moosic"]));
     if (image) {
       formData.append("img", image);
@@ -63,14 +63,14 @@ const CreatePost = ({ onPostSubmit }: Props) => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       setImage(e.target.files[0]);
-    }
+    } 
   };
 
   return (
     <div className="mx-64  bg-white rounded-3xl shadow-md border border-gray-300 p-6">
       <h2 className="text-2xl font-semibold mb-3 text-gray-700">Create Post</h2>
       <textarea
-        className="w-full text-lg h-28 border border-gray-300 rounded-md p-3 resize-none focus:outline-none focus:ring-2 focus:ring-green-200"
+        className="w-full text-lg h-16 border border-gray-300 rounded-md p-3 resize-none focus:outline-none focus:ring-2 focus:ring-green-200"
         placeholder="What's on your mind?"
         value={postContent}
         onChange={(e) => setPostContent(e.target.value)}

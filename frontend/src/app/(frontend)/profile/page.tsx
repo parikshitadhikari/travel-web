@@ -1,4 +1,5 @@
 import Posts from "@/app/components/community-post/Posts";
+import ProfilePage from "@/app/components/profile/Profile";
 import SidebarDemo from "@/app/components/Sidebar";
 import React from "react";
 
@@ -8,8 +9,8 @@ const CommunityPost = () => {
       <div className="float-left">
         <SidebarDemo />
       </div>
-      <div className="pt-12">
-        <Posts className="w-full" />
+      <div>
+        <ProfilePage/>
       </div>
     </div>
   );

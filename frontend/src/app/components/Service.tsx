@@ -47,7 +47,7 @@ const Service = () => {
   return (
     <div className="flex mx-40 space-x-16">
       <div className="left flex justify-center items-center ">
-        <img src={"/images/ujj.jpg"} alt="Tourists exploring a city" />
+        <img src={"/images/travelling.jpg"} alt="Tourists exploring a city" />
       </div>
       <div className="right p-4 flex space-y-6 flex-col">
         <div className="text-4xl font-bold mb-2">Why Choose Us</div>

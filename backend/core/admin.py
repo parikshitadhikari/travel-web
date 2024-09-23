@@ -6,10 +6,11 @@ from .models import (
     Business,
     Guide,
     Package,
-    PackageLike,
+    PackageSubscription,
     Event,
-    EventLike,
+    EventInterested,
     Post,
+    PostComment
 )
 
 
@@ -38,31 +39,31 @@ class TravellersAdmin(admin.ModelAdmin):
 # Register Business
 @admin.register(Business)
 class BusinessAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "email")
-    search_fields = ("username", "email")
+    list_display = ("id", "base_user__username", "base_user__email")
+    search_fields = ("base_user__username", "base_user__email")
 
 
 # Register Guide
 @admin.register(Guide)
 class GuideAdmin(admin.ModelAdmin):
-    list_display = ("id", "username", "email")
-    search_fields = ("username", "email")
+    list_display = ("id", "base_user__username", "base_user__email")
+    search_fields = ("base_user__username", "base_user__email")
     filter_horizontal = ("label",)
 
 
 # Register Package
 @admin.register(Package)
 class PackageAdmin(admin.ModelAdmin):
-    list_display = ("id", "name", "business", "price", "guide")
-    search_fields = ("name", "business__username", "guide__username")
+    list_display = ("id", "name",  "price", )
+    search_fields = ("name", )
     filter_horizontal = ("label",)
 
 
-# Register PackageLike
-@admin.register(PackageLike)
-class PackageLikeAdmin(admin.ModelAdmin):
-    list_display = ("id", "package", "liked_by")
-    search_fields = ("package__name", "liked_by__username")
+# # Register PackageLike
+# @admin.register(PackageSubscription)
+# class PackageLikeAdmin(admin.ModelAdmin):
+#     list_display = ("id", "package", "liked_by")
+#     search_fields = ("package__name", "liked_by__username")
 
 
 # Register Event
@@ -74,10 +75,10 @@ class EventAdmin(admin.ModelAdmin):
 
 
 # Register EventLike
-@admin.register(EventLike)
+@admin.register(EventInterested)
 class EventLikeAdmin(admin.ModelAdmin):
-    list_display = ("id", "event", "liked_by")
-    search_fields = ("event__name", "liked_by__username")
+    list_display = ("id", "event", "interested_user")
+    search_fields = ("event__name", "interested_user__username")
 
 
 @admin.register(Post)
@@ -85,3 +86,8 @@ class PostAdmin(admin.ModelAdmin):
     list_display = ("id", "description")
     search_fields = ("description",)
     filter_horizontal = ("label",)
+
+@admin.register(PostComment)
+class PostCommentAdmin(admin.ModelAdmin):
+    list_display=("id","comment","commented_by__username")
+    

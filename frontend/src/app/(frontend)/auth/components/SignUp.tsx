@@ -5,6 +5,7 @@ import { Modal, MantineProvider, Checkbox } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import mockUsers from "../data/mockUsers";
 import { toast } from "react-toastify";
+import axios from "axios";
 
 const interests = [
   "Adventure Seeker",
@@ -28,7 +29,9 @@ const SignUp: React.FC = () => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const existingUser = mockUsers.find((user) => user.email === email);
+    const existingUser = mockUsers.find(
+      (user) => user.email === email && user.email !== "rohan@gmail.com"
+    );
     if (existingUser) {
       toast.error("User already exists");
       return;
@@ -47,6 +50,20 @@ const SignUp: React.FC = () => {
     mockUsers.push(newUser);
 
     localStorage.setItem("userInfo", JSON.stringify(newUser));
+    try {
+      
+      axios.post(
+       "http://127.0.0.1:8000/auth/travellers/create_user/",
+       JSON.stringify(newUser),
+       {
+         headers: {
+           "Content-Type": "application/json",
+           // Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token retrieval logic
+         },
+       }
+     );
+    }
+    catch(e){}
     console.log(mockUsers);
     toast.success("User successfully signed up.");
   };

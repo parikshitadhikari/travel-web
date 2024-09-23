@@ -14,27 +14,27 @@ const Feature = () => {
   const features = [
     {
       id: 1,
-      icon: <GiDiscussion className="bg-green-400 text-6xl p-3 rounded-full" />,
+      icon: <GiDiscussion className="bg-blue-500 text-6xl p-3 rounded-full" />,
       title: "Travel Forums",
       description: "Connect with fellow travelers and share experiences.",
     },
     {
       id: 2,
-      icon: <MdInterests className="bg-yellow-300 text-6xl p-3 rounded-full" />,
+      icon: <MdInterests className="bg-blue-400 text-6xl p-3 rounded-full" />,
       title: "Personalized Interests",
       description:
         "Explore destinations that match your personal interests and preferences.",
     },
     {
       id: 3,
-      icon: <SiPowerpages className="bg-red-400 text-6xl p-3 rounded-full" />,
+      icon: <SiPowerpages className="bg-blue-300 text-6xl p-3 rounded-full" />,
       title: "Expand Your Horizons",
       description:
         "Discover new travel opportunities and expand your travel plans.",
     },
     {
       id: 4,
-      icon: <FaRocket className="bg-gray-400 text-6xl p-2 rounded-full" />,
+      icon: <FaRocket className="bg-blue-200 text-6xl p-2 rounded-full" />,
       title: "Customized Itineraries",
       description:
         "Get tailored travel itineraries designed specifically for you.",

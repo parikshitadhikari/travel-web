@@ -5,28 +5,31 @@ from rest_framework.response import Response
 from core.models import (
     Business,
     Event,
+    EventInterested,
     Label,
     Package,
     User,
     Travellers,
-    PackageLike,
+    PackageSubscription,
     Post,
     PostComment,
     PostLike,
 )
 from core.serializers import (
     BusinessSerializer,
+    EventInterestedSerializer,
     EventSerializer,
     PackageSerializer,
     TravellersSerializer,
     UserSerializer,
     LabelSerializer,
     PostSerializer,
+    PackageSubscriptionSerializer
 )
 from rest_framework.decorators import action
 from django.db.models import Count
 from .authentication import CustomAuthentication
-
+from rest_framework.test import CoreAPIClient
 # Create your views here.
 # class UserRegistrationView(APIView):
 #     renderer_classes = [UserRenderer]
@@ -137,8 +140,8 @@ class BusinessViewSet(viewsets.ModelViewSet):
 
 
 class PackageViewSet(viewsets.ModelViewSet):
-    authentication_classes = [authentication.BasicAuthentication]
-    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = []
+    permission_classes = []
     queryset = Package.objects.all()
     serializer_class = PackageSerializer
 
@@ -160,6 +163,58 @@ class PackageViewSet(viewsets.ModelViewSet):
     def trending(self, request):
         traveller = self.get_traveller(request.data["username"])
 
+    @action(methods=["POST","GET"], permission_classes=[], authentication_classes=[], detail=False)
+    def subscribe(self, request, *args, **kwargs):
+        if(request.method=="POST"):
+            data =request.data
+            user = User.objects.get(username=data['username'])
+            # comment = data['comment']
+            package = Package.objects.get(id= data['id'])
+            package_subsctipton_data={
+                
+            }
+            package_subsctipton_data['package']= package.pk
+            package_subsctipton_data['subscribed_by']= user.pk
+            package_subscription_serializer = PackageSubscriptionSerializer(data= package_subsctipton_data)
+            package_subscription_serializer.is_valid(raise_exception=True)
+            package_subscription_serializer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            data = request.data
+            event_id = data['id']
+            package = Package.objects.get(id= event_id)
+            # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
+            interested_users = User.objects.filter(packagesubscription__package=package)
+            return Response(status=status.HTTP_200_OK, data=UserSerializer(interested_users, many=True).data)
+            
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def create_destination(self, request, *args, **kwargs):
+
+        data = request.data
+        labels = data["label"]
+        # print(interests)
+        # event_serializer.
+        data["business"] =Business.objects.get(base_user =  User.objects.get(username=data["username"]).pk).pk
+        
+        data["label"] = []
+        for label in labels:
+            # print(interest)
+            data["label"].append({"name": label})
+
+        # data['interests']=None
+        # print(data)
+        # print(data['interests'])
+        package_serializer = self.serializer_class(data=data)
+        package_serializer.is_valid(raise_exception=True)
+        event = package_serializer.save()
+        # print(event)
+
+        return Response(status=status.HTTP_200_OK)
+        # return super().create(request, *args, **kwargs
+
+
 
 class EventViewSet(viewsets.ModelViewSet):
     authentication_classes = []
@@ -180,7 +235,34 @@ class EventViewSet(viewsets.ModelViewSet):
             .annotate(matched_labels=Count("label"))
             .order_by("-matched_labels")
         )
-
+    @action(
+        methods=["POST","GET"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def interested(self, request, *args, **kwargs):
+        if(request.method=="POST"):
+            
+            data =request.data
+            user = User.objects.get(username=data['username'])
+            # comment = data['comment']
+            event = Event.objects.get(id= data['id'])
+            event_interested_data={
+                
+            }
+            event_interested_data['event']= event.pk
+            event_interested_data['interested_user']= user.pk
+            event_interested_seralizer = EventInterestedSerializer(data= event_interested_data)
+            event_interested_seralizer.is_valid(raise_exception=True)
+            event_interested_seralizer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            data = request.data
+            event_id = data['id']
+            event = Event.objects.get(id= event_id)
+            # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
+            interested_users = User.objects.filter(eventinterested__event=event)
+# Serialize the user data
+            return Response(status=status.HTTP_200_OK, data=UserSerializer(interested_users, many=True).data)
+            # return Response(status=status.HTTP_200_OK,data=UserSerializer(interested_users,many=True).data)
     # @action(methods=["GET"],detail=False)
     # def trending(self,request):
     #     traveller =self.get_traveller(request.data['username'])
@@ -193,6 +275,7 @@ class EventViewSet(viewsets.ModelViewSet):
         labels = data["label"]
         # print(interests)
         # event_serializer.
+        data["created_by"] = User.objects.get(username=data["username"]).pk
 
         data["label"] = []
         for label in labels:
@@ -205,7 +288,7 @@ class EventViewSet(viewsets.ModelViewSet):
         event_serializer = self.serializer_class(data=data)
         event_serializer.is_valid()
         event = event_serializer.save()
-        print(event)
+        # print(event)
 
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs
@@ -230,7 +313,16 @@ class PostViewSet(viewsets.ModelViewSet):
             .annotate(matched_labels=Count("label"))
             .order_by("-matched_labels")
         )
-
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def comment(self, request, *args, **kwargs):
+        data =request.data
+        user = User.objects.get(username=data['username'])
+        comment = data['comment']
+        post = Post.objects.get(id= data['id'])
+        post_comment = PostComment.objects.create(post = post.pk,comment= comment,commented_by=user.pk)
+        return Response(status=status.HTTP_200_OK)
     # @action(methods=["GET"],detail=False)
     # def trending(self,request):
     #     traveller =self.get_traveller(request.data['username'])
@@ -239,7 +331,7 @@ class PostViewSet(viewsets.ModelViewSet):
     )
     def create_post(self, request, *args, **kwargs):
         # request = request.copy()
-        data = request.data
+        data = request.data.copy()
         labels = data["label"]
         # print(interests)
         # post_serializer.
@@ -267,3 +359,45 @@ class PostViewSet(viewsets.ModelViewSet):
         # print(data)
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs
+        
+import google.generativeai as genai
+import os
+from dotenv import load_dotenv
+load_dotenv()
+genai.configure(api_key=os.environ.get("API_KEY"))
+class ChatbotViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
+    queryset=None
+    def create(self, request, *args, **kwargs):
+        prompt = request.data['prompt']
+#         curl \
+#   -H 'Content-Type: application/json' \
+#   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
+#   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        # print(response.text)
+
+        return Response(data=response.text,status=status.HTTP_200_OK)
+        # return super().list(request, *args, **kwargs)
+
+class TraverseViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
+    queryset=None
+    def create(self, request, *args, **kwargs):
+        # prompt = request.data['prompt']
+        package_id = request.data['id']
+        package =Package.objects.get(id=package_id)
+#         curl \
+#   -H 'Content-Type: application/json' \
+#   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
+#   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        prompt = f"I am going on the package(travel): {package.name}. It's description is {package.description}. Give required equipments and its price for this trip."
+        response = model.generate_content(prompt)
+        # print(response.text)
+
+        return Response(data=response.text,status=status.HTTP_200_OK)
+        # return super().list(request, *args, **kwargs)

@@ -3,7 +3,12 @@ import Link from "next/link";
 import React, { useState } from "react";
 // import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
+import {
+  HoveredLink,
+  Menu,
+  MenuItem,
+  ProductItem,
+} from "@/components/ui/navbar-menu";
 
 const NavBar = () => {
   return (
@@ -66,13 +71,14 @@ const NavBar = () => {
           </ul> */}
         </div>
         <div className="md:order-2">
-          <Link href="/auth">
-            <div className=" flex md:order-3 ">
-              <button className="w-40 z-50 bg-green-600 text-white hover:bg-green-900 rounded-lg text-lg px-2 py-2 text-center">
-                Login
-              </button>
-            </div>
-          </Link>
+          <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
+            <Link
+              href="/auth"
+              className="w-40 h-10 flex items-center justify-center rounded-xl bg-blue-500 border dark:border-white border-transparent text-white text-sm z-[9999]"
+            >
+              Login
+            </Link>
+          </div>
         </div>
       </div>
     </nav>
@@ -80,9 +86,6 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
-
 
 function Navbar({ className }: { className?: string }) {
   const [active, setActive] = useState<string | null>(null);
@@ -92,51 +95,15 @@ function Navbar({ className }: { className?: string }) {
     >
       <Menu setActive={setActive}>
         <MenuItem setActive={setActive} active={active} item="Services">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
-            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
-            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-            <HoveredLink href="/branding">Branding</HoveredLink>
-          </div>
+          <a href="#"></a>
         </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Products">
-          <div className="  text-sm grid grid-cols-2 gap-10 p-4">
-            <ProductItem
-              title="Algochurn"
-              href="https://algochurn.com"
-              src="https://assets.aceternity.com/demos/algochurn.webp"
-              description="Prepare for tech interviews like never before."
-            />
-            <ProductItem
-              title="Tailwind Master Kit"
-              href="https://tailwindmasterkit.com"
-              src="https://assets.aceternity.com/demos/tailwindmasterkit.webp"
-              description="Production ready Tailwind css components for your next project"
-            />
-            <ProductItem
-              title="Moonbeam"
-              href="https://gomoonbeam.com"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.51.31%E2%80%AFPM.png"
-              description="Never write from scratch again. Go from idea to blog in minutes."
-            />
-            <ProductItem
-              title="Rogue"
-              href="https://userogue.com"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.47.07%E2%80%AFPM.png"
-              description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
-            />
-          </div>
+        <MenuItem setActive={setActive} active={active} item="Features">
+          <a href="#"></a>
         </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Pricing">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/hobby">Hobby</HoveredLink>
-            <HoveredLink href="/individual">Individual</HoveredLink>
-            <HoveredLink href="/team">Team</HoveredLink>
-            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
-          </div>
+        <MenuItem setActive={setActive} active={active} item="Testimonials">
+          <a href="#"></a>
         </MenuItem>
       </Menu>
     </div>
   );
 }
-

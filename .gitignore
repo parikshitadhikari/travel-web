@@ -22,3 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+backend/readme.html
+backend/mydatabase
+backend/static
+backend/mydatabase.sqlite
+*.sqlite

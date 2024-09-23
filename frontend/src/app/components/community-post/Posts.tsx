@@ -42,14 +42,15 @@ const Posts = ({ className }: Props) => {
   };
 
   return (
-    <div className={`${className} bg-green-50`}>
-      <CreatePost
+    <div className={`${className} flex flex-col pb-10 bg-green-50`}>
+      <div className="fixed w-full bottom-5">
+        <CreatePost
         onPostSubmit={async () => {
           await fetchPosts(); // Refresh posts after creating a new post
         }}
-      />
+      /></div>
       <div
-        className={`flex flex-col justify-between items-center ${className}`}
+        className={`mb-56 flex flex-col justify-between items-center ${className}`}
       >
         {posts.map((post) => (
           <div
