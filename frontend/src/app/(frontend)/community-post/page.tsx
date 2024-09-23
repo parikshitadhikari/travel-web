@@ -4,11 +4,11 @@ import React from "react";
 
 const CommunityPost = () => {
   return (
-    <div className="bg-green-50 h-screen pt-20 ">
+    <div className="bg-green-50 h-screen">
       <div className="float-left">
         <SidebarDemo />
       </div>
-      <div className="">
+      <div className="pt-12">
         <Posts className="w-full" />
       </div>
     </div>
