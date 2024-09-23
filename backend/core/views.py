@@ -284,7 +284,7 @@ class ChatbotViewSet(viewsets.ModelViewSet):
 #   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
 #   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
         model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(prompt)
+        response = model.generate_content(prompt +"\n Please return the answer in markdown")
         # print(response.text)
 
         return Response(data=response.text,status=status.HTTP_200_OK)
