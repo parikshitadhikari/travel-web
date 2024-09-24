@@ -13,6 +13,7 @@ import {
   IconAt,
   IconHeartFilled,
   IconHeart,
+  IconPencil,
 } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
@@ -36,6 +37,9 @@ interface Place {
 
 const PlaceDetails = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [reviewOpened, { open: openReview, close: closeReview }] =
+    useDisclosure(false);
+
   const [place, setPlace] = useState<Place | undefined>(undefined);
   const [isInterested, setIsInterested] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
@@ -136,6 +140,21 @@ const PlaceDetails = () => {
           ))}
         </div>
       </Modal>
+      <Modal opened={reviewOpened} onClose={closeReview} size="lg">
+        <h2 className="font-bold text-xl">Write a Review for {place.name}</h2>
+        <textarea
+          className="w-full h-32 mt-4 p-2 border rounded"
+          placeholder="Share your thoughts..."
+        />
+        <button
+          onClick={async () => {
+            closeReview();
+          }}
+          className="mt-4 bg-blue-500 text-white p-2 rounded"
+        >
+          Submit Review
+        </button>
+      </Modal>
       <div className="relative min-h-screen bg-white">
         <div className="absolute inset-0 z-0">
           <BackgroundBeams />
@@ -172,7 +191,7 @@ const PlaceDetails = () => {
           <Divider my="md" />
           <div className="flex items-center gap-x-10 w-fit">
             <p className="mt-5 bg-gray-200 w-fit p-2 rounded">
-              <strong>Guides:</strong> {place.guide}
+              <strong>Guide:</strong> {place.guide}
             </p>
             <button
               onClick={open}
@@ -194,6 +213,16 @@ const PlaceDetails = () => {
                 <IconHeart className="text-black" size={20} />
               )}
               {isInterested ? " Subscribed" : " Subscribe"}
+            </button>
+          </div>
+          <Divider my="lg" />
+          <div>
+            <h1 className="font-bold text-xl">Traveller's Review</h1>
+            <button
+              onClick={openReview}
+              className="flex items-center gap-x-1 border border-gray-400 rounded w-fit p-1 px-3 mt-2 hover:border-gray-700 hover:cursor-pointer "
+            >
+              <IconPencil size={20} /> Leave a review...
             </button>
           </div>
         </div>
