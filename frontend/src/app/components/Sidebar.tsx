@@ -38,7 +38,7 @@ export default function SidebarDemo() {
   const links = [
     {
       label: "Community",
-      href: "/community", // Updated with a route
+      href: "/community-post", // Updated with a route
       icon: (
         <IconBrandTabler className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
