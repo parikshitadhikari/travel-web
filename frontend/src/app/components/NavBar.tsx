@@ -24,7 +24,7 @@ const NavBar = () => {
             className="w-16 h-16"
           />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-            TravelWeb
+            TravellersHub
           </span>
         </Link>
 

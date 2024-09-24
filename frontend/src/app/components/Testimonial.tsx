@@ -61,7 +61,7 @@ const Testimonial = () => {
                   </div>
                   <div className="personDesc flex flex-col justify-center items-center  bg-gray-50">
                     <div className="h-[50%] text-xl">{personName}</div>
-                    <div className="h-[20%] text-md  text-gray-600">
+                    <div className="h-[20%] text-md  text-blue-400">
                       {personPosition}
                     </div>
                   </div>

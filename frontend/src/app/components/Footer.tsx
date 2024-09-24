@@ -12,7 +12,7 @@ import Button from "../components/Button";
  */
 const Footer = () => {
   return (
-    <div className="bg-gray-800 text-white py-12 mt-16">
+    <div className="bg-slate-800 text-white py-12 mt-16">
       <div className="container mx-auto flex flex-col md:flex-row items-center justify-between">
         <div className="md:w-1/2">
           <div className="text-4xl font-bold mb-6 px-6">
@@ -74,8 +74,8 @@ const Footer = () => {
       </div>
 
       {/* Copyright notice */}
-      <hr className="my-6 border-gray-200 sm:mx-auto dark:border-gray-700 lg:my-6" />
-      <span className="block text-sm text-gray-500 sm:text-center dark:text-gray-400">
+      {/* <hr className="my-6 border-slate-200 sm:mx-auto dark:border-slate-700 lg:my-6" /> */}
+      <span className="block text-sm text-slate-500 bottom-3 sm:text-center dark:text-slate-400">
         © 2024{" "}
         <a href="#" className="hover:underline">
           TravelWeb™
