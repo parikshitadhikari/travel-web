@@ -6,15 +6,20 @@ import "@mantine/carousel/styles.css";
 import { useRouter } from "next/navigation";
 import "@mantine/core/styles.css";
 
+interface Label {
+  id: number;
+  name: string;
+}
+
 interface Place {
-  id: Number;
+  id: number;
   name: string;
   description: string;
-  budget: string;
-  guide_name: string;
-  people_liking_this_place: string[];
-  image_of_the_place: string;
-  tag: string[];
+  price: number;
+  guide: number;
+  interested_users: string[];
+  img: string;
+  label: Label[];
 }
 
 interface ItenariesCardProps {
@@ -31,7 +36,7 @@ function ItenariesCard({ place }: ItenariesCardProps) {
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
         <img
-          src={place.image_of_the_place}
+          src={place.img}
           className="h-64 w-full"
           alt={place.name}
         />
@@ -55,7 +60,7 @@ function ItenariesCard({ place }: ItenariesCardProps) {
             size={30}
           />
           <Badge color="pink" className="max-w-[100%]">
-            {place.budget}
+            {place.price}
           </Badge>
         </div>
       </Group>

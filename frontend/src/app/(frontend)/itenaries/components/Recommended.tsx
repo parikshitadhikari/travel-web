@@ -3,19 +3,23 @@ import React, { useState, useEffect } from "react";
 import ItenariesCard from "./ItenariesCard";
 import "@mantine/core/styles.css";
 import { Carousel } from "@mantine/carousel";
-
 import mockPlaces from "../data/mockPlaces";
-interface Place {
-  id: Number;
+import axios from "axios";
+interface Label {
+  id: number;
   name: string;
-  description: string;
-  budget: string;
-  guide_name: string;
-  people_liking_this_place: string[];
-  image_of_the_place: string;
-  tag: string[];
 }
 
+interface Place {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  guide: number;
+  interested_users: string[];
+  img: string;
+  label: Label[];
+}
 interface UserInfo {
   username: string;
   email: string;
@@ -25,24 +29,50 @@ interface UserInfo {
 
 const Recommended = () => {
   const [filteredPlaces, setFilteredPlaces] = useState<Place[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedUserInfo = localStorage.getItem("userInfo");
+    const fetchPlaces = async () => {
+      try {
+        const storedUserInfo = localStorage.getItem("userInfo");
 
-    if (storedUserInfo) {
-      const userInfo: UserInfo = JSON.parse(storedUserInfo);
+        if (storedUserInfo) {
+          const userInfo: UserInfo = JSON.parse(storedUserInfo);
 
-      if (userInfo.interests) {
-        const userInterests = userInfo.interests;
+          if (userInfo.interests) {
+            const response = await axios.get(
+              "http://127.0.0.1:8000/auth/destination",
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  // Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token retrieval logic
+                },
+              }
+            );
 
-        const recommendedPlaces = mockPlaces.filter((place) =>
-          place.tag.some((tag) => userInterests.includes(tag))
-        );
+            const recommendedPlaces = response.data.filter((place: Place) =>
+              place.label.some((label) =>
+                userInfo.interests.includes(label.name)
+              )
+            );
 
-        setFilteredPlaces(recommendedPlaces);
+            setFilteredPlaces(recommendedPlaces);
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching places:", error);
+        setError("Failed to load places.");
+      } finally {
+        setLoading(false);
       }
-    }
+    };
+
+    fetchPlaces();
   }, []);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="px-20">
