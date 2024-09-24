@@ -11,15 +11,20 @@ import { IconTag, IconUser, IconAt } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
 
+interface Label {
+  id: number;
+  name: string;
+}
+
 interface Place {
   id: number;
   name: string;
   description: string;
-  budget: string;
-  guide_name: string;
-  people_liking_this_place: string[];
-  image_of_the_place: string;
-  tag: string[];
+  price: number;
+  guide: string;
+  interested_users: string[]; 
+  img: string; 
+  label: Label[];
 }
 
 const PlaceDetails = () => {
@@ -29,13 +34,25 @@ const PlaceDetails = () => {
   const [place, setPlace] = useState<Place | undefined>(undefined);
 
   useEffect(() => {
-    if (id) {
-      const placeDetails = mockPlaces.find(
-        (place) => place.id === parseInt(id as string)
-      );
-      setPlace(placeDetails);
-    }
+    const fetchPlaces = async () => {
+      try {
+        const response = await fetch("http://127.0.0.1:8000/auth/destination");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const places: Place[] = await response.json();
+        const placeDetails = places.find(
+          (place) => place.id === parseInt(id as string)
+        );
+        setPlace(placeDetails);
+      } catch (error) {
+        console.error("Error fetching places:", error);
+      }
+    };
+
+    fetchPlaces();
   }, [id]);
+
 
   if (!place) {
     return <p>Loading...</p>;
@@ -53,7 +70,7 @@ const PlaceDetails = () => {
           People interested in travelling to {place.name}
         </p>
         <div className="flex flex-col gap-y-2 mt-4">
-          {place.people_liking_this_place.slice(0).map((person, index) => (
+          {place.interested_users.map((person, index) => (
             <div
               key={index}
               className="border py-2 px-4 rounded font-bold flex items-center gap-x-4"
@@ -82,37 +99,37 @@ const PlaceDetails = () => {
               <h1 className="text-3xl font-bold mb-4">{place.name}</h1>
               <p className="mt-10">{place.description}</p>
               <p className="mt-10 border w-fit py-2 px-4 rounded bg-pink-600 text-white">
-                <strong>Budget:</strong> {place.budget}
+                <strong>Budget:</strong> Rs. {place.price} approx.
               </p>
             </div>
             <img
-              src={place.image_of_the_place}
+              src={place.img}
               alt={place.name}
               className="w-2/5 h-auto mb-4"
             />
           </div>
           <Divider my="md" />
           <p className="flex justify-around gap-x-10">
-            {place.tag.slice(0, 7).map((tag, index) => (
+            {place.label.slice(0, 7).map((tag, index) => (
               <span
                 key={index}
                 className="bg-blue-500 py-2 px-4 rounded text-white font-bold flex gap-x-2 items-center"
               >
                 <IconTag size={20} />
-                {tag}
+                {tag.name}
               </span>
             ))}
           </p>
           <Divider my="md" />
           <div className="flex items-center gap-x-10 w-fit">
             <p className="mt-5 bg-gray-200 w-fit p-2 rounded">
-              <strong>Guide Name:</strong> {place.guide_name}
+              <strong>Guides:</strong> {place.guide}
             </p>
             <button
               onClick={open}
               className="border p-2 mt-5 rounded border-blue-500 hover:bg-blue-500 font-bold hover:text-white"
             >
-              People Interested ({place.people_liking_this_place.length})
+              People Interested ({place.interested_users.length})
             </button>
           </div>
         </div>
