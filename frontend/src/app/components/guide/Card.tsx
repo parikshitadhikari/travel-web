@@ -109,7 +109,7 @@ export default function ExpandableCardDemo() {
                     exit={{ opacity: 0 }}
                     href={active.ctaLink}
                     target="_blank"
-                    className="px-4 py-3 text-sm rounded-full font-bold bg-green-500 text-white"
+                    className="px-4 py-3 text-sm rounded-full font-bold bg-blue-500 text-white"
                   >
                     {active.ctaText}
                   </motion.a>
@@ -207,7 +207,7 @@ export const CloseIcon = () => {
 
 const cards = [
   {
-    description: "Arjun Dhara",
+    description: "The Budget Traveler",
     title: "Ujjwal Jha",
     src: Ujjwal,
     ctaText: "Book",
@@ -215,17 +215,15 @@ const cards = [
     content: () => {
       return (
         <p>
-          Sophie is all about immersing herself in the local culture.<br />
-          With a deep love for art, history, and authentic experiences, 
-          she’ll guide you to the hidden gems of each city, 
-          from quirky museums to vibrant street festivals. If you’re 
-          looking to explore the soul of a destination, Sophie’s got you covered
+          Ujjwal believes that incredible adventures don’t need to come with a hefty price tag. 
+          Specializing in budget-friendly trips, he’s an expert in finding the best deals, cheap eats, and hidden gems. 
+          If you want to see the world without draining your wallet, Max is the perfect guide.
         </p>
       );
     },
   },
   {
-    description: "Jheel",
+    description: "The Luxe Nomad",
     title: "Ravi Tiwari",
     src: Guide1,
     ctaText: "Book",
@@ -233,48 +231,42 @@ const cards = [
     content: () => {
       return (
         <p>
-           Sophie is all about immersing herself in the local culture.<br />
-          With a deep love for art, history, and authentic experiences, 
-          she’ll guide you to the hidden gems of each city, 
-          from quirky museums to vibrant street festivals. If you’re 
-          looking to explore the soul of a destination, Sophie’s got you covered.
+          Ravi has mastered the art of luxury travel. 
+          From opulent stays at world-class resorts to indulgent spa retreats, he knows how to curate an extravagant experience. 
+          Whether it’s a private island getaway or a gourmet dining tour, Ethan will ensure you travel in style.
         </p>
       );
     },
   },
 
   {
-    description: "Barpak",
-    title: "Shiela Johns",
+    description: "The Adventure Junkie",
+    title: "Shea Johns",
     src: Guide2,
     ctaText: "Book",
     ctaLink: "#",
     content: () => {
       return (
         <p>
-          Sophie is all about immersing herself in the local culture.<br />
-          With a deep love for art, history, and authentic experiences, 
-          she’ll guide you to the hidden gems of each city, 
-          from quirky museums to vibrant street festivals. If you’re 
-          looking to explore the soul of a destination, Sophie’s got you covered.
+          Shea is an adrenaline enthusiast who’s always on the lookout for his next thrill. 
+          Whether it’s bungee jumping, scuba diving, or trekking through rugged terrains, Liam’s passion for adventure knows no bounds. 
+          If you’re ready to challenge yourself, he’ll take you on an unforgettable, action-packed journey.
         </p>
       );
     },
   },
   {
-    description: "Markhu",
-    title: "Sardul Chamrakar",
+    description: "The Culture Seeker",
+    title: "Sardul KC",
     src: Sardul,
     ctaText: "Book",
     ctaLink: "#",
     content: () => {
       return (
         <p>
-          Sophie is all about immersing herself in the local culture.<br />
-          With a deep love for art, history, and authentic experiences, 
-          she’ll guide you to the hidden gems of each city, 
-          from quirky museums to vibrant street festivals. If you’re 
-          looking to explore the soul of a destination, Sophie’s got you covered. 
+          Sardul thrives on immersing himself in the rich history and traditions of every place he visits. 
+          From ancient ruins to bustling local markets, he’ll guide you through the heart and soul of each destination. 
+          If you’re eager to dive into local customs and heritage, Santiago is your go-to guide.
         </p>
       );
     },
