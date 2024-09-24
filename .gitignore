@@ -28,3 +28,4 @@ backend/static
 backend/mydatabase.sqlite
 *.sqlite
 backend/core/machineLearning/output.json
+backend/core/machineLearning/output.txt
