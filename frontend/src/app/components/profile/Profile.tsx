@@ -16,7 +16,7 @@ const ProfilePageComponent = () => {
       name: userData.interests[0] || "place1",
       image: "/images/travelling.jpg",
     },
-    { name: userData.interests[1] || "place2", image: "/images/ujj.jpg" },
+    { name: userData.interests[1] || "place2", image: "/images/everest.jpeg" },
     {
       name: userData.interests[2] || "place3",
       image: "/images/logo-travel-web.jpg",
@@ -48,7 +48,7 @@ const ProfilePageComponent = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <img
-            src="/images/ujj.jpg"
+            src="/images/profile.png"
             alt="Profile Picture"
             className="w-24 h-24 rounded-full border-4 border-gray-300 mr-6"
           />
