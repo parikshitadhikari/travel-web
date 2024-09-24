@@ -24,7 +24,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-200 to-blue-400 p-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-blue-200 p-10">
       <SidebarDemo/>
       <ProfilePageComponent/>
       {/* Travel Quote

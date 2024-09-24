@@ -16,22 +16,22 @@ const Auth = () => {
         <BackgroundBeams />
       </div>
 
-      <NavBar />
+      {/* <NavBar /> */}
 
       <div className="flex justify-center mt-10 space-x-4 z-10 relative">
         <button
           onClick={() => setFormType("login")}
           className={`px-6 py-3 font-medium text-lg ${
-            formType === "login" ? "bg-green-600 text-white" : "bg-gray-200"
-          } hover:bg-green-700 rounded-md`}
+            formType === "login" ? "bg-blue-500 text-white" : "bg-gray-200"
+          } hover:bg-blue-600 rounded-md`}
         >
           Login
         </button>
         <button
           onClick={() => setFormType("signup")}
           className={`px-6 py-3 font-medium text-lg ${
-            formType === "signup" ? "bg-green-600 text-white" : "bg-gray-200"
-          } hover:bg-green-700 rounded-md text-black`}
+            formType === "signup" ? "bg-blue-500 text-white" : "bg-gray-200"
+          } hover:bg-blue-600 rounded-md text-black`}
         >
           Sign Up
         </button>

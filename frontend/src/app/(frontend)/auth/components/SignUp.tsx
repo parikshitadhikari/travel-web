@@ -95,7 +95,7 @@ const SignUp: React.FC = () => {
           ))}
         </div>
         <button
-          className="p-2 font-bold bg-green-600 text-xs mt-4 text-white text-center w-full rounded-sm"
+          className="p-2 font-bold bg-blue-500 text-xs mt-4 text-white text-center w-full rounded-sm"
           onClick={handleFormSubmit}
         >
           Complete SignUp
@@ -107,7 +107,7 @@ const SignUp: React.FC = () => {
             <div className="mb-6">
               <label
                 htmlFor="username"
-                className="block text-2xl font-medium text-gray-600 mb-3"
+                className="block text-xl font-medium text-gray-600 mb-3"
               >
                 Username
               </label>
@@ -115,7 +115,7 @@ const SignUp: React.FC = () => {
                 placeholder="Enter your username"
                 type="text"
                 id="username"
-                className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 text-md p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
                 onChange={(e) => {
                   setUsername(e.target.value);
                 }}
@@ -125,14 +125,14 @@ const SignUp: React.FC = () => {
             <div className="mb-6">
               <label
                 htmlFor="email"
-                className="block text-2xl font-medium text-gray-600 mb-3"
+                className="block text-xl font-medium text-gray-600 mb-3"
               >
                 Email
               </label>
               <input
                 type="email"
                 id="email"
-                className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 text-md p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
                 placeholder="email@gmail.com"
                 onChange={(e) => {
                   setEmail(e.target.value);
@@ -143,7 +143,7 @@ const SignUp: React.FC = () => {
             <div className="mb-6">
               <label
                 htmlFor="password"
-                className="block text-2xl font-medium text-gray-600 mb-3"
+                className="block text-xl font-medium text-gray-600 mb-3"
               >
                 Password
               </label>
@@ -151,7 +151,7 @@ const SignUp: React.FC = () => {
                 type="password"
                 id="password"
                 placeholder="Enter your password"
-                className="mt-1 text-lg p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 text-md p-3 w-full border rounded-md focus:ring-blue-500 focus:border-blue-500"
                 onChange={(e) => {
                   setPassword(e.target.value);
                 }}
@@ -161,7 +161,7 @@ const SignUp: React.FC = () => {
             <div className="mb-6">
               <label
                 htmlFor="confirmPassword"
-                className="block text-2xl font-medium text-gray-600 mb-3"
+                className="block text-xl font-medium text-gray-600 mb-3"
               >
                 Confirm password
               </label>
@@ -169,7 +169,7 @@ const SignUp: React.FC = () => {
                 type="password"
                 id="confirmPassword"
                 placeholder="Confirm Password"
-                className="mt-1 p-3 w-full text-lg border rounded-md focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 p-3 w-full text-md border rounded-md focus:ring-blue-500 focus:border-blue-500"
                 onChange={(e) => {
                   setconfirmPassword(e.target.value);
                 }}
@@ -178,7 +178,7 @@ const SignUp: React.FC = () => {
             </div>
 
             <button
-              className="w-full text-2xl bg-green-600 hover:bg-green-700 text-white font-medium rounded-md py-3"
+              className="w-full text-xl bg-blue-500 hover:bg-blue-600 text-white font-medium rounded-md py-3"
               onClick={open}
             >
               Submit

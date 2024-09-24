@@ -4,7 +4,8 @@ import Modal from "./Model";
 import CreatePost from "./CreatePost";
 import SinglePost, { Post } from "./SinglePost";
 import axios from "axios";
-import { FaSeedling } from "react-icons/fa";
+import { FaBus, FaSeedling } from "react-icons/fa";
+import { IconArrowGuideFilled, IconBus, IconMap2, IconMapBolt, IconMessageChatbot, IconMountainFilled, IconWorld, IconWorldLongitude } from "@tabler/icons-react";
 
 interface Props {
   className: string;
@@ -68,7 +69,7 @@ const Posts = ({ className }: Props) => {
         </div>
       </Modal>
       <div className="fixed bottom-10 right-10 bg-blue-600 p-4 rounded-full shadow-md hover:bg-blue-700 transition-colors">
-        <FaSeedling className="text-white text-2xl" />
+        <IconMessageChatbot className="text-white text-2xl" />
       </div>
     </div>
   );
