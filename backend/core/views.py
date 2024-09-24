@@ -1,5 +1,5 @@
 import io
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets, permissions, authentication, status
 from rest_framework.request import Request
 from rest_framework.response import Response
@@ -56,6 +56,15 @@ class TravellersViewSet(viewsets.ModelViewSet):
     queryset = Travellers.objects.all()
     serializer_class = TravellersSerializer
 
+    def retrieve(self, request, *args, **kwargs):
+        print(kwargs)
+        username = kwargs.get('pk')
+        # traveller = get_object_or_404(Travellers,base_user__username = username)
+        print(username)
+        traveller = Travellers.objects.get(base_user__username = username)
+        serializer = self.serializer_class(traveller)
+        return Response(status=status.HTTP_200_OK,data=serializer.data)
+        
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )

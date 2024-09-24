@@ -44,6 +44,9 @@ Manages the creation and listing of travellers.
       "interests": ["interest1", "interest2"]
     }
     ```
+- **GET** `auth/travellers/username/`
+  - Get a traveller by username.
+  
 
 
 ## PackageViewSet

@@ -22,7 +22,12 @@ class TravellersSerializer(serializers.ModelSerializer):
     interests = LabelSerializer(many=True, required=False)
     # interests = serializers.StringRelatedField()
     base_user = UserSerializer()
-
+    selected_destinations = serializers.SerializerMethodField()
+    def get_selected_destinations(self, obj):
+        packages = Package.objects.filter(packagesubscription__subscribed_by=obj.base_user)
+    
+    # Serialize the package objects
+        return PackageSerializer(packages, many=True).data
     def create(self, validated_data):
         # Extract the nested data for instructor feedback
         print(validated_data)
@@ -47,6 +52,7 @@ class TravellersSerializer(serializers.ModelSerializer):
     class Meta:
         model = Travellers
         fields = "__all__"
+        
 
 
 class SimpleBusinessSerializer(serializers.ModelSerializer):
