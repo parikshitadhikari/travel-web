@@ -75,7 +75,7 @@ const FinanceTracker: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gradient-to-r from-blue-600 to-blue-300 p-8 text-white">
+    <div className="min-h-screen flex flex-col items-center bg-gradient-to-br from-blue-500 to-blue-200 p-8 text-white">
       <SidebarDemo/>
       <h1 className="text-4xl font-bold mb-6">Finance Tracker</h1>
       <div className="w-full max-w-4xl bg-white p-8 rounded-2xl shadow-lg text-gray-800">
