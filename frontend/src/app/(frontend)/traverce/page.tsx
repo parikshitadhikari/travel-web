@@ -22,11 +22,10 @@ const Traverce: React.FC = () => {
     interests: [],
     mood: "",
   });
-  const [tripDetails, setTripDetails] = useState<any>(null); // New state for trip details
+  const [tripDetails, setTripDetails] = useState<string | null>(null); // Change type to string
 
   useEffect(() => {
     const storedData = localStorage.getItem("userInfo");
-    console.log(storedData);
     if (storedData) {
       setUserData(JSON.parse(storedData));
     }
@@ -47,7 +46,6 @@ const Traverce: React.FC = () => {
           `http://127.0.0.1:8000/auth/travellers/${username}/`
         );
         setDestinations(response.data.selected_destinations);
-        console.log(response.data.selected_destinations);
       } catch (error) {
         console.error("Error fetching destinations:", error);
       } finally {
@@ -62,12 +60,9 @@ const Traverce: React.FC = () => {
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/auth/traverse/",
-        {
-          id: destinationId,
-        }
+        { id: destinationId }
       );
       setTripDetails(response.data); // Store the trip details from the response
-      console.log(response.data);
     } catch (error) {
       console.error("Error fetching trip details:", error);
     }
@@ -78,6 +73,21 @@ const Traverce: React.FC = () => {
     setSelectedDestinationId(destinationId);
     setTripDetails(null); // Reset trip details when a new destination is selected
     handleExplore(destinationId); // Call API when destination is selected
+  };
+
+  const renderTripDetails = (details: string) => {
+    // Split the details string into an array based on newline characters
+    const items = details.split("\n").filter((item) => item.trim() !== "");
+
+    return (
+      <ul className="list-disc pl-6">
+        {items.map((item, index) => (
+          <li key={index} className="text-gray-700 list-none mb-3">
+            {item.trim()}
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   return (
@@ -106,12 +116,10 @@ const Traverce: React.FC = () => {
                 </option>
               ))}
             </select>
-            {tripDetails && ( // Display trip details instead of the description
-              <div className="mt-4">
-                <h3 className="font-semibold">Trip Details:</h3>
-                <pre className="bg-gray-100 p-2 rounded">
-                  {JSON.stringify(tripDetails, null, 2)}
-                </pre>
+            {tripDetails && ( // Display trip details as bullet points
+              <div className="mt-4 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                <h4 className="font-semibold text-lg mb-5">Trip Requirements:</h4>
+                {renderTripDetails(tripDetails)}
               </div>
             )}
           </div>
