@@ -6,6 +6,7 @@ import Trending from "./components/Trending";
 import LowBudget from "./components/LowBudget";
 import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+import SidebarDemo from "@/app/components/Sidebar";
 
 const Itenaries = () => {
   return (
@@ -15,9 +16,12 @@ const Itenaries = () => {
           <BackgroundBeams />
         </div>
 
-        <NavBar />
+        {/* <NavBar /> */}
+        <div className="z-50 relative">
+          <SidebarDemo />
+        </div>
 
-        <div className="flex flex-col items-center justify-center mt-10 space-y-4 z-10 relative">
+        <div className="flex flex-col items-center justify-center pt-10 space-y-4 -z-10">
           <Recommended />
           <Trending />
           <LowBudget />
