@@ -29,7 +29,7 @@ interface ItenariesCardProps {
 function ItenariesCard({ place }: ItenariesCardProps) {
   const router = useRouter();
   const handleViewDetails = () => {
-    router.push(`/itenaries/${place.id}`);
+    router.push(`/destination/${place.id}`);
   };
 
   return (
