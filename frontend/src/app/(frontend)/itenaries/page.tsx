@@ -20,7 +20,7 @@ const Itenaries = () => {
         <div className="flex flex-col items-center justify-center mt-10 space-y-4 z-10 relative">
           <Recommended />
           <Trending />
-          {/* <LowBudget /> */}
+          <LowBudget />
         </div>
       </div>
     </MantineProvider>

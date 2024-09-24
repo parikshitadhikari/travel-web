@@ -42,13 +42,7 @@ const Recommended = () => {
 
           if (userInfo.interests) {
             const response = await axios.get(
-              "http://127.0.0.1:8000/auth/destination",
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  // Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token retrieval logic
-                },
-              }
+              "http://127.0.0.1:8000/auth/destination"
             );
 
             const recommendedPlaces = response.data.filter((place: Place) =>

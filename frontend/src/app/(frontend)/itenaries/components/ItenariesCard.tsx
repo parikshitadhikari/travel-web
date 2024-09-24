@@ -60,7 +60,7 @@ function ItenariesCard({ place }: ItenariesCardProps) {
             size={30}
           />
           <Badge color="pink" className="max-w-[100%]">
-            {place.price}
+            Rs. {place.price}
           </Badge>
         </div>
       </Group>
