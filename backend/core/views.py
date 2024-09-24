@@ -75,18 +75,18 @@ class TravellersViewSet(viewsets.ModelViewSet):
         serializer = self.serializer_class(traveller)
         return Response(status=status.HTTP_200_OK,data=serializer.data)
         
-    @action(
-        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
-    )
+    # @action(
+    #     methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    # )
 
-    def retrieve(self, request, *args, **kwargs):
-        print(kwargs)
-        username = kwargs.get('pk')
-        # traveller = get_object_or_404(Travellers,base_user__username = username)
-        print(username)
-        traveller = Travellers.objects.get(base_user__username = username)
-        serializer = self.serializer_class(traveller)
-        return Response(status=status.HTTP_200_OK,data=serializer.data)
+    # def retrieve(self, request, *args, **kwargs):
+    #     print(kwargs)
+    #     username = kwargs.get('pk')
+    #     # traveller = get_object_or_404(Travellers,base_user__username = username)
+    #     print(username)
+    #     traveller = Travellers.objects.get(base_user__username = username)
+    #     serializer = self.serializer_class(traveller)
+    #     return Response(status=status.HTTP_200_OK,data=serializer.data)
         
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
@@ -161,9 +161,9 @@ class BusinessViewSet(viewsets.ModelViewSet):
     queryset = Business.objects.all()
     serializer_class = BusinessSerializer
 
-    @action(
-        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
-    )
+    # @action(
+    #     methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    # )
 
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
@@ -438,7 +438,7 @@ class PackageViewSet(viewsets.ModelViewSet):
 
         json_result = predictions(df=df)
         return Response(status=status.HTTP_200_OK, data=json_result)
-    
+
 
 class EventViewSet(viewsets.ModelViewSet):
     authentication_classes = []
@@ -528,9 +528,9 @@ class EventViewSet(viewsets.ModelViewSet):
     # @action(methods=["GET"],detail=False)
     # def trending(self,request):
     #     traveller =self.get_traveller(request.data['username'])
-    @action(
-        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
-    )
+    # @action(
+    #     methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    # )
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )
