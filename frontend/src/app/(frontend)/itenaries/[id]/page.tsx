@@ -7,9 +7,16 @@ import NavBar from "@/app/components/NavBar";
 import { Divider } from "@mantine/core";
 import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
-import { IconTag, IconUser, IconAt } from "@tabler/icons-react";
+import {
+  IconTag,
+  IconUser,
+  IconAt,
+  IconHeartFilled,
+  IconHeart,
+} from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal } from "@mantine/core";
+import { toast } from "react-toastify";
 
 interface Label {
   id: number;
@@ -22,16 +29,32 @@ interface Place {
   description: string;
   price: number;
   guide: string;
-  interested_users: string[]; 
-  img: string; 
+  interested_users: string[];
+  img: string;
   label: Label[];
 }
 
 const PlaceDetails = () => {
   const [opened, { open, close }] = useDisclosure(false);
+  const [place, setPlace] = useState<Place | undefined>(undefined);
+  const [isInterested, setIsInterested] = useState(false);
+  const [username, setUsername] = useState<string | null>(null);
 
   const { id } = useParams();
-  const [place, setPlace] = useState<Place | undefined>(undefined);
+
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      const parsedUserInfo = JSON.parse(userInfo);
+      setUsername(parsedUserInfo.username);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (username && place?.interested_users.includes(username)) {
+      setIsInterested(true);
+    }
+  }, [place?.interested_users, username]);
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -45,14 +68,40 @@ const PlaceDetails = () => {
           (place) => place.id === parseInt(id as string)
         );
         setPlace(placeDetails);
+
+        if (username && placeDetails?.interested_users.includes(username)) {
+          setIsInterested(true);
+        }
       } catch (error) {
         console.error("Error fetching places:", error);
       }
     };
 
     fetchPlaces();
-  }, [id]);
+  }, [id, username, isInterested]);
 
+  const handleInterestToggle = async () => {
+    if (!username) return;
+
+    const body = {
+      id: place?.id,
+      username: username,
+    };
+
+    try {
+      await fetch("http://127.0.0.1:8000/auth/destination/subscribe/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      });
+      setIsInterested(true);
+    } catch (error) {
+      console.error("Error while subscribing:", error);
+      toast.error("An error occurred while subscribing.");
+    }
+  };
 
   if (!place) {
     return <p>Loading...</p>;
@@ -130,6 +179,21 @@ const PlaceDetails = () => {
               className="border p-2 mt-5 rounded border-blue-500 hover:bg-blue-500 font-bold hover:text-white"
             >
               People Interested ({place.interested_users.length})
+            </button>
+            <button
+              onClick={handleInterestToggle}
+              className={`border p-2 mt-5 rounded flex items-center gap-x-2 ${
+                isInterested
+                  ? "border-pink-500 bg-pink-500 text-white font-bold"
+                  : "border-black bg-white text-black"
+              }`}
+            >
+              {isInterested ? (
+                <IconHeartFilled className="text-white" size={20} />
+              ) : (
+                <IconHeart className="text-black" size={20} />
+              )}
+              {isInterested ? " Subscribed" : " Subscribe"}
             </button>
           </div>
         </div>
