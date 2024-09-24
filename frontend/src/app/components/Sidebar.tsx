@@ -97,7 +97,7 @@ export default function SidebarDemo() {
     },
     {
       label: "Logout",
-      href: "/logout", // Updated with a route
+      href: "/", // Updated with a route
       icon: (
         <IconArrowLeft className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
