@@ -1,9 +1,11 @@
+from django.utils import timezone
 import io
 from django.shortcuts import get_object_or_404, render
 from rest_framework import viewsets, permissions, authentication, status
 from rest_framework.request import Request
 from rest_framework.response import Response
 from django.core.files.images import ImageFile
+import pandas as pd
 from core.models import (
     Business,
     Event,
@@ -11,6 +13,7 @@ from core.models import (
     Guide,
     Label,
     Package,
+    PackageComment,
     User,
     Travellers,
     PackageSubscription,
@@ -23,6 +26,7 @@ from core.serializers import (
     EventInterestedSerializer,
     EventSerializer,
     GuideSerializer,
+    PackageCommentSerializer,
     PackageSerializer,
     TravellersSerializer,
     UserSerializer,
@@ -35,6 +39,7 @@ from django.db.models import Count
 from .authentication import CustomAuthentication
 from rest_framework.test import CoreAPIClient
 from rest_framework.test import CoreAPIClient
+# from .predict import predictions
 # Create your views here.
 # class UserRegistrationView(APIView):
 #     renderer_classes = [UserRenderer]
@@ -47,6 +52,10 @@ from rest_framework.test import CoreAPIClient
 #         return Response({'token':token, 'info':user_info.data}, status=status.HTTP_201_CREATED)
 
 
+# Json Fields
+# username
+# password
+# interests
 # Json Fields
 # username
 # password
@@ -69,7 +78,26 @@ class TravellersViewSet(viewsets.ModelViewSet):
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )
+
+    def retrieve(self, request, *args, **kwargs):
+        print(kwargs)
+        username = kwargs.get('pk')
+        # traveller = get_object_or_404(Travellers,base_user__username = username)
+        print(username)
+        traveller = Travellers.objects.get(base_user__username = username)
+        serializer = self.serializer_class(traveller)
+        return Response(status=status.HTTP_200_OK,data=serializer.data)
+        
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
     def create_user(self, request, *args, **kwargs):
+        data = request.data
+        base_user = {
+            "username": data["username"],
+            "password": data["password"],
+            "email": data["email"],
+        }
         data = request.data
         base_user = {
             "username": data["username"],
@@ -78,21 +106,29 @@ class TravellersViewSet(viewsets.ModelViewSet):
         }
         data["base_user"] = base_user
         interests = data["interests"]
+        data["base_user"] = base_user
+        interests = data["interests"]
         # print(interests)
         # traveller_serializer.
+
+        data["interests"] = []
 
         data["interests"] = []
         for interest in interests:
             # print(interest)
             data["interests"].append({"name": interest})
 
+            data["interests"].append({"name": interest})
+
         # data['interests']=None
         # print(data)
         # print(data['interests'])
         traveller_serializer = self.serializer_class(data=data)
+        traveller_serializer = self.serializer_class(data=data)
         traveller_serializer.is_valid(raise_exception=True)
         traveller = traveller_serializer.save()
         print(traveller)
+
 
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs)
@@ -128,7 +164,15 @@ class BusinessViewSet(viewsets.ModelViewSet):
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )
+
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
     def create_user(self, request, *args, **kwargs):
+        data = request.data
+        base_user = {"username": data["username"], "password": data["password"]}
+        data["base_user"] = base_user
+        interests = data["interests"]
         data = request.data
         base_user = {"username": data["username"], "password": data["password"]}
         data["base_user"] = base_user
@@ -137,23 +181,32 @@ class BusinessViewSet(viewsets.ModelViewSet):
         # traveller_serializer.
 
         data["interests"] = []
+
+        data["interests"] = []
         for interest in interests:
             # print(interest)
+            data["interests"].append({"name": interest})
+
             data["interests"].append({"name": interest})
 
         # data['interests']=None
         # print(data)
         # print(data['interests'])
         traveller_serializer = self.serializer_class(data=data)
+        traveller_serializer = self.serializer_class(data=data)
         traveller_serializer.is_valid(raise_exception=True)
         traveller = traveller_serializer.save()
         print(traveller)
+
 
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs)
 
 import requests
+import requests
 class PackageViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
     authentication_classes = []
     permission_classes = []
     queryset = Package.objects.all()
@@ -161,6 +214,7 @@ class PackageViewSet(viewsets.ModelViewSet):
 
     def get_traveller(username):
         user = User.objects.get(username=username)
+        traveller = Travellers.objects.get(base_user=user.pk)
         traveller = Travellers.objects.get(base_user=user.pk)
         return traveller
 
@@ -266,7 +320,125 @@ class PackageViewSet(viewsets.ModelViewSet):
 
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs
+        
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def comment(self, request, *args, **kwargs):
+        
+        data =request.data
+        user = User.objects.get(username=data['username'])
+        comment = data['comment']
+        post = Package.objects.get(id= data['id'])
+        post_data = {
+            'commented_by':user.pk,
+            'comment':comment,
+            'package':post.pk
+        }
+        post_comment = PackageCommentSerializer(data=post_data)
+        post_comment.is_valid(raise_exception=True)
+        post_comment.save()
+        return Response(status=status.HTTP_200_OK)
 
+    @action(
+        methods=["GET"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def sentiment(self, request, *args, **kwargs):
+        data =request.data
+
+        id = data['id']
+        comments = PackageComment.objects.filter(package__id=id).values_list('comment',flat=True)
+        print(comments)
+        print(len(comments))
+        if(len(comments)==0):
+            return Response(status=status.HTTP_200_OK)
+        from tf_keras.models import load_model
+        from tf_keras.preprocessing.sequence import pad_sequences
+
+        from tf_keras.preprocessing.text import Tokenizer
+        import numpy as np
+        import json
+        import pandas as pd
+        from pathlib import Path
+
+        try:
+            # Load Model
+            DIR = Path(__file__).resolve().parent.parent
+            print(DIR)
+            model_path =  DIR / "core" /"machineLearning" / "model.h5"
+            # model_path =  "/core/machineLearning/model.h5"
+            model = load_model(model_path)
+
+            print(model_path)
+
+            # CSV path
+            csv_file =DIR / "core" /"machineLearning" / "output.txt"
+
+            # Reading from CSV file
+            with open(csv_file, mode="r") as file:
+                data = [line.strip() for line in file]
+
+            max_words = 5000
+            max_len = 600
+
+            tokenizer = Tokenizer(num_words=max_words)
+            tokenizer.fit_on_texts(data)
+
+
+            def predictions(df):
+                reviewText = df["reviewText"].tolist()
+                num = df.shape[0]
+                sequence = tokenizer.texts_to_sequences(reviewText)
+                test_review = pad_sequences(sequence, maxlen=max_len)
+
+                sentiment = []
+                print(df)
+                for i in range(num):
+                    eachsentiment = ["Negative", "Neutral", "Positive"][
+                        np.around(model.predict(test_review), decimals=4).argmax(axis=1)[i]
+                    ]
+                    sentiment.append(eachsentiment)
+
+                positiveCount = sentiment.count("Positive")
+                negativeCount = sentiment.count("Negative")
+                neutralCount = sentiment.count("Neutral")
+
+                positivePercentage = positiveCount / num
+                negativePercentage = negativeCount / num
+                neutralPercentage = neutralCount / num
+
+
+                resultDataDic = {"comments": {}}
+                for i, text in enumerate(reviewText):
+                    resultDataDic["comments"][text] = sentiment[i]
+
+                resultDataDic["Percentage"] = {
+                    "Positive": positivePercentage,
+                    "Negative": negativePercentage,
+                    "Neutral": neutralPercentage,
+                }
+                return resultDataDic
+                # with open(BASE_DIR / "machineLearning" / "output.json", "w") as outfile:
+                #     json.dump(resultDataDic, outfile)
+
+        except Exception as e:
+            print(f"An error occurred: {e}")
+
+        # Get the current time
+        current_time = timezone.now()
+
+        # Create a list of dictionaries for DataFrame
+        data = [{'reviewText': comment, 'reviewTime': current_time} for comment in comments]
+        if(data.count==0):
+            return Response(status=status.HTTP_200_OK)
+            
+        print(data)
+        # Create a pandas DataFrame from the data
+        df = pd.DataFrame(data)
+
+        json_result = predictions(df=df)
+        return Response(status=status.HTTP_200_OK, data=json_result)
+    
 
 class EventViewSet(viewsets.ModelViewSet):
     authentication_classes = []
@@ -277,7 +449,45 @@ class EventViewSet(viewsets.ModelViewSet):
     def get_traveller(username):
         user = User.objects.get(username=username)
         traveller = Travellers.objects.get(base_user=user.pk)
+        traveller = Travellers.objects.get(base_user=user.pk)
         return traveller
+
+    @action(methods=["GET"], detail=False)
+    def recommendations(self, request):
+        traveller = self.get_traveller(request.data["username"])
+        matching_users = (
+            Event.objects.filter(label__name__in=traveller.interests)
+            .annotate(matched_labels=Count("label"))
+            .order_by("-matched_labels")
+        )
+    @action(
+        methods=["POST","GET"], permission_classes=[], authentication_classes=[], detail=False
+    )
+    def interested(self, request, *args, **kwargs):
+        if(request.method=="POST"):
+            
+            data =request.data
+            user = User.objects.get(username=data['username'])
+            # comment = data['comment']
+            event = Event.objects.get(id= data['id'])
+            event_interested_data={
+                
+            }
+            event_interested_data['event']= event.pk
+            event_interested_data['interested_user']= user.pk
+            event_interested_seralizer = EventInterestedSerializer(data= event_interested_data)
+            event_interested_seralizer.is_valid(raise_exception=True)
+            event_interested_seralizer.save()
+            return Response(status=status.HTTP_201_CREATED)
+        else:
+            data = request.data
+            event_id = data['id']
+            event = Event.objects.get(id= event_id)
+            # interested_users = event.eventinterested_set.all().values_list('interested_user',flat=True)
+            interested_users = User.objects.filter(eventinterested__event=event)
+# Serialize the user data
+            return Response(status=status.HTTP_200_OK, data=UserSerializer(interested_users, many=True).data)
+            # return Response(status=status.HTTP_200_OK,data=UserSerializer(interested_users,many=True).data)
 
     @action(methods=["GET"], detail=False)
     def recommendations(self, request):
@@ -321,12 +531,20 @@ class EventViewSet(viewsets.ModelViewSet):
     @action(
         methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
     )
+    @action(
+        methods=["POST"], permission_classes=[], authentication_classes=[], detail=False
+    )
     def create_event(self, request, *args, **kwargs):
+
 
         data = request.data
         labels = data["label"]
+        labels = data["label"]
         # print(interests)
         # event_serializer.
+        data["created_by"] = User.objects.get(username=data["username"]).pk
+
+        data["label"] = []
         data["created_by"] = User.objects.get(username=data["username"]).pk
 
         data["label"] = []
@@ -334,9 +552,12 @@ class EventViewSet(viewsets.ModelViewSet):
             # print(interest)
             data["label"].append({"name": label})
 
+            data["label"].append({"name": label})
+
         # data['interests']=None
         # print(data)
         # print(data['interests'])
+        event_serializer = self.serializer_class(data=data)
         event_serializer = self.serializer_class(data=data)
         event_serializer.is_valid()
         event = event_serializer.save()
@@ -508,3 +729,5 @@ class GuideViewSet(viewsets.ModelViewSet):
 
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs)
+
+

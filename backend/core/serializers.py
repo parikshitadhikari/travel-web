@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Business,  EventInterested, Guide, PackageSubscription, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
+from .models import Business,  EventInterested, Guide, PackageComment, PackageSubscription, Post, User, Travellers, Label, Package, Event,PostComment,PostLike
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -153,11 +153,17 @@ class PackageSubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = PackageSubscription
         fields = '__all__'
+class PackageCommentSerializer(serializers.ModelSerializer):
+    commented_by = serializers.CharField(source='commented_by.username',read_only=True)
+
+    class Meta:
+        model = PackageComment
+        fields = '__all__'
 
 class PackageSerializer(serializers.ModelSerializer):
     label = LabelSerializer(many=True, required=False)
     # user = serializers.JSONField(source='created_by', read_only=True)
-    # postcomment_set = PackageCommentSerializer(source='comments', many=True, read_only=True)
+    reviews = PackageCommentSerializer( many=True, read_only=True)
     # subscribedby_set = PackageSubscriptionSerializer(source='subscription', many=True, read_only=True)
     # business_data = BusinessSerializer(source="business",read_only=True)
     interested_users = serializers.SerializerMethodField()

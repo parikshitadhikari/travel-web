@@ -52,6 +52,7 @@ class Guide(models.Model):
     base_user = models.ForeignKey(User,on_delete=models.CASCADE,related_name="Guide")
     label = models.ManyToManyField(Label)
     image = models.ImageField(upload_to='core/giude/profile',null=True,blank=True)
+    
     def __str__(self):
         return self.base_user.username
 

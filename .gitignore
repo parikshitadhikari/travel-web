@@ -27,3 +27,4 @@ backend/mydatabase
 backend/static
 backend/mydatabase.sqlite
 *.sqlite
+backend/core/machineLearning/output.json
