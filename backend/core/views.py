@@ -34,6 +34,7 @@ from rest_framework.decorators import action
 from django.db.models import Count
 from .authentication import CustomAuthentication
 from rest_framework.test import CoreAPIClient
+from rest_framework.test import CoreAPIClient
 # Create your views here.
 # class UserRegistrationView(APIView):
 #     renderer_classes = [UserRenderer]
@@ -411,6 +412,28 @@ class PostViewSet(viewsets.ModelViewSet):
         # print(data)
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs
+        
+import google.generativeai as genai
+import os
+from dotenv import load_dotenv
+load_dotenv()
+genai.configure(api_key=os.environ.get("API_KEY"))
+class ChatbotViewSet(viewsets.ModelViewSet):
+    authentication_classes = []
+    permission_classes = []
+    queryset=None
+    def create(self, request, *args, **kwargs):
+        prompt = request.data['prompt']
+#         curl \
+#   -H 'Content-Type: application/json' \
+#   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
+#   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        # print(response.text)
+
+        return Response(data=response.text,status=status.HTTP_200_OK)
+        # return super().list(request, *args, **kwargs)
         
 import google.generativeai as genai
 import os

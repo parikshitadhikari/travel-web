@@ -8,10 +8,12 @@ import {
 import {
   IconAi,
   IconAnalyze,
+  IconArrowGuide,
   IconArrowLeft,
   IconBrandTabler,
   IconCalendarEvent,
   IconChartArcs,
+  IconMoneybag,
   IconMountain,
   IconSettings,
   IconUserBolt,
@@ -38,7 +40,7 @@ export default function SidebarDemo() {
   const links = [
     {
       label: "Community",
-      href: "/community", // Updated with a route
+      href: "/community-post", // Updated with a route
       icon: (
         <IconBrandTabler className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -52,29 +54,43 @@ export default function SidebarDemo() {
     },
     {
       label: "Events",
-      href: "/events", // Updated with a route
+      href: "/event", // Updated with a route
       icon: (
         <IconCalendarEvent className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Travel AI",
-      href: "/travel-ai", // Updated with a route
+      href: "/travelAI", // Updated with a route
       icon: (
         <IconAi className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Guide",
+      href: "#", // Yet t0 update with a route
+      icon: (
+        <IconArrowGuide className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Traverce",
+      href: "#", // Yet to update with a route
+      icon: (
+        <IconMoneybag className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
 
     {
       label: "Financial Tracker",
-      href: "/financial-tracker", // Updated with a route
+      href: "/tracker", // Updated with a route
       icon: (
         <IconChartArcs className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
     {
       label: "Profile",
-      href: "/profile", // Updated with a route
+      href: "/user", // Updated with a route
       icon: (
         <IconUserBolt className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -110,7 +126,7 @@ export default function SidebarDemo() {
               <SidebarLink
                 link={{
                   label: userData?.username || "Traveler",
-                  href: "#", 
+                  href: "#",
                   icon: (
                     <Image
                       src="https://assets.aceternity.com/manu.png"

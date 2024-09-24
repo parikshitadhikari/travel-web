@@ -254,3 +254,16 @@ Create destination or get a list of destination
 - **GET** `auth/guide/`
 - Returns list of guides
 ---
+## ChatViewSet (chat)
+Chat with chatbot
+
+### ENDPOINTS
+- **POST** `/auth/post`
+  -  prompt chatbot
+   - **Request Body:**
+    ```json
+    {
+
+      "prompt" :"Your Prompt"
+    }
+    ```

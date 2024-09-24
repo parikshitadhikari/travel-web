@@ -21,6 +21,8 @@ export default function ExpandableCardDemo() {
   const [active, setActive] = useState<Card | null>(null);
   const ref = useRef<HTMLDivElement>(null);
   const id = useId();
+  const truncate = (input: string) =>
+    input?.length > 10 ? `${input.substring(0, 10)}` : input;
 
   const staticUsername = "Rohan"; // Static username for the API request
 
@@ -32,7 +34,7 @@ export default function ExpandableCardDemo() {
         const transformedCards = response.data.map((item: any) => ({
           id: item.id, // Get event ID for the API
           title: item.name,
-          description: item.description,
+          description: truncate(item.created_at),
           image: item.img,
           isFavorite: item.interested_users.includes(staticUsername), // Initially, all events are not favorited
           content: () => item.description,

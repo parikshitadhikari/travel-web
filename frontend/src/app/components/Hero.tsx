@@ -8,7 +8,7 @@ const Hero = () => {
       text: "Your",
     },
     {
-      text: "Tribe",
+      text: "Tribe,",
     },
     {
       text: "Your",

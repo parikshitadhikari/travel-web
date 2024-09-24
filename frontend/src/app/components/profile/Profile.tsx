@@ -1,17 +1,33 @@
 // components/ProfilePage.tsx
 "use client"
 import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-const ProfilePage = () => {
+const ProfilePageComponent = () => {
+  const [userData, setUserData] = useState<any>({
+    username: "",
+    email: "",
+    password: "",
+    interests: [],
+    mood: "",
+  });
   const destinations = [
-    { name: 'Paris', image: '/images/favicon.png' },
-    { name: 'Tokyo', image: '/images/ujj.jpg' },
-    { name: 'New York', image: '/images/logo-travel-web.png' },
+    { name: userData.interests[0] || "place1", image: '/images/travelling.jpg' },
+    { name:userData.interests[1] || "place2", image: '/images/ujj.jpg' },
+    { name: userData.interests[2] || "place3", image: '/images/logo-travel-web.jpg' },
     // { name: 'Sydney', image: '#' },
   ];
 
+  useEffect(() => {
+    const storedData = localStorage.getItem("userData");
+    if (storedData) {
+      setUserData(JSON.parse(storedData));
+    }
+  }, []);
+
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
+    
+    <div className="min-h-screen">
       {/* Profile Section */}
       <motion.div
         className="bg-white shadow-lg rounded-lg p-6 max-w-4xl mx-auto"
@@ -32,9 +48,9 @@ const ProfilePage = () => {
             className="w-24 h-24 rounded-full border-4 border-gray-300 mr-6"
           />
           <div>
-            <h1 className="text-3xl font-bold text-gray-800">John Doe</h1>
+            <h1 className="text-3xl font-bold text-gray-800">{userData.username || "Traveler"}</h1>
             <p className="text-gray-600">Travel Enthusiast & Blogger</p>
-            <p className="text-gray-600">john.doe@example.com</p>
+            <p className="text-gray-600">{userData.email || "you@example.com"}</p>
             <p className="text-gray-600">Based in: New York, USA</p>
           </div>
         </motion.div>
@@ -86,4 +102,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default ProfilePageComponent;

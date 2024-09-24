@@ -24,7 +24,7 @@ const Chat = ({ messages }: Props) => {
   }
 
   return (
-    <div className="flex flex-col w-full px-4 py-5 overflow-y-auto space-y-4 ">
+    <div className="flex flex-col w-full px-3 py-5 overflow-y-auto space-y-4 ">
       {messages.map((message, index) => (
         <div
           key={index}

@@ -42,7 +42,7 @@ const Posts = ({ className }: Props) => {
   };
 
   return (
-    <div className={`${className} flex flex-col pb-10 bg-green-50`}>
+    <div className={`${className} flex flex-col pb-10 bg-blue-200`}>
       <div className="fixed w-full bottom-5">
         <CreatePost
         onPostSubmit={async () => {
@@ -67,7 +67,7 @@ const Posts = ({ className }: Props) => {
           {selectedPost && <SinglePost post={selectedPost} inModal={true} />}
         </div>
       </Modal>
-      <div className="fixed bottom-10 right-10 bg-green-600 p-4 rounded-full shadow-md hover:bg-green-700 transition-colors">
+      <div className="fixed bottom-10 right-10 bg-blue-600 p-4 rounded-full shadow-md hover:bg-blue-700 transition-colors">
         <FaSeedling className="text-white text-2xl" />
       </div>
     </div>
