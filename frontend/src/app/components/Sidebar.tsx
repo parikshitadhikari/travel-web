@@ -128,8 +128,8 @@ export default function SidebarDemo() {
                   label: userData?.username || "Traveler",
                   href: "#",
                   icon: (
-                    <Image
-                      src="https://assets.aceternity.com/manu.png"
+                    <img
+                      src={"/images/profile.png"}
                       className="h-7 w-7 flex-shrink-0 rounded-full"
                       width={50}
                       height={50}
