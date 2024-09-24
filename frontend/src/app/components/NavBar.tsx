@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import {
@@ -9,8 +9,21 @@ import {
   MenuItem,
   ProductItem,
 } from "@/components/ui/navbar-menu";
+import { IconLogin2, IconLogout2, IconPinInvoke } from "@tabler/icons-react";
 
 const NavBar = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo");
+    if (userInfo) {
+      setIsLoggedIn(true);
+    }
+  }, []);
+  const handleLogout = () => {
+    localStorage.removeItem("userInfo");
+    setIsLoggedIn(false);
+  };
+
   return (
     <nav className="bg-white border-gray-200 dark:bg-gray-900">
       <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
@@ -72,12 +85,21 @@ const NavBar = () => {
         </div>
         <div className="md:order-2">
           <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-4">
-            <Link
-              href="/auth"
-              className="w-40 h-10 flex items-center justify-center rounded-xl bg-blue-500 border dark:border-white border-transparent text-white text-sm z-[9999]"
-            >
-              Login
-            </Link>
+            {isLoggedIn ? (
+              <button
+                onClick={handleLogout}
+                className="w-40 h-10 gap-x-2 flex items-center justify-center rounded-xl bg-red-500 border dark:border-white border-transparent text-white text-sm z-[9999]"
+              >
+                <IconLogout2 /> Logout
+              </button>
+            ) : (
+              <Link
+                href="/auth"
+                className="w-40 h-10 gap-x-2 flex items-center justify-center rounded-xl bg-blue-500 border dark:border-white border-transparent text-white text-sm z-[9999]"
+              >
+                <IconLogin2 /> Login
+              </Link>
+            )}
           </div>
         </div>
       </div>
