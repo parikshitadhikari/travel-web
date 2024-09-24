@@ -6,6 +6,7 @@ import { useDisclosure } from "@mantine/hooks";
 import mockUsers from "../data/mockUsers";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const interests = [
   "Adventure Seeker",
@@ -25,6 +26,7 @@ const SignUp: React.FC = () => {
   const [email, setEmail] = useState("");
   const [confirmPassword, setconfirmPassword] = useState("");
   const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const router = useRouter();
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -50,21 +52,19 @@ const SignUp: React.FC = () => {
     mockUsers.push(newUser);
 
     localStorage.setItem("userInfo", JSON.stringify(newUser));
+    router.push("/community-post");
     try {
-      
       axios.post(
-       "http://127.0.0.1:8000/auth/travellers/create_user/",
-       JSON.stringify(newUser),
-       {
-         headers: {
-           "Content-Type": "application/json",
-           // Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token retrieval logic
-         },
-       }
-     );
-    }
-    catch(e){}
-    console.log(mockUsers);
+        "http://127.0.0.1:8000/auth/travellers/create_user/",
+        JSON.stringify(newUser),
+        {
+          headers: {
+            "Content-Type": "application/json",
+            // Authorization: `Bearer ${localStorage.getItem("token")}`, // Replace with your token retrieval logic
+          },
+        }
+      );
+    } catch (e) {}
     toast.success("User successfully signed up.");
   };
 
