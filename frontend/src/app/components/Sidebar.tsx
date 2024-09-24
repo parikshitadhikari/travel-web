@@ -59,7 +59,7 @@ export default function SidebarDemo() {
     },
     {
       label: "Travel AI",
-      href: "/travel-ai", // Updated with a route
+      href: "/travelAI", // Updated with a route
       icon: (
         <IconAi className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -67,7 +67,7 @@ export default function SidebarDemo() {
 
     {
       label: "Financial Tracker",
-      href: "/financial-tracker", // Updated with a route
+      href: "/tracker", // Updated with a route
       icon: (
         <IconChartArcs className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
@@ -110,7 +110,7 @@ export default function SidebarDemo() {
               <SidebarLink
                 link={{
                   label: userData?.username || "Traveler",
-                  href: "#", 
+                  href: "#",
                   icon: (
                     <Image
                       src="https://assets.aceternity.com/manu.png"
