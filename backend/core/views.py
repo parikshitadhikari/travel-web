@@ -268,7 +268,6 @@ class PackageViewSet(viewsets.ModelViewSet):
         # return super().create(request, *args, **kwargs
 
 
-
 class EventViewSet(viewsets.ModelViewSet):
     authentication_classes = []
     permission_classes = []
@@ -412,7 +411,7 @@ class PostViewSet(viewsets.ModelViewSet):
         # print(data)
         return Response(status=status.HTTP_200_OK)
         # return super().create(request, *args, **kwargs
-        
+
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
@@ -434,7 +433,7 @@ class ChatbotViewSet(viewsets.ModelViewSet):
 
         return Response(data=response.text,status=status.HTTP_200_OK)
         # return super().list(request, *args, **kwargs)
-        
+
 import google.generativeai as genai
 import os
 from dotenv import load_dotenv
@@ -465,12 +464,12 @@ class TraverseViewSet(viewsets.ModelViewSet):
         # prompt = request.data['prompt']
         package_id = request.data['id']
         package =Package.objects.get(id=package_id)
-#         curl \
-#   -H 'Content-Type: application/json' \
-#   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
-#   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
+        #         curl \
+        #   -H 'Content-Type: application/json' \
+        #   -d '{"contents":[{"parts":[{"text":"Explain how AI works"}]}]}' \
+        #   -X POST 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=YOUR_API_KEY'
         model = genai.GenerativeModel("gemini-1.5-flash")
-        prompt = f"I am going on the package(travel): {package.name}. It's description is {package.description}. Give required equipments and its price for this trip."
+        prompt = f"I am going on the package(travel): {package.name}. It's description is {package.description}. Give required equipments and its price for this trip. Stricly only give me short points on what equipments i need. Nothing more nothing less.Parse data and give in 10 nice points. No extra text just the 10 points starting with 1,2,3 and so on.Dont say Here are 10 essential items for your Kathmandu Durbar Square trip"
         response = model.generate_content(prompt)
         # print(response.text)
 
