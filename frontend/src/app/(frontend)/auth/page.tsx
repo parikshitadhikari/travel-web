@@ -18,7 +18,7 @@ const Auth = () => {
 
       {/* <NavBar /> */}
 
-      <div className="flex justify-center mt-10 space-x-4 z-10 relative">
+      <div className="flex justify-center pt-10 space-x-4 z-10 relative">
         <button
           onClick={() => setFormType("login")}
           className={`px-6 py-3 font-medium text-lg ${
