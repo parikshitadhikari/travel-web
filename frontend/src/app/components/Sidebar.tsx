@@ -8,10 +8,12 @@ import {
 import {
   IconAi,
   IconAnalyze,
+  IconArrowGuide,
   IconArrowLeft,
   IconBrandTabler,
   IconCalendarEvent,
   IconChartArcs,
+  IconMoneybag,
   IconMountain,
   IconSettings,
   IconUserBolt,
@@ -62,6 +64,20 @@ export default function SidebarDemo() {
       href: "/travelAI", // Updated with a route
       icon: (
         <IconAi className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Guide",
+      href: "#", // Yet t0 update with a route
+      icon: (
+        <IconArrowGuide className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
+      ),
+    },
+    {
+      label: "Traverce",
+      href: "#", // Yet to update with a route
+      icon: (
+        <IconMoneybag className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
     },
 
