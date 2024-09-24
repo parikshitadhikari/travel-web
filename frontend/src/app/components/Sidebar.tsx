@@ -52,7 +52,7 @@ export default function SidebarDemo() {
     },
     {
       label: "Events",
-      href: "/events", // Updated with a route
+      href: "/event", // Updated with a route
       icon: (
         <IconCalendarEvent className="text-neutral-200 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
       ),
