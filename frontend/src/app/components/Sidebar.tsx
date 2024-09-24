@@ -32,7 +32,8 @@ export default function SidebarDemo() {
     mood: "",
   });
   useEffect(() => {
-    const storedData = localStorage.getItem("userData");
+    const storedData = localStorage.getItem("userInfo");
+    console.log(storedData);
     if (storedData) {
       setUserData(JSON.parse(storedData));
     }
