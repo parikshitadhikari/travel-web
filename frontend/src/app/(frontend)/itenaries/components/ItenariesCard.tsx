@@ -35,11 +35,7 @@ function ItenariesCard({ place }: ItenariesCardProps) {
   return (
     <Card shadow="sm" padding="lg" radius="md" withBorder>
       <Card.Section>
-        <img
-          src={place.img}
-          className="h-64 w-full"
-          alt={place.name}
-        />
+        <img src={place.img} className="h-64 w-full" alt={place.name} />
       </Card.Section>
 
       <Group justify="space-between" mt="md" mb="xs">
@@ -55,10 +51,10 @@ function ItenariesCard({ place }: ItenariesCardProps) {
           {place.name}
         </Text>
         <div className="max-w-[50%] flex justify-center items-center gap-x-4">
-          <IconHeart
+          {/* <IconHeart
             className="max-w-[40%] border-2 p-0.5 rounded-full"
             size={30}
-          />
+          /> */}
           <Badge color="pink" className="max-w-[100%]">
             Rs. {place.price}
           </Badge>
