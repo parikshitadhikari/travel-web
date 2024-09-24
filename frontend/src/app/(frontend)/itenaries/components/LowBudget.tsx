@@ -5,34 +5,59 @@ import "@mantine/core/styles.css";
 import { Carousel } from "@mantine/carousel";
 import mockPlaces from "../data/mockPlaces";
 
-interface Place {
+interface Label {
+  id: number;
   name: string;
-  description: string;
-  budget: string;
-  guide_name: string;
-  people_liking_this_place: string[];
-  image_of_the_place: string;
-  tag: string[];
 }
 
-const parseMinBudget = (budget: string) => {
-  const budgetRange = budget.split("-")[0].replace(/\D/g, "");
-  return parseInt(budgetRange, 10);
+interface Place {
+  id: number;
+  label: Label[];
+  interested_users: string[];
+  name: string;
+  img: string;
+  price: number;
+  description: string;
+  business: number;
+  guide: number;
+}
+
+const parseMinBudget = (budget: number) => {
+  return budget;
+};
+const fetchPlaces = async (): Promise<Place[]> => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/auth/destination");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching places:", error);
+    return [];
+  }
 };
 
-const sortPlacesByBudget = (places: Place[]) => {
-  return places.sort(
-    (a, b) => parseMinBudget(a.budget) - parseMinBudget(b.budget)
-  );
+const getTopLowBudgetPlaces = (places: Place[]) => {
+  // Sort places by price in ascending order
+  const sortedPlaces = places.sort((a, b) => a.price - b.price);
+
+  // Return top 5 low-budget places
+  return sortedPlaces.slice(0, 5);
 };
 
 const LowBudget = () => {
   const [lowBudgetPlaces, setLowBudgetPlaces] = useState<Place[]>([]);
 
   useEffect(() => {
-    const sortedPlaces = sortPlacesByBudget(mockPlaces);
-    const top10LowBudgetPlaces = sortedPlaces.slice(0, 5);
-    setLowBudgetPlaces(top10LowBudgetPlaces);
+    const loadLowBudgetPlaces = async () => {
+      const places = await fetchPlaces();
+      const topLowBudgetPlaces = getTopLowBudgetPlaces(places); // Get top 5 low-budget places
+      setLowBudgetPlaces(topLowBudgetPlaces);
+    };
+
+    loadLowBudgetPlaces();
   }, []);
 
   return (

@@ -5,36 +5,58 @@ import "@mantine/core/styles.css";
 import { Carousel } from "@mantine/carousel";
 import mockPlaces from "../data/mockPlaces";
 
-interface Place {
+interface Label {
+  id: number;
   name: string;
-  description: string;
-  budget: string;
-  guide_name: string;
-  people_liking_this_place: string[];
-  image_of_the_place: string;
-  tag: string[];
 }
 
-// get the top 3 places based on likes
+interface Place {
+  id: number;
+  label: Label[];
+  interested_users: string[];
+  name: string;
+  img: string;
+  price: number;
+  description: string;
+  business: number;
+  guide: number;
+}
 const getTopPlaces = (places: Place[]) => {
   const placesWithLikes = places.map((place) => ({
     ...place,
-    likeCount: place.people_liking_this_place.length,
+    likeCount: place.interested_users.length, // Count of people liking this place
   }));
 
-  const sortedPlaces = placesWithLikes.sort(
-    (a, b) => b.likeCount - a.likeCount
-  );
+  const sortedPlaces = placesWithLikes.sort((a, b) => b.likeCount - a.likeCount);
 
   return sortedPlaces.slice(0, 3);
+};
+
+const fetchTrendingPlaces = async (): Promise<Place[]> => {
+  try {
+    const response = await fetch("http://127.0.0.1:8000/auth/destination");
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching trending places:", error);
+    return [];
+  }
 };
 
 const Trending = () => {
   const [trendingPlaces, setTrendingPlaces] = useState<Place[]>([]);
 
   useEffect(() => {
-    const topPlaces = getTopPlaces(mockPlaces);
-    setTrendingPlaces(topPlaces);
+    const loadTrendingPlaces = async () => {
+      const places = await fetchTrendingPlaces();
+      const topPlaces = getTopPlaces(places); // Get top 3 places based on likes
+      setTrendingPlaces(topPlaces);
+    };
+
+    loadTrendingPlaces();
   }, []);
 
   return (
