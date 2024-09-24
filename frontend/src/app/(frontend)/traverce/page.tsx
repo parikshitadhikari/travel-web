@@ -6,11 +6,14 @@ import axios from "axios";
 interface Destination {
   id: number;
   name: string;
-  description: string;
+  description: string; // This can still be kept if you want it for any other purpose
 }
 
 const Traverce: React.FC = () => {
-  const [destination, setDestination] = useState<Destination | null>(null);
+  const [destinations, setDestinations] = useState<Destination[]>([]);
+  const [selectedDestinationId, setSelectedDestinationId] = useState<
+    number | null
+  >(null);
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState<any>({
     username: "",
@@ -19,6 +22,7 @@ const Traverce: React.FC = () => {
     interests: [],
     mood: "",
   });
+  const [tripDetails, setTripDetails] = useState<any>(null); // New state for trip details
 
   useEffect(() => {
     const storedData = localStorage.getItem("userInfo");
@@ -31,7 +35,7 @@ const Traverce: React.FC = () => {
   const username = userData?.username;
 
   useEffect(() => {
-    const fetchDestination = async () => {
+    const fetchDestinations = async () => {
       if (!username) {
         console.error("Username not found");
         setLoading(false);
@@ -42,29 +46,38 @@ const Traverce: React.FC = () => {
         const response = await axios.get(
           `http://127.0.0.1:8000/auth/travellers/${username}/`
         );
-        // console.log(response.data);
-        setDestination(response.data.selected_destinations[0]);
-        // Selected_destinations is an array
+        setDestinations(response.data.selected_destinations);
         console.log(response.data.selected_destinations);
       } catch (error) {
-        console.error("Error fetching destination:", error);
+        console.error("Error fetching destinations:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchDestination();
-  }, [username]); // Add username to the dependency array
+    fetchDestinations();
+  }, [username]);
 
   const handleExplore = async (destinationId: number) => {
     try {
-      const response = await axios.post("http://127.0.0.1:8000/auth/traverse/", {
-        id: destinationId,
-      });
+      const response = await axios.post(
+        "http://127.0.0.1:8000/auth/traverse/",
+        {
+          id: destinationId,
+        }
+      );
+      setTripDetails(response.data); // Store the trip details from the response
       console.log(response.data);
     } catch (error) {
       console.error("Error fetching trip details:", error);
     }
+  };
+
+  const handleDestinationSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const destinationId = parseInt(e.target.value);
+    setSelectedDestinationId(destinationId);
+    setTripDetails(null); // Reset trip details when a new destination is selected
+    handleExplore(destinationId); // Call API when destination is selected
   };
 
   return (
@@ -76,16 +89,31 @@ const Traverce: React.FC = () => {
         </h1>
         {loading ? (
           <p className="text-center">Loading...</p>
-        ) : destination ? (
-          <div className="destination-card bg-white rounded-lg shadow-lg p-6 m-4 max-w-md mx-auto">
-            <h2 className="text-xl font-semibold">{destination.name}</h2>
-            <p className="mt-2">{destination.description}</p>
-            <button
-              onClick={() => handleExplore(destination.id)}
-              className="mt-4 bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-500 transition"
+        ) : destinations.length > 0 ? (
+          <div className="destination-selector bg-white rounded-lg shadow-lg p-6 m-4 max-w-md mx-auto">
+            <h2 className="text-xl font-semibold">Select a Destination</h2>
+            <select
+              onChange={handleDestinationSelect}
+              value={selectedDestinationId ?? ""}
+              className="mt-2 bg-gray-100 p-2 rounded w-full"
             >
-              Explore
-            </button>
+              <option value="" disabled>
+                -- Select a Destination --
+              </option>
+              {destinations.map((destination) => (
+                <option key={destination.id} value={destination.id}>
+                  {destination.name}
+                </option>
+              ))}
+            </select>
+            {tripDetails && ( // Display trip details instead of the description
+              <div className="mt-4">
+                <h3 className="font-semibold">Trip Details:</h3>
+                <pre className="bg-gray-100 p-2 rounded">
+                  {JSON.stringify(tripDetails, null, 2)}
+                </pre>
+              </div>
+            )}
           </div>
         ) : (
           <p className="text-center">No destination found.</p>
