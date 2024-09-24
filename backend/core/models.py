@@ -70,6 +70,9 @@ class Package(models.Model):
 class PackageSubscription(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE)
     subscribed_by = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    class Meta:
+        unique_together = [['package','subscribed_by']]
 
 class PackageComment(models.Model):
     package = models.ForeignKey(Package, on_delete=models.CASCADE)
